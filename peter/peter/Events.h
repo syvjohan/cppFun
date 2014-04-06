@@ -1,0 +1,18 @@
+#ifndef EVENTS_H
+#define EVENTS_H
+
+enum Event
+{
+	EVT_UNDEFINED = 0,
+
+	EVT_QUIT_GAME,
+	EVT_UPDATE_TICK,
+	
+	EVT_MOVE,
+	EVT_PLAYER_WALL_COLLISION,
+	
+};
+
+
+
+#endif // !EVENTS_H
