@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLTest", "SDLTest\SDLTest.vcxproj", "{36608C12-3843-4854-83C8-D12CC8CB187E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tut2", "tut2\tut2.vcxproj", "{A760DA30-6AA3-477E-B284-68D5751B3FA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{36608C12-3843-4854-83C8-D12CC8CB187E}.Debug|Win32.Build.0 = Debug|Win32
 		{36608C12-3843-4854-83C8-D12CC8CB187E}.Release|Win32.ActiveCfg = Release|Win32
 		{36608C12-3843-4854-83C8-D12CC8CB187E}.Release|Win32.Build.0 = Release|Win32
+		{A760DA30-6AA3-477E-B284-68D5751B3FA2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A760DA30-6AA3-477E-B284-68D5751B3FA2}.Debug|Win32.Build.0 = Debug|Win32
+		{A760DA30-6AA3-477E-B284-68D5751B3FA2}.Release|Win32.ActiveCfg = Release|Win32
+		{A760DA30-6AA3-477E-B284-68D5751B3FA2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

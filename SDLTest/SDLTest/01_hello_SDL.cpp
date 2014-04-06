@@ -5,6 +5,11 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <stdio.h>
 
+#ifdef WIN32
+#pragma comment (lib, "SDL.lib")
+#pragma comment (lib, "SDL_manin.lib")
+#endif
+
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;

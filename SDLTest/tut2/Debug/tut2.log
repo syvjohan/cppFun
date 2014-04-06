@@ -1,0 +1,2 @@
+﻿  02_getting_an_image_on_the_screen.cpp
+LINK : fatal error LNK1104: cannot open file 'SDL.lib'
