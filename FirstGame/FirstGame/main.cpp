@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <random>
 
+
 #undef main
 #define RGB_COLOR(R, G, B) (((B) << 24) | ((G) << 16) | ((R) << 8)) 
 
@@ -24,31 +25,59 @@ struct rectangle {
 } player, barrier;
 
 const int rectSize = 40;
-rectangle arr[];
+const int numBarrier = 10;
+
+struct matrix {
+	int arrX[numBarrier];
+	int arrY[numBarrier];
+}arr;
+
+bool run = true;
+
 
 void fillRect(int x, int y, int w, int h, int color) {
 	SDL_Rect rect = {x, y, w, h};
 	SDL_FillRect(surface, &rect, color);
 }
 
-rectangle barrierRect() {
+void barrierRect(int x[], int y[]) {
 	int pX;
 	int pY;
-	for (int i = 0; i != 10; i++) {
-		pX = (barrier.width.x = (rand()  % 1180 + 50));
-		pY = (barrier.height.y = (rand() % 620 + 50));
-		arr[px];
-		arr[pY];
-		fillRect(pX, pY, rectSize, rectSize, RGB_COLOR(255, 0, 255));
+	x = arr.arrX;
+	y = arr.arrY;
+
+	if (!run) {
+		int drawBarrier(int x[], int y[]);
 	}
+	else if (run) {
+ 		for (int i = 0; i < numBarrier; i++) {
+			pX = (rand() % 1180 + 50);
+			pY = (rand() % 620 + 50);
 
-	for (
+			barrier.width.x = pX + 50;
+			x[i] = barrier.width.x;
 
-	return barrier;
+			barrier.height.y = pY + 50;
+			y[i] = barrier.height.y;
+		}
+		run = false;	
+	}
+}
+
+int drawBarrier(int x[], int y[]) {
+	int p = 0;
+	x = arr.arrX;
+	y = arr.arrY;
+	for (int i = 0; i <= x[i]; i++) {
+		for (int k = 0; k <= y[k]; k++) {
+			fillRect(x[i], y[k], rectSize, rectSize, RGB_COLOR(255, 0, 255));
+		}
+	}
+	return p;
 }
 
 void playerRect() {
-		fillRect(player.width.x, player.height.y, rectSize, rectSize, RGB_COLOR(255, 255, 0));
+	fillRect(player.width.x, player.height.y, rectSize, rectSize, RGB_COLOR(255, 255, 0));
 }
 
 void wallCollision() {
@@ -105,7 +134,9 @@ int main() {
 		}
 
 		fillRect(50, 50, screenWidth, screenHeight, 0);
-		barrierRect();
+
+		barrierRect (arr.arrX, arr.arrY);	
+
 		playerRect();
 
 		controlls();
