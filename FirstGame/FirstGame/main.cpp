@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <cstdio>
 #include <random>
-
+#include "math_physics.h"
 
 #undef main
 #define RGB_COLOR(R, G, B) (((B) << 24) | ((G) << 16) | ((R) << 8)) 
@@ -24,26 +24,10 @@ struct rectangle {
 	point max;
 } player;
 
-struct vector2 {
-	float x;
-	float y;
-};
-
-struct physic {
-	vector2 pos; // koordinat
-	vector2 velocity; //riktade hastighten
-	vector2 forces;
-};
-
 const int rectSize = 40;
 const int numBarrier = 1;
 
 rectangle arrBarrier[numBarrier];
-float enemySpeed = 0.5;
-
-void integrate(physic* ph , float delta) {
-	vector2 vec = ph->forces * delta;
-}
 
 void fillRect(int x, int y, int w, int h, int color) {
 	SDL_Rect rect = {x, y, w, h};
@@ -162,23 +146,39 @@ void enemyMovement() {
 	}
 }
 
+void moveLeft() {
+	--player.min.x;
+	--player.max.x;
+}
+
+void moveRight() {
+	++player.min.x;
+	++player.max.x;
+}
+
+void moveUp() {
+	--player.max.y;
+	--player.min.y;
+}
+
+void moveDown() {
+	++player.max.y;
+	++player.min.y;
+}
+
 void controlls() {
 	const Uint8 *keys = SDL_GetKeyboardState(0); 
 	if (keys[SDL_SCANCODE_LEFT]) {
-		--player.min.x;
-		--player.max.x;
+		moveLeft();
 	}
 	if (keys[SDL_SCANCODE_RIGHT]) {
-		++player.min.x;
-		++player.max.x;
+		moveRight();
 	}
 	if (keys[SDL_SCANCODE_UP]) {
-		--player.max.y;
-		--player.min.y;
+		moveUp();
 	}
 	if (keys[SDL_SCANCODE_DOWN]) {
-		++player.max.y;
-		++player.min.y;
+		moveDown();
 	}
 }
 
