@@ -1,169 +1,79 @@
 #include <SDL.h>
 #include <cstdio>
 #include <random>
-#include "math_physics.h"
 
-#undef main
+#include "enemy.h"
+#include "math_physics.h"
+#include "bullet.h"
+#include "player.h"
+#include "collision.h"
+
 #define RGB_COLOR(R, G, B) (((B) << 24) | ((G) << 16) | ((R) << 8)) 
+#undef main
 
 SDL_Window *window;
 SDL_Event event;
 SDL_Renderer *render;
 SDL_Surface *surface;
 
-const int screenWidth = 1280;
-const int screenHeight = 720;
-
-struct point {
-	int x;
-	int y;
-};
-
-struct rectangle {
-	point min;
-	point max;
-} player;
-
-const int rectSize = 40;
-const int numBarrier = 1;
-
-rectangle arrBarrier[numBarrier];
+//const int screenWidth = 1280; //TODO lös problemet med screen varibel placeringen!
+//const int screenHeight = 720;
 
 void fillRect(int x, int y, int w, int h, int color) {
 	SDL_Rect rect = {x, y, w, h};
 	SDL_FillRect(surface, &rect, color);
 }
 
-void drawBarriers() {
-	for (int i = 0; i < numBarrier; i++) {
-		fillRect(arrBarrier[i].min.x, arrBarrier[i].min.y, rectSize, rectSize, RGB_COLOR(255, 0, 255));		
-	}
-}
-
-void barrierRect() {
-	for (int i = 0; i < numBarrier; i++) {
-		arrBarrier[i].min.x = (rand() % 1180 + 50);
-		arrBarrier[i].min.y = (rand() % 620 + 50);
-		arrBarrier[i].max.x = arrBarrier[i].min.x + rectSize;
-		arrBarrier[i].max.y = arrBarrier[i].min.y + rectSize;
-	}
-}
-
 void playerRect() {
 	fillRect(player.min.x, player.min.y, player.max.x - player.min.x, player.max.y - player.min.y , RGB_COLOR(255, 255, 0)); // rectSize rectSize
 }
 
-void wallCollision() {
-	if (player.min.x < 0) {
-		player.min.x = 0;
-		player.max.x = rectSize;
-	}
-	if (player.min.y < 0) {
-		player.min.y = 0;
-		player.max.y = rectSize;
-	}
-	if (player.max.x > screenWidth) {
-		player.max.x = screenWidth;
-		player.min.x = screenWidth - rectSize;
-	}
-	if (player.max.y > screenHeight) {
-		player.max.y = screenHeight;
-		player.min.y = screenHeight - rectSize;
+void drawEnemy() {
+	for (int i = 0; i < numEnemy; i++) {
+		fillRect(arrEnemy[i].min.x, arrEnemy[i].min.y, enemySize, enemySize, RGB_COLOR(255, 0, 255));		
 	}
 }
 
-bool intersection() {
-	for (int i = 0; i < numBarrier; i++) {
-		if (player.min.x > arrBarrier[i].max.x ||
-		player.min.y > arrBarrier[i].max.y ||
-		arrBarrier[i].min.x > player.max.x ||
-		arrBarrier[i].min.y > player.max.y) {
-			return false;
-		} else {
-			return true;
+void drawBullets() {
+	for (int i = 0; i < 2; i++) {
+		fillRect(bullets.max.y, bullets.min.y, bulletSize, bulletSize, RGB_COLOR(255, 0, 255));		
+	}
+}
+
+//collision between player and enemy.
+void playerCollEnemy() {
+	for (int i = 0; i < numEnemy; i++) {
+		if (rectIntersects(player, arrEnemy[i])) {
+		vec2 mtv = rectMTV(player, arrEnemy[i]);
+		player.min = vec2Add(player.min, mtv);
+		player.max = vec2Add(player.max, mtv);
 		}
-	}
-}
-
-rectangle recCollision() {
-
-	// player
-	int playerTop = player.min.y;
-	int playerBottom = player.max.y;
-	int playerRight = player.max.x;
-	int playerLeft = player.min.x;
-
-	//Barrier
-	for (int i = 0; i < numBarrier; i++) {
-
-		int barrierTop = arrBarrier[i].min.y;
-		int barrierBottom = arrBarrier[i].max.y;
-		int barrierRight = arrBarrier[i].max.x;
-		int barrierLeft = arrBarrier[i].min.x;
-
-		if(intersection()) 
-		{
-			if (playerBottom > barrierTop) {
-				++player.min.y;
-				++player.max.y;
-			}
-			if (playerRight > barrierLeft) {
-				++player.min.x;
-				++player.max.x;
-			}
-			if (playerLeft < barrierRight) {
-				--player.min.x;
-				--player.max.x;
-			}
-			if (playerTop < barrierBottom) {
- 				--player.min.y;
-				--player.max.y;
-			}
-			return player;
-		}	
-		return player;
 	}
 }
 
 void enemyMovement() {
-	for (int i = 0; i < numBarrier; i++) {
-		if (player.min.x > arrBarrier[i].min.x) {
-			++arrBarrier[i].min.x;
-			++arrBarrier[i].max.x;
+	for (int i = 0; i < numEnemy; i++) {
+		if (player.min.x > arrEnemy[i].min.x) {
+			++arrEnemy[i].min.x;
+			++arrEnemy[i].max.x;
 		}
-		if (player.min.x < arrBarrier[i].min.x) {
-			--arrBarrier[i].min.x;
-			--arrBarrier[i].max.x;
+		if (player.min.x < arrEnemy[i].min.x) {
+			--arrEnemy[i].min.x;
+			--arrEnemy[i].max.x;
 		}
-		if (player.max.y < arrBarrier[i].max.y) {
-			--arrBarrier[i].max.y;
-			--arrBarrier[i].min.y;
+		if (player.max.y < arrEnemy[i].max.y) {
+			--arrEnemy[i].max.y;
+			--arrEnemy[i].min.y;
 		}
-		if (player.max.y > arrBarrier[i].max.y) {
-			++arrBarrier[i].max.y;
-			++arrBarrier[i].min.y;
+		if (player.max.y > arrEnemy[i].max.y) {
+			++arrEnemy[i].max.y;
+			++arrEnemy[i].min.y;
 		}
 	}
 }
 
-void moveLeft() {
-	--player.min.x;
-	--player.max.x;
-}
-
-void moveRight() {
-	++player.min.x;
-	++player.max.x;
-}
-
-void moveUp() {
-	--player.max.y;
-	--player.min.y;
-}
-
-void moveDown() {
-	++player.max.y;
-	++player.min.y;
+void shoot() {
+	//if (lastBulletTime + bulletIntervall <= SDL_GetTime
 }
 
 void controlls() {
@@ -180,6 +90,9 @@ void controlls() {
 	if (keys[SDL_SCANCODE_DOWN]) {
 		moveDown();
 	}
+	if (keys[SDL_SCANCODE_J]) {
+		shoot();
+	}
 }
 
 int main() {
@@ -189,9 +102,9 @@ int main() {
 	render = SDL_CreateRenderer(window, 0, 0);
 	surface = SDL_GetWindowSurface(window);
 
-	player.max.x = rectSize;
-	player.max.y = rectSize;
-	barrierRect();	
+	player.max.x = playerSize;
+	player.max.y = playerSize;
+	EnemyRectPos();
 
 	bool running = true;
 	while (running) {
@@ -204,18 +117,18 @@ int main() {
 
 		fillRect(0, 0, screenWidth, screenHeight, 0);
 
-		drawBarriers();
+		drawEnemy();
 		playerRect();
-
+		drawBullets();
 		//enemyMovement();
 
 		controlls();
 		wallCollision();
 
-		recCollision();
+		playerCollEnemy();
 
 		SDL_UpdateWindowSurface(window);
-		SDL_Delay(1);
+		SDL_Delay(0);
 	}
 
 	SDL_DestroyWindow(window);
@@ -223,4 +136,3 @@ int main() {
 
 	return 0;
 }
-

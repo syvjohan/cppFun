@@ -1,10 +1,26 @@
-﻿Build started 2014-05-03 17:50:26.
+﻿Build started 2014-05-05 15:08:55.
      1>Project "C:\cppFun\FirstGame\FirstGame\FirstGame.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\cppfun\firstgame\firstgame\main.cpp(85): warning C4715: 'intersection' : not all control paths return a value
-     1>c:\cppfun\firstgame\firstgame\main.cpp(125): warning C4715: 'recCollision' : not all control paths return a value
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(22): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(53): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(54): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(65): warning C4244: 'return' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(78): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(90): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(95): warning C4244: 'return' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(100): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(101): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\math_physics.h(106): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(65): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(66): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(68): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(77): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(81): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(91): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(95): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\cppfun\firstgame\firstgame\collision.h(102): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cppFun\FirstGame\Debug\FirstGame.exe" /INCREMENTAL /NOLOGO SDL2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cppFun\FirstGame\Debug\FirstGame.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cppFun\FirstGame\Debug\FirstGame.lib" /MACHINE:X86 Debug\main.obj
          FirstGame.vcxproj -> C:\cppFun\FirstGame\Debug\FirstGame.exe
@@ -12,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.74
+Time Elapsed 00:00:01.02
