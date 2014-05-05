@@ -3,7 +3,6 @@
 #include <random>
 
 #include "enemy.h"
-#include "math_physics.h"
 #include "bullet.h"
 #include "player.h"
 #include "collision.h"
@@ -25,7 +24,7 @@ void fillRect(int x, int y, int w, int h, int color) {
 }
 
 void playerRect() {
-	fillRect(player.min.x, player.min.y, player.max.x - player.min.x, player.max.y - player.min.y , RGB_COLOR(255, 255, 0)); // rectSize rectSize
+	fillRect(player.box.min.x, player.box.min.y, player.box.max.x - player.box.min.x, player.box.max.y - player.box.min.y , RGB_COLOR(255, 255, 0)); // rectSize rectSize
 }
 
 void drawEnemy() {
@@ -34,50 +33,29 @@ void drawEnemy() {
 	}
 }
 
-void drawBullets() {
-	for (int i = 0; i < 2; i++) {
-		fillRect(bullets.max.y, bullets.min.y, bulletSize, bulletSize, RGB_COLOR(255, 0, 255));		
-	}
-}
+//void drawBullets() {
+//	for (int i = 0; i < 2; i++) {
+//		fillRect(bullets.max.y, bullets.min.y, bulletSize, bulletSize, RGB_COLOR(255, 0, 255));		
+//	}
+//}
 
 //collision between player and enemy.
 void playerCollEnemy() {
 	for (int i = 0; i < numEnemy; i++) {
-		if (rectIntersects(player, arrEnemy[i])) {
-		vec2 mtv = rectMTV(player, arrEnemy[i]);
-		player.min = vec2Add(player.min, mtv);
-		player.max = vec2Add(player.max, mtv);
+		if (tiRectIntersects(player.box, arrEnemy[i])) {
+		tiVec2 mtv = tiRectMTV(player.box, arrEnemy[i]);
+		player.ph.position = tiVec2Add(player.ph.position, mtv);
 		}
 	}
 }
 
 // make enemy chase player.
-void chaseplayer() {
-	for (int i = 0; i < numEnemy; i++) {
-		moveEnemy(arrEnemy[i], player);
-	}
-}
+//void chaseplayer() {
+//	for (int i = 0; i < numEnemy; i++) {
+//		moveEnemy(arrEnemy[i], player);
+//	}
+//}
 
-void enemyMovement() {
-	for (int i = 0; i < numEnemy; i++) {
-		if (player.min.x > arrEnemy[i].min.x) {
-			++arrEnemy[i].min.x;
-			++arrEnemy[i].max.x;
-		}
-		if (player.min.x < arrEnemy[i].min.x) {
-			--arrEnemy[i].min.x;
-			--arrEnemy[i].max.x;
-		}
-		if (player.max.y < arrEnemy[i].max.y) {
-			--arrEnemy[i].max.y;
-			--arrEnemy[i].min.y;
-		}
-		if (player.max.y > arrEnemy[i].max.y) {
-			++arrEnemy[i].max.y;
-			++arrEnemy[i].min.y;
-		}
-	}
-}
 
 void shoot() {
 	//if (lastBulletTime + bulletIntervall <= SDL_GetTime
@@ -109,8 +87,17 @@ int main() {
 	render = SDL_CreateRenderer(window, 0, 0);
 	surface = SDL_GetWindowSurface(window);
 
-	player.max.x = playerSize;
-	player.max.y = playerSize;
+	int time;
+	int lastTime;
+	float delta;
+
+	time = lastTime = SDL_GetTicks(); // båda får samma värde
+
+	player.ph.linearDrag = 0.003f;
+	player.box.min.x = playerSize;
+	player.box.max.y = playerSize;
+	/*player.max.x = playerSize;
+	player.max.y = playerSize;*/
 	EnemyRectPos();
 
 	bool running = true;
@@ -122,20 +109,32 @@ int main() {
 			}	
 		}
 
+		time = SDL_GetTicks();
+		delta = ((float)time - (float)lastTime) /1000.0f; //sekunder
+
 		fillRect(0, 0, screenWidth, screenHeight, 0);
 
 		drawEnemy();
 		playerRect();
-		drawBullets();
-		//enemyMovement();
-
+		//drawBullets();
+		//moveEnemy();
+	
 		controlls();
-		wallCollision();
+	
+		tiPhysicsIntegrate(&player.ph, delta);
 
+		//uppdaterar spelarens rektangle så den är centrerad.
+		tiRectSet(player.ph.position.x - playerSize / 2, 
+					player.ph.position.y - playerSize / 2,
+					playerSize, playerSize,
+					&player.box);
+
+		wallCollision();
 		playerCollEnemy();
 
 		SDL_UpdateWindowSurface(window);
 		SDL_Delay(0);
+		lastTime = time;
 	}
 
 	SDL_DestroyWindow(window);

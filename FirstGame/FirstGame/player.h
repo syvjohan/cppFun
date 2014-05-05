@@ -1,28 +1,37 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "rectangle.h"
 
-rect player;
+#include "tinymath.h"
+
+struct Player {
+	tiRect box;
+	tiPhysics ph;
+	int canJump;
+}player;
+
 const int playerSize = 40;
 
-void pMoveLeft() {
-	--player.min.x;
-	--player.max.x;
+inline void pMoveLeft() {
+	tiVec2 v = {-250, 0};
+	tiPhysicsApplyForce(v, &player.ph);
 }
 
-void pMoveRight() {
-	++player.min.x;
-	++player.max.x;
+inline void pMoveRight() {
+	tiVec2 v = {250, 0};
+	tiPhysicsApplyForce(v, &player.ph);
 }
 
-void pMoveUp() {
-	--player.max.y;
-	--player.min.y;
+inline void pMoveUp() {
+	if(player.canJump && player.ph.velocity.y > 0) {
+		tiVec2 v = {0, -150000};
+		tiPhysicsApplyForce(v, &player.ph);
+		player.canJump = 0;
+	}
 }
 
-void pMoveDown() {
-	++player.max.y;
-	++player.min.y;
+inline void pMoveDown() {
+	tiVec2 v = {0, 250};
+	tiPhysicsApplyForce(v, &player.ph);
 }
 
 #endif //!PLAYER_H
