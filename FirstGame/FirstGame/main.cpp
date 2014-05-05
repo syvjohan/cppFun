@@ -51,6 +51,13 @@ void playerCollEnemy() {
 	}
 }
 
+// make enemy chase player.
+void chaseplayer() {
+	for (int i = 0; i < numEnemy; i++) {
+		moveEnemy(arrEnemy[i], player);
+	}
+}
+
 void enemyMovement() {
 	for (int i = 0; i < numEnemy; i++) {
 		if (player.min.x > arrEnemy[i].min.x) {
@@ -79,16 +86,16 @@ void shoot() {
 void controlls() {
 	const Uint8 *keys = SDL_GetKeyboardState(0); 
 	if (keys[SDL_SCANCODE_LEFT]) {
-		moveLeft();
+		pMoveLeft();
 	}
 	if (keys[SDL_SCANCODE_RIGHT]) {
-		moveRight();
+		pMoveRight();
 	}
 	if (keys[SDL_SCANCODE_UP]) {
-		moveUp();
+		pMoveUp();
 	}
 	if (keys[SDL_SCANCODE_DOWN]) {
-		moveDown();
+		pMoveDown();
 	}
 	if (keys[SDL_SCANCODE_J]) {
 		shoot();

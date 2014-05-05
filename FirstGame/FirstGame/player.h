@@ -5,22 +5,22 @@
 rect player;
 const int playerSize = 40;
 
-void moveLeft() {
+void pMoveLeft() {
 	--player.min.x;
 	--player.max.x;
 }
 
-void moveRight() {
+void pMoveRight() {
 	++player.min.x;
 	++player.max.x;
 }
 
-void moveUp() {
+void pMoveUp() {
 	--player.max.y;
 	--player.min.y;
 }
 
-void moveDown() {
+void pMoveDown() {
 	++player.max.y;
 	++player.min.y;
 }
