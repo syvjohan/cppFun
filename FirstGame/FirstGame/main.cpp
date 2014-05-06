@@ -49,6 +49,13 @@ void playerCollEnemy() {
 	}
 }
 
+//Enemy chase player.
+void chasePlayer() {
+	for (int i = 0; i < numEnemy; i++) {
+		moveEnemy(player.box, arrEnemy[i]);
+	}
+}
+
 // make enemy chase player.
 //void chaseplayer() {
 //	for (int i = 0; i < numEnemy; i++) {
@@ -117,8 +124,7 @@ int main() {
 		drawEnemy();
 		playerRect();
 		//drawBullets();
-		//moveEnemy();
-	
+		chasePlayer();
 		controlls();
 	
 		tiPhysicsIntegrate(&player.ph, delta);
