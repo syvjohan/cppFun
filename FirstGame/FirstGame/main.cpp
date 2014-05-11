@@ -1,11 +1,11 @@
 #include <SDL.h>
 #include <cstdio>
-#include <random>
 
 #include "enemy.h"
 #include "bullet.h"
 #include "player.h"
 #include "collision.h"
+#include "level.h"
 
 #define RGB_COLOR(R, G, B) (((B) << 24) | ((G) << 16) | ((R) << 8)) 
 #undef main
@@ -15,22 +15,19 @@ SDL_Event event;
 SDL_Renderer *render;
 SDL_Surface *surface;
 
-//const int screenWidth = 1280; //TODO lös problemet med screen varibel placeringen!
-//const int screenHeight = 720;
-
 void fillRect(int x, int y, int w, int h, int color) {
 	SDL_Rect rect = {x, y, w, h};
 	SDL_FillRect(surface, &rect, color);
 }
 
-void playerRect() {
-	fillRect(player.box.min.x, player.box.min.y, player.box.max.x - player.box.min.x, player.box.max.y - player.box.min.y , RGB_COLOR(255, 255, 0)); // rectSize rectSize
+void drawPlayer() {
+	fillRect(player.box.min.x, player.box.min.y, player.box.max.x - player.box.min.x, player.box.max.y - player.box.min.y , RGB_COLOR(255, 255, 0));
 }
 
 void drawEnemy() {
 	for (int i = 0; i < numEnemy; i++) {
-		fillRect(arrEnemy[i].min.x, arrEnemy[i].min.y, enemySize, enemySize, RGB_COLOR(255, 0, 255));		
-	}
+		fillRect(arrEnemy[i].min.x, arrEnemy[i].min.y, arrEnemy[i].max.x - arrEnemy[i].min.x, arrEnemy[i].max.y - arrEnemy[i].min.y, RGB_COLOR(255, 0, 255));		
+	}	
 }
 
 //void drawBullets() {
@@ -49,29 +46,23 @@ void playerCollEnemy() {
 	}
 }
 
-//Enemy chase player.
+//make enemy chase player.
 void chasePlayer() {
 	for (int i = 0; i < numEnemy; i++) {
 		moveEnemy(player.box, arrEnemy[i]);
 	}
 }
 
-// make enemy chase player.
-//void chaseplayer() {
-//	for (int i = 0; i < numEnemy; i++) {
-//		moveEnemy(arrEnemy[i], player);
-//	}
-//}
-
-
 void shoot() {
 	//if (lastBulletTime + bulletIntervall <= SDL_GetTime
 }
 
+//controlls for player movement.
 void controlls() {
 	const Uint8 *keys = SDL_GetKeyboardState(0); 
 	if (keys[SDL_SCANCODE_LEFT]) {
 		pMoveLeft();
+		eMoveLeft();
 	}
 	if (keys[SDL_SCANCODE_RIGHT]) {
 		pMoveRight();
@@ -97,15 +88,14 @@ int main() {
 	int time;
 	int lastTime;
 	float delta;
-
 	time = lastTime = SDL_GetTicks(); // båda får samma värde
 
-	player.ph.linearDrag = 0.003f;
-	player.box.min.x = playerSize;
-	player.box.max.y = playerSize;
-	/*player.max.x = playerSize;
-	player.max.y = playerSize;*/
-	EnemyRectPos();
+	//set pos and lineardrag.
+	setEnemy();
+	setPlayer();
+
+	//blockPosition();
+	enemyRectPos();
 
 	bool running = true;
 	while (running) {
@@ -121,20 +111,27 @@ int main() {
 
 		fillRect(0, 0, screenWidth, screenHeight, 0);
 
+		//drawing objects.
+		//drawBlock();
 		drawEnemy();
-		playerRect();
+		drawPlayer();
 		//drawBullets();
+
+		//Objects for chasing other objects
 		chasePlayer();
+
+		//controlls for player movement.
 		controlls();
 	
+		// Integrates a physics object using standard newton.
 		tiPhysicsIntegrate(&player.ph, delta);
+		tiPhysicsIntegrate(&enemy.ph, delta);
 
-		//uppdaterar spelarens rektangle så den är centrerad.
-		tiRectSet(player.ph.position.x - playerSize / 2, 
-					player.ph.position.y - playerSize / 2,
-					playerSize, playerSize,
-					&player.box);
+		//update objects.
+		updatePlayer();
+		updateEnemy();
 
+		//collision.
 		wallCollision();
 		playerCollEnemy();
 
