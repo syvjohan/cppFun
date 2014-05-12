@@ -8,25 +8,51 @@
 #include "level.h"
 
 #define RGB_COLOR(R, G, B) (((B) << 24) | ((G) << 16) | ((R) << 8)) 
+#define SPRITESIZE 23
 #undef main
 
-SDL_Window *window;
+SDL_Window *window = NULL;
 SDL_Event event;
-SDL_Renderer *render;
-SDL_Surface *surface;
+SDL_Renderer *render = NULL;
+SDL_Surface *surface, *background = NULL/*, *mario, *sprite*/;
+//SDL_PixelFormat *pixelformat;
+//SDL_Rect Sprite, src;
+
+//void loadImages() {
+//	background = SDL_LoadBMP("img/wallpaper.bmp");
+//	//mario = SDL_LoadBMP("img/mario.bmp");
+//	/*sprite = SDL_ConvertSurface(mario, pixelformat, 0);*/
+//	//SDL_FreeSurface(mario);
+//}
+
+void loadImage() {
+	background = SDL_LoadBMP("img/wallpaper.bmp");
+}
 
 void fillRect(int x, int y, int w, int h, int color) {
 	SDL_Rect rect = {x, y, w, h};
 	SDL_FillRect(surface, &rect, color);
 }
 
+//void drawImage(SDL_Surface *img, int x, int y) {
+//	SDL_Rect rect;
+//	rect.x = x;
+//	rect.y = y;
+//	SDL_BlitSurface(img, NULL, surface, &rect);
+//	SDL_BlitSurface(sprite, &Sprite, surface, &src);
+//}
+
+//void drawBackground() {
+//	drawImage(background, 0, 0);
+//}
+
 void drawPlayer() {
 	fillRect(player.box.min.x, player.box.min.y, player.box.max.x - player.box.min.x, player.box.max.y - player.box.min.y , RGB_COLOR(255, 255, 0));
 }
 
 void drawEnemy() {
-	for (int i = 0; i < numEnemy; i++) {
-		fillRect(arrEnemy[i].min.x, arrEnemy[i].min.y, arrEnemy[i].max.x - arrEnemy[i].min.x, arrEnemy[i].max.y - arrEnemy[i].min.y, RGB_COLOR(255, 0, 255));		
+	for (int i = 0; i < NUM_ENEMY; i++) {
+		fillRect(arrEnemy[i].box.min.x, arrEnemy[i].box.min.y, arrEnemy[i].box.max.x - arrEnemy[i].box.min.x, arrEnemy[i].box.max.y - arrEnemy[i].box.min.y, RGB_COLOR(255, 0, 255));		
 	}	
 }
 
@@ -38,9 +64,9 @@ void drawEnemy() {
 
 //collision between player and enemy.
 void playerCollEnemy() {
-	for (int i = 0; i < numEnemy; i++) {
-		if (tiRectIntersects(player.box, arrEnemy[i])) {
-		tiVec2 mtv = tiRectMTV(player.box, arrEnemy[i]);
+	for (int i = 0; i < NUM_ENEMY; i++) {
+		if (tiRectIntersects(player.box, arrEnemy[i].box)) {
+		tiVec2 mtv = tiRectMTV(player.box, arrEnemy[i].box);
 		player.ph.position = tiVec2Add(player.ph.position, mtv);
 		}
 	}
@@ -48,8 +74,8 @@ void playerCollEnemy() {
 
 //make enemy chase player.
 void chasePlayer() {
-	for (int i = 0; i < numEnemy; i++) {
-		moveEnemy(player.box, arrEnemy[i]);
+	for (int i = 0; i < NUM_ENEMY; i++) {
+		return moveEnemy(player.box, arrEnemy[i].box);
 	}
 }
 
@@ -57,12 +83,19 @@ void shoot() {
 	//if (lastBulletTime + bulletIntervall <= SDL_GetTime
 }
 
+void integratePhysics(float delta) {
+	tiPhysicsIntegrate(&player.ph, delta);
+
+	for (int i = 0; i < NUM_ENEMY; i++) {
+		tiPhysicsIntegrate(&arrEnemy[i].ph, delta);
+	}
+}
+
 //controlls for player movement.
 void controlls() {
 	const Uint8 *keys = SDL_GetKeyboardState(0); 
 	if (keys[SDL_SCANCODE_LEFT]) {
 		pMoveLeft();
-		eMoveLeft();
 	}
 	if (keys[SDL_SCANCODE_RIGHT]) {
 		pMoveRight();
@@ -94,8 +127,26 @@ int main() {
 	setEnemy();
 	setPlayer();
 
+
+	SDL_Rect backRect;
+	backRect.x = 100;
+	backRect.y = 120;
+
+	SDL_FillRect(surface, NULL, 0x221122);
+
+	loadImage();
+	//loadImages();
+
+	//Sprite.x = 150;
+	//Sprite.y = 120;
+
+	//src.x = 128;
+	//src.y = 0;
+	//src.w = SPRITESIZE;
+	//src.h = SPRITESIZE;
+
 	//blockPosition();
-	enemyRectPos();
+	setEnemyStartPos();
 
 	bool running = true;
 	while (running) {
@@ -116,16 +167,16 @@ int main() {
 		drawEnemy();
 		drawPlayer();
 		//drawBullets();
+	/*	drawBackground();*/
 
 		//Objects for chasing other objects
-		chasePlayer();
+		//chasePlayer();
 
 		//controlls for player movement.
 		controlls();
 	
 		// Integrates a physics object using standard newton.
-		tiPhysicsIntegrate(&player.ph, delta);
-		tiPhysicsIntegrate(&enemy.ph, delta);
+		integratePhysics(delta);
 
 		//update objects.
 		updatePlayer();

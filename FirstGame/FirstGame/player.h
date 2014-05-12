@@ -3,50 +3,28 @@
 
 #include "tinymath.h"
 
+#define PLAYER_SIZE 40 
+
 struct Player {
 	tiRect box;
 	tiPhysics ph;
 	int canJump;
-}player;
+};
 
-const int playerSize = 40;
+extern Player player;
 
 //Update player rectangle and make sure it's centralized.
-inline void updatePlayer() {
-	tiRectSet(player.ph.position.x - playerSize / 2, 
-				player.ph.position.y - playerSize / 2,
-				playerSize, playerSize,
-				&player.box);
-}
+void updatePlayer();
 
 //set pos and lineardrag
-inline void setPlayer() {
-	player.ph.linearDrag = 0.003f;
-	player.box.min.x = playerSize;
-	player.box.max.y = playerSize;
-}
+void setPlayer();
 
-inline void pMoveLeft() {
-	tiVec2 v = {-250, 0};
-	tiPhysicsApplyForce(v, &player.ph);
-}
+void pMoveLeft();
 
-inline void pMoveRight() {
-	tiVec2 v = {250, 0};
-	tiPhysicsApplyForce(v, &player.ph);
-}
+void pMoveRight();
 
-inline void pMoveUp() {
-	if(player.canJump && player.ph.velocity.y > 0) {
-		tiVec2 v = {0, -1500000}; //change the jump.
-		tiPhysicsApplyForce(v, &player.ph);
-		player.canJump = 0;
-	}
-}
+void pMoveUp();
 
-inline void pMoveDown() {
-	tiVec2 v = {0, 250};
-	tiPhysicsApplyForce(v, &player.ph);
-}
+void pMoveDown();
 
 #endif //!PLAYER_H

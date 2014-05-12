@@ -1,5 +1,5 @@
-#ifndef SIMPLEMATH_H
-#define SIMPLEMATH_H
+#ifndef TINYMATH_H
+#define TINYMATH_H
 
 #ifdef __cplusplus
 #include <cmath>
@@ -294,4 +294,4 @@ inline tiVec2 tiVec2Normalized(const tiVec2 &v)
  return o;
 }
 
-#endif // !SIMPLEMATH_H
+#endif // !TINYMATH_H
