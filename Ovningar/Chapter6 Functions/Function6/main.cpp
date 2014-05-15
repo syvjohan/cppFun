@@ -5,6 +5,25 @@ using namespace std;
 
 int flagg = 0;
 
+//6.4
+int Fact(int val) {
+
+	int ret = 1;
+	while (val > 1) {
+		ret *= val--;
+	}
+	return ret;
+}
+
+//6.5
+//Return always a positive value.
+int Absolute(int val) {
+
+	int ret = 1;
+		ret = abs(val);
+	return ret;
+}
+
 //6.7
 size_t countCalls()
 {
