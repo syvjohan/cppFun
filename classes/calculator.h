@@ -1,16 +1,13 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-class Calculator {
-
+template <class T> class Calculator {
 public:
-	Calculator();
-	~Calculator();
 
-	int Multiplication(int a, int b);
-	int Division(int a, int b);
-	int Addition(int a, int b);
-	int Substraction(int a, int b);
+	T Multiplication(T a, T b);
+	T Division(T a, T b);
+	T Addition(T a, T b);
+	T Substraction(T a, T b);
 
 private:
 };

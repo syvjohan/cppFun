@@ -6,12 +6,14 @@ using namespace std;
 
 int main() {
 
-	Calculator pCalc;
+	Calculator<int> calc;
 
-	printf("Result-Mul : %i\n", pCalc.Multiplication(4,3));
-	printf("Result-Div : %i\n", pCalc.Division(12,4));
-	printf("Result-Add : %i\n", pCalc.Addition(12,4));
-	printf("Result-Div : %i\n", pCalc.Substraction(12,4));
-
+	/*
+	printf("Result-Mul : %i\n", calc.Multiplication(4,3));
+	printf("Result-Div : %i\n", calc.Division(12,4));
+	printf("Result-Add : %i\n", calc.Addition(12,4));
+	printf("Result-Div : %i\n", calc.Substraction(12,4));
+	*/
+	
 	return 0;
 }
