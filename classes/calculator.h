@@ -2,14 +2,17 @@
 #define CALCULATOR_H
 
 class Calculator {
-	int number1, number2, sum;
-public:
-	Calculator(int k, int x, int y) : number1(k), number2(x), sum(y) {}
 
-	int Multiplication();
-	int Division();
+public:
+	Calculator();
+	~Calculator();
+
+	int Multiplication(int a, int b);
+	int Division(int a, int b);
+	int Addition(int a, int b);
+	int Substraction(int a, int b);
 
 private:
 };
 
-#endif // !CALCULATOR_H 
+#endif // !CALCULATOR_H

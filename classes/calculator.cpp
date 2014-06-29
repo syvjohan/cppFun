@@ -1,11 +1,23 @@
 #include "calculator.h"
-	
-Calculator::Multiplication() {
-	sum = number1 * number2;
-	return sum;
+
+Calculator::Calculator() {}
+
+Calculator::~Calculator() {}
+
+int Calculator::Multiplication(int a, int b) {
+	return a * b;
 }
 
-Calculator::Division() {
-	sum = number1 / number2;
-	return sum;
+int Calculator::Division(int a, int b) {
+	
+	return a / b;
+}
+
+int Calculator::Addition(int a, int b) {
+	return a + b;
+}
+
+int Calculator::Substraction(int a, int b) {
+	return Addition(a, -b);
+
 }
