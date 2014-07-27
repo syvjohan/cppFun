@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -12,20 +13,21 @@ int main() {
   node *conductor;  // Points to each node as it traverses the list
 
   root = new node;  // Sets it to actually point to something
-  root->next = 0;   //  Otherwise it would not work well
+  root->next = NULL; // Otherwise it would not work well
   root->x = 12;
 
   conductor = root; // The conductor points to the first node
   if ( conductor != 0 ) {
-    while ( conductor->next != 0) {
+    while ( conductor->next != NULL) {
       conductor = conductor->next;
-  		cout<< conductor->x;
+  		printf("%i \n", conductor->x);	
   	}
   }
   conductor->next = new node;  // Creates a node at the end of the list
   conductor = conductor->next; // Points to that node
-  conductor->next = 0;         // Prevents it from going any further
-  conductor->x = 42;
+  conductor->next = NULL;         // Prevents it from going any further
+  conductor->x = 42; //add a new value to the list
+  printf("%i \n", conductor->x);
 
 	return 0;
 }
