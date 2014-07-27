@@ -1,33 +1,157 @@
 #include <iostream>
-#include <stdio.h>
 
 using namespace std;
 
-struct node {
-	int x;
-	node *next;
+// Node class
+class Node {
+    int data;
+    Node* next;
+
+  public:
+    Node() {};
+    void SetData(int aData) { data = aData; };
+    void SetNext(Node* aNext) { next = aNext; };
+    int Data() { return data; };
+    Node* Next() { return next; };
+
+  private:
 };
 
+// List class
+class List {
+    Node *root;
+  public:
+    List() { root = NULL; };
+    void Print();
+    void Append(int data);
+    void Delete(int data);
+
+  private:
+};
+
+//Print the contents of the list
+void List::Print() {
+
+    // Temp pointer
+    Node *tmp = root;
+
+    // No nodes
+    if ( tmp == NULL ) {
+    cout << "EMPTY" << endl;
+    return;
+    }
+
+    // One node in the list
+    if ( tmp->Next() == NULL ) {
+    cout << tmp->Data();
+    cout << " --> ";
+    cout << "NULL" << endl;
+    }
+    else {
+    // Parse and print the list
+    do {
+        cout << tmp->Data();
+        cout << " --> ";
+        tmp = tmp->Next();
+    }
+    while ( tmp != NULL );
+
+    cout << "NULL" << endl;
+    }
+}
+
+/**
+ * Append a node to the linked list
+ */
+void List::Append(int data) {
+
+    // Create a new node
+    Node* newNode = new Node();
+    newNode->SetData(data);
+    newNode->SetNext(NULL);
+
+    // Create a temp pointer
+    Node *tmp = root;
+
+    if ( tmp != NULL ) {
+    // Nodes already present in the list
+    // Parse to end of list
+    while ( tmp->Next() != NULL ) {
+        tmp = tmp->Next();
+    }
+
+    // Point the last node to the new node
+    tmp->SetNext(newNode);
+    }
+    else {
+    // First node in the list
+    root = newNode;
+    }
+}
+
+/**
+ * Delete a node from the list
+ */
+void List::Delete(int data) {
+
+    // Create a temp pointer
+    Node *tmp = root;
+
+    // No nodes
+    if ( tmp == NULL )
+    return;
+
+    // Last node of the list
+    if ( tmp->Next() == NULL ) {
+    delete tmp;
+    root = NULL;
+    }
+    else {
+    // Parse thru the nodes
+    Node *prev;
+    do {
+        if ( tmp->Data() == data ) break;
+        prev = tmp;
+        tmp = tmp->Next();
+    } while ( tmp != NULL );
+
+    // Adjust the pointers
+    prev->SetNext(tmp->Next());
+
+    // Delete the current node
+    delete tmp;
+    }
+}
+
+
+
 int main() {
-	node *root;       // This won't change, or we would lose the list in memory
-  node *conductor;  // Points to each node as it traverses the list
+  
+	// New list
+    List list;
 
-  root = new node;  // Sets it to actually point to something
-  root->next = NULL; // Otherwise it would not work well
-  root->x = 12;
+    // Append nodes to the list
+    list.Append(100);
+    list.Print();
+    list.Append(200);
+    list.Print();
+    list.Append(300);
+    list.Print();
+    list.Append(400);
+    list.Print();
+    list.Append(500);
+    list.Print();
 
-  conductor = root; // The conductor points to the first node
-  if ( conductor != 0 ) {
-    while ( conductor->next != NULL) {
-      conductor = conductor->next;
-  		printf("%i \n", conductor->x);	
-  	}
-  }
-  conductor->next = new node;  // Creates a node at the end of the list
-  conductor = conductor->next; // Points to that node
-  conductor->next = NULL;         // Prevents it from going any further
-  conductor->x = 42; //add a new value to the list
-  printf("%i \n", conductor->x);
-
+    // Delete nodes from the list
+    list.Delete(400);
+    list.Print();
+    list.Delete(300);
+    list.Print();
+    list.Delete(200);
+    list.Print();
+    list.Delete(500);
+    list.Print();
+    list.Delete(100);
+    list.Print();
 	return 0;
 }
