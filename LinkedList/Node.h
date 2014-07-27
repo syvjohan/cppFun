@@ -2,7 +2,8 @@
 #define NODE_H
 
 // Node class
-template <class T> class Node {
+template <typename T> 
+class Node {
     T data;
     Node* next;
 

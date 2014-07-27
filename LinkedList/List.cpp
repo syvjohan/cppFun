@@ -2,7 +2,8 @@
 #include "List.h"
 
 //Print the contents of the list
-template <class T> void List::Print() {
+template <typename T>
+void List<T>::Print() {
     // Temp pointer
     Node *tmp = head;
 
@@ -33,7 +34,8 @@ template <class T> void List::Print() {
 
 
 //Append a node to the linked list
-template <class T> void List::Append(T data) {
+template <typename T>
+void List<T>::Append(T data) {
 
     // Create a new node
     Node* newNode = new Node();
@@ -61,7 +63,8 @@ template <class T> void List::Append(T data) {
 
  //Delete a node from the list
  
-template <class T> void List::Delete(T data) {
+template <typename T> 
+void List<T>::Delete(T data) {
 
     // Create a temp pointer
     Node *tmp = root;

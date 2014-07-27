@@ -2,7 +2,8 @@
 #define LIST_H
 
 // List class
-template <class T> class List {
+template <typename T> 
+class List {
 
     Node *root;
 
