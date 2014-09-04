@@ -1,8 +1,18 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "TelephoneReg.h"
 
 using namespace std;
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#ifdef _DEBUG
+	#ifndef DBG_NEW
+		#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+		#define new DBG_NEW
+	#endif
+#endif
 
 TeleReg::TeleReg(int maxSize) {
 	size = maxSize;
@@ -59,7 +69,7 @@ void TeleReg::DelContact(const std::string &number, const std::string &name) {
 	}
 }
 
-void TeleReg::RemoveName(const std::string &number, const std::string &name) {
+void TeleReg::RemoveName(const std::string &name) {
 	//Check if name exist.
 	for (int i = 0; i != size; i++) {
 		if (reg[i].name == name) {
@@ -82,7 +92,7 @@ void TeleReg::RemoveName(const std::string &number, const std::string &name) {
 	}
 }
 
-void TeleReg::RemoveNumber(const std::string &number, const std::string &name) {
+void TeleReg::RemoveNumber(const std::string &number) {
 	//Check if name exist.
 	for (int i = 0; i != size; i++) {
 		if (reg[i].number == number) {
@@ -105,9 +115,9 @@ void TeleReg::RemoveNumber(const std::string &number, const std::string &name) {
 	}
 }
 
-bool TeleReg::FindName(const std::string &number, const std::string &name) const {
+bool TeleReg::FindName(const std::string &name) const {
 	for (int i = 0; i != size; i++) {
-		if (reg[i].number == "4" && reg[i].name == name) {
+		if (reg[i].name == name) {
 			return true;
 		}
 	}

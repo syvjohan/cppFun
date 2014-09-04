@@ -4,6 +4,16 @@
 
 using namespace std;
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#ifdef _DEBUG
+	#ifndef DBG_NEW
+		#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+		#define new DBG_NEW
+	#endif
+#endif
+
 void Menu();
 void Start();
 
@@ -50,6 +60,13 @@ void Menu() {
 
 	TeleReg teleReg(10); // tio platser i telefon registret....
 
+	teleReg.AddContact("333", "nisse");
+	teleReg.AddContact("5555", "lisa");
+	teleReg.AddContact("8888", "rune");
+	teleReg.AddContact("9999", "peter");
+	teleReg.AddContact("000", "emma");
+	teleReg.AddContact("2222", "mia");
+
 	string name = "";
 	string number = "";
 	int choice = 0;
@@ -69,31 +86,33 @@ void Menu() {
 			break;
 		case 3:
 			printf("\nEnter name to find: ");
-			cin >> number >> name;
-			if (teleReg.FindName(number, name) == true) {
-				cout << number << endl;
+			cin >> name;
+			if (teleReg.FindName(name) == true) {
+				cout << "\nFound the name" << endl;
 			} else {
-				cout << "No name could be found" << endl;
+				cout << "\nNo name could be found!" << endl;
 			}
 			break;
 		case 4:
 			printf("\nEnter name to remove: ");
 			cin >> name;
-			teleReg.RemoveName(number, name);
+			teleReg.RemoveName(name);
 			break;
 		case 5:
 			printf("\nEnter number to remove: ");
-			cin >> name;
-			teleReg.RemoveNumber(number, name);
+			cin >> number;
+			teleReg.RemoveNumber(number);
 			break;
 		case 6:
 			teleReg.PrintReg();
 			break;
 		case 7:
 			exit(0);
+			_CrtDumpMemoryLeaks();
 			break;
 		}
 		Start();
 
 	} while (choice != 7);
+	_CrtDumpMemoryLeaks();
 }

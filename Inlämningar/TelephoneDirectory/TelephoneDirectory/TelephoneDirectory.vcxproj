@@ -72,11 +72,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="TelephoneNumber.cpp" />
     <ClCompile Include="TelephoneReg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TelephoneNumber.h" />
     <ClInclude Include="TelephoneReg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
