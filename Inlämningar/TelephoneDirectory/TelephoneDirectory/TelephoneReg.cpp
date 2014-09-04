@@ -24,7 +24,7 @@ void TeleReg::AddContact(const std::string &number, const std::string &name) {
 	if (nextIndex == size) {
 		int newSize = size * 2;
 		contact *temp = new contact[newSize];
-	
+
 		for (int i = 0; i != nextIndex; i++) {
 			temp[i] = reg[i];
 		}
@@ -42,42 +42,75 @@ void TeleReg::AddContact(const std::string &number, const std::string &name) {
 void TeleReg::DelContact(const std::string &number, const std::string &name) {
 	for (int i = 0; i != (size - 1); i++) {
 		if (reg[i].number == number && reg[i].name == name) {
+			//Initialize nextIndex
 			nextIndex = i + 1;
-
-			reg[i].number = reg[nextIndex].number;
-			reg[i].name = reg[nextIndex].name;
-
-			reg[nextIndex] = reg[(size - 1)];
-			reg[nextIndex] = reg[nextIndex + 1]; //move upp the elements +1.
-			//int newSize = size / 2;
-			//reg[newSize]; // Shrink the array.	
+			while (nextIndex != size) {
+				//move upp the elements +1.
+				reg[i].number = reg[nextIndex].number;
+				reg[i].name = reg[nextIndex].name;
+				i = nextIndex;
+				nextIndex++;
+			}
+			// Shrink the array.	
+			int newSize = size / 2;
+			reg[newSize];
+			return;
 		}
 	}
 }
 
 void TeleReg::RemoveName(const std::string &number, const std::string &name) {
-	int count = size;
+	//Check if name exist.
 	for (int i = 0; i != size; i++) {
-		count++;
 		if (reg[i].name == name) {
-			count--;
-			reg[i].name = "No name!";
-		} else if (count == size) {
-			printf("No names was removed!\n");
-		} else {
-			int num = count - size;
-			printf("%i number of names that was removed: ", num);
+			reg[i].name = "";
+			if ((reg[i].number == "") && (reg[i].name == "")) {
+				//Initialize nextIndex
+				nextIndex = i + 1;
+				while (nextIndex != size) {
+					//move upp the elements +1.
+					reg[i].number = reg[nextIndex].number;
+					reg[i].name = reg[nextIndex].name;
+					i = nextIndex;
+					nextIndex++;
+				}
+				// Shrink the array.	
+				int newSize = size / 2;
+				reg[newSize];
+			}
 		}
-
-		
 	}
 }
 
 void TeleReg::RemoveNumber(const std::string &number, const std::string &name) {
-
+	//Check if name exist.
+	for (int i = 0; i != size; i++) {
+		if (reg[i].number == number) {
+			reg[i].number = "";
+			if (reg[i].number == "" && reg[i].name == "") {
+				//Initialize nextIndex
+				nextIndex = i + 1;
+				while (nextIndex != size) {
+					//move upp the elements +1.
+					reg[i].number = reg[nextIndex].number;
+					reg[i].name = reg[nextIndex].name;
+					i = nextIndex;
+					nextIndex++;
+				}
+				// Shrink the array.	
+				int newSize = size / 2;
+				reg[newSize];
+			}
+		}
+	}
 }
 
-bool TeleReg::FindName(const std::string &number, std::string &name) const {
+bool TeleReg::FindName(const std::string &number, const std::string &name) const {
+	for (int i = 0; i != size; i++) {
+		if (reg[i].number == "4" && reg[i].name == name) {
+			return true;
+		}
+	}
 	return false;
 }
 
