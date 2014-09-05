@@ -75,6 +75,7 @@
     <ClCompile Include="TelephoneReg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="TelephoneReg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

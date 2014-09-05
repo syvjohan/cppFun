@@ -17,7 +17,8 @@ public:
 	void DelContact(const std::string &number, const std::string &name);
 	void RemoveName(const std::string &name);
 	void RemoveNumber(const std::string &number);
-	bool FindName(const std::string &name) const;
+	std::string FindName(const std::string &number) const;
+	std::string FindNumber(const std::string &name) const;
 	void PrintReg();
 
 private:
