@@ -5,9 +5,9 @@
 
 int main() {
 
-	const int size = 9;
-	char arr[size] = {'t','\0'};
-	char arr2[size] = { 'r', '\0' };
+	const int size = 11;
+	char arr[size] = {'h','e', 'j', ' ','p', 'a', ' ', 'd', 'i', 'g', '\0'};
+	char arr2[size] = {};
 
 
 	String string;
@@ -22,6 +22,9 @@ int main() {
 	/*if (string.StringCompare(*arr, *arr2)) {
 		printf("Comparison is true");
 	}*/
+
+	//string.StringCopy(arr, *arr2, 2, 8);
+	//printf("%c", arr2);
 
 	system("pause");
 	return 0;

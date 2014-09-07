@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 String::String() {
+	nextIndex = 0;
 	sizes = 10;
 	str = DBG_NEW char[sizes]; //Create an object.
 }
@@ -80,11 +81,16 @@ void String::StringPop(const char &pop) {
 bool String::StringCompare(const char &str1, const char &str2) {
 	if (str1 == str2) {
 		return true;
-	} 
+	}
 	return false;
 }
 
-//Copy the hole char[].
-void String::StringCopy(const char &copy) {
-
+//Copy the char[] into another char[]. Set start (pos) and number of chars to be copied.
+void String::StringCopy(const char *arrCopyFrom, char &arrCopyTo, int pos, int number) {
+	if (StringIsEmpty(*arrCopyFrom) == false) {
+		do {
+			(&arrCopyTo)[pos] = arrCopyFrom[pos];
+			pos++;
+		} while (arrCopyFrom[pos] != '\0' && pos != number);
+	}
 }
