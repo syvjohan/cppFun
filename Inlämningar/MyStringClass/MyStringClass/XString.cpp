@@ -1,40 +1,90 @@
 #include "XString.h"
+#include "Defs.h"
 #include <stdlib.h>
-//#include <stdio.h>
-
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-#define _CRTDBG_MAP_ALLOC
-#ifdef _DEBUG
-	#ifndef DBG_NEW
-		#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-		#define new DBG_NEW
-	#endif
-#endif
+#include <stdio.h>
 
 String::String() {
-	size = 10;
-	str = new char[size]; //Create an object.
+	sizes = 10;
+	str = DBG_NEW char[sizes]; //Create an object.
 }
 
 String::~String() {
-
+	delete[] str;
 }
 
 //Access first char in char[].
-char *String::StringFirstChar() const {
-	return &str[0]; //points to the first element.
+char String::StringFirstChar(const char *arr) const {
+	if (StringIsEmpty(*arr) == false) {
+		return arr[0];
+	}
 }
 
 //Access last char in char[].
-char *String::StringLastChar() const {
-	//number of elements.
-	int s = sizeof(str) / sizeof(*str);
-	//last element, -1 for '\0'.
-	return &str[s - 1];
+char String::StringLastChar(const char *arr) const {
+	if (StringIsEmpty(*arr) == false) {
+		int count = 0;
+		char lastChar;
+
+		while (arr[count] != '\0') {
+			count++;
+		}
+
+		return lastChar = arr[count - 1];
+	}
 }
 
-//Returns the sizeof char[] (bytes).
-size_t String::StringSize(const char *arr) const {
-	return sizeof(arr);
+//Returns the sizeof char[] in bytes. 
+size_t String::StringSize(const char &arr) const {
+	size_t count = 0;
+	while ((&arr)[count] != '\0') {
+		count++;
+	}
+
+	return count;
+}
+
+//Erase all the elements in the char[].
+void String::StringClear(const int &arr) {
+
+}
+
+//Check if char[] is empty.
+bool String::StringIsEmpty(const char &arr) const {
+	if ((&arr)[0] == '\0' || (&arr)[0] == 0) {
+		return true;
+	}
+	return false;
+}
+
+//Shrink the char[] size
+void String::StringShrink(const int &shrink) {
+
+}
+
+//Returns a specific position in char[].
+void String::StringPosition(const int &position) {
+
+}
+
+// append element to char[].
+void String::StringPush(const char &push) {
+
+}
+
+//Erase last element in char[] (string).
+void String::StringPop(const char &pop) {
+
+}
+
+//Compare the content of 2 different char[]
+bool String::StringCompare(const char &str1, const char &str2) {
+	if (str1 == str2) {
+		return true;
+	} 
+	return false;
+}
+
+//Copy the hole char[].
+void String::StringCopy(const char &copy) {
+
 }

@@ -1,24 +1,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "XString.h"
-
-#include <crtdbg.h>
-#define _CRTDBG_MAP_ALLOC
-#ifdef _DEBUG
-	#ifndef DBG_NEW
-		#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-		#define new DBG_NEW
-	#endif
-#endif
+#include "Defs.h"
 
 int main() {
 
-	char arr[30];
+	const int size = 9;
+	char arr[size] = {'t','\0'};
+	char arr2[size] = { 'r', '\0' };
+
 
 	String string;
-	int s = string.StringSize(arr);
-	//printf("%i", s);
+	//printf("%c\n", string.StringLastChar(arr));
+	//printf("%i\n", string.StringSize(*arr));
+	//printf("%c", string.StringFirstChar(arr));
 
+	/*if (string.StringIsEmpty(*arr) == false) {
+		printf("string is empty");
+	}*/
+	
+	/*if (string.StringCompare(*arr, *arr2)) {
+		printf("Comparison is true");
+	}*/
 
 	system("pause");
 	return 0;

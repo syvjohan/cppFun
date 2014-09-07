@@ -1,0 +1,25 @@
+#include <Windows.h>
+static LARGE_INTEGER _TimerFrequency, _TimerStart;
+// Call this on program startup, measure the timer frequency on the cpu ( ticks / sec ).
+// Returns false if the CPU does not support high performance timing.
+inline bool TimerInit( void )
+{
+	if ( QueryPerformanceFrequency( &_TimerFrequency ) == 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+// Call this to begin measuring time.
+inline void TimerStart( void )
+{
+	QueryPerformanceCounter( &_TimerStart );
+}
+// Call this to stop the timer and retrieve the number of milliseconds since start.
+inline double TimerStop( void )
+{
+	LARGE_INTEGER tick;
+	QueryPerformanceCounter( &tick );
+	return ( ( double ) ( tick.QuadPart - _TimerStart.QuadPart ) / ( double ) _TimerFrequency.QuadPart ) * 1000.0;
+}
