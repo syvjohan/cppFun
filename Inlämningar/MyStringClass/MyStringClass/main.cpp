@@ -26,6 +26,9 @@ int main() {
 	//string.StringCopy(arr, *arr2, 2, 8);
 	//printf("%c", arr2);
 
+	string.StringPop(arr);
+	printf("%c", arr);
+
 	system("pause");
 	return 0;
 }

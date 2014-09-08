@@ -73,8 +73,18 @@ void String::StringPush(const char &push) {
 }
 
 //Erase last element in char[] (string).
-void String::StringPop(const char &pop) {
+char *String::StringPop(char *arr) {
+	if (StringIsEmpty(*arr) == false) {
+		int count = 0;
+		char lastChar = '\0';
 
+		while (arr[count] != '\0') {
+			count++;
+		}
+
+		lastChar = arr[count - 1];
+		return arr;
+	}
 }
 
 //Compare the content of 2 different char[]

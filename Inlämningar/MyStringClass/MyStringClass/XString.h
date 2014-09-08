@@ -26,7 +26,7 @@ public:
 
 	//Modifiers
 	void StringPush(const char &push); // append element to char[].
-	void StringPop(const char &pop); //Erase last element in char[] (string).
+	char *StringPop(char *arr); //Erase last element in char[] (string).
 
 	//Non-member functions overloads
 	
