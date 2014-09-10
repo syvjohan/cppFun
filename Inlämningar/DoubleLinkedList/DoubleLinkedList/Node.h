@@ -14,4 +14,16 @@ private:
 	Node *nextNode, *previousNode;
 };
 
+template <class T>
+Node<T>::Node() {
+	nextNode = nullptr;
+	previousNode = nullptr;
+}
+
+template <class T>
+Node<T>::~Node() {}
+
+
+
+
 #endif //!NODE_H

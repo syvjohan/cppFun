@@ -9,8 +9,6 @@
 #define DBG_NEW new
 #endif
 
-//typedef float T;
-
 
 #endif //!DEFS_H
 
