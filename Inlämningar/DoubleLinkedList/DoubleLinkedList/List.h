@@ -8,14 +8,14 @@ public:
 	List();
 	~List();
 
+	inline bool IsNullptr(Node<T> *nodePtr) const;
 	void PushFront(const T data);
 	void PushBack(const T data);
-	Node *PopFront();
-	Node *PopBack();
-	Node *Back();
-	Node *Front();
+	Node *PopFront() const;
+	Node *PopBack() const;
+	Node *Back() const;
+	Node *Front() const;
 	void ClearList();
-	inline bool IsNullptr(Node *nodePtr);
 
 private:
 	Node *lastNode, *firstNode;

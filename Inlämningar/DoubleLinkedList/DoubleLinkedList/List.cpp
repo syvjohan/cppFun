@@ -10,12 +10,18 @@ List<T>::List() {
 template <class T>
 List<T>::~List() {}
 
+// Check either or not the pointer is a nullptr.
+template <class T>
+bool List<T>::IsNullptr(Node<T> *nodePtr) const{
+	return nodePtr == nullptr;
+}
+
 // Push a node to the first position in the list.
 template <class T>
 void List<T>::PushFront(T data) {
-	Node *newNode = new Node; //Allocate memory for a new node.
+	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
 	newNode->data = data;
-	Node *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
+	Node<T> *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
 	firstNode = newNode;
 	firstNode->nextNode = tempNode;
 }
@@ -23,9 +29,9 @@ void List<T>::PushFront(T data) {
 //Pushes a node at the end of the list.
 template <class T>
 void List<T>::PushBack(T data) {
-	Node *newNode = new Node; //Allocate memory for a new node.
+	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
 	newNode->data = data;
-	Node *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
+	Node<T> *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
 	if (firstNode != nullptr) {
 		//loop until tempNode don't have a value.
 		while (tempNode->nextNode) {
@@ -40,12 +46,12 @@ void List<T>::PushBack(T data) {
 
 // Erase the first element in the list.
 template <class T>
-Node* List<T>::PopFront() {
+Node<T>* List<T>::PopFront() const {
 	if (IsNullptr(firstNode)) {
 		return nullptr;
 	}
 
-	Node *tempNode = firstNode;
+	Node<T> *tempNode = firstNode;
 	firstNode = firstNode->nextNode;
 	
 	return tempNode;
@@ -53,13 +59,13 @@ Node* List<T>::PopFront() {
 
 // Returns the last element in the list.
 template <class T>
-Node* List<T>::PopBack() {
+Node<T>* List<T>::PopBack() const {
 	if (IsNullptr(firstNode)) {
 		return nullptr;
 	}
 
-	Node *tempNode = firstNode;
-	Node *previous = nullptr;
+	Node<T> *tempNode = firstNode;
+	Node<T> *previous = nullptr;
 	while (!(IsNullptr(tempNode->nextNode))) {
 		previous = tempNode;
 		tempNode = tempNode->nextNode; //Move one step forward in the list.
@@ -71,13 +77,13 @@ Node* List<T>::PopBack() {
 
 // Returns the last element in the list.
 template <class T>
-Node* List<T>::Back() {
+Node<T>* List<T>::Back() const {
 	if (IsNullptr(firstNode)) {
 		return nullptr;
 	}
 
-	Node *tempNode = firstNode;
-	Node *previous = nullptr;
+	Node<T> *tempNode = firstNode;
+	Node<T> *previous = nullptr;
 	while (!(IsNullptr(tempNode->nextNode))) {
 		previous = tempNode;
 		tempNode = tempNode->nextNode; //Move one step forward in the list.
@@ -88,7 +94,7 @@ Node* List<T>::Back() {
 
 // Returns the first element in the list.
 template <class T>
-Node* List<T>::Front() {
+Node<T>* List<T>::Front() const {
 	if (IsNullptr(firstNode)) {
 		return nullptr;
 	}
@@ -100,15 +106,11 @@ Node* List<T>::Front() {
 template <class T>
 void List<T>::ClearList() {
 	while (IsNullptr(firstNode)) {
-		Node *tempNode = firstNode;
+		Node<T> *tempNode = firstNode;
 		firstNode = firstNode->nextNode; // Move the pointer one step forward.
 		delete tempNode; // Delete previous node.
 	}
 	firstNode = nullptr;
 }
 
-// Check either or not the pointer is a nullptr.
-template <class T>
-bool List<T>::IsNullptr(Node *nodePtr) {
-	return nodePtr == nullptr;
-}
+
