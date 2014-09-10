@@ -1,19 +1,17 @@
 #ifndef NODE_H
 #define NODE_H
 
+template <class T>
 class Node {
-	friend class List;
+	template <class T> friend class List;
 public:
-	Node() :prev(), next() {}
+	Node();
 	~Node();
 
-	Node *Prev();
-	Node *Next();
-	Node *InsertAfter(List *list, T data);
-	Node *InsertBefore(List *list, T data);
+	T data;
 	
 private:
-	Node *prev, *next;
+	Node *nextNode, *previousNode;
 };
 
 #endif //!NODE_H

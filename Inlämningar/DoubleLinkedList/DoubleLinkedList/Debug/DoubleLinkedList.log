@@ -1,0 +1,12 @@
+﻿Build started 2014-09-10 18:36:27.
+     1>Project "C:\cppFun\Inlämningar\DoubleLinkedList\DoubleLinkedList\DoubleLinkedList.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt List.cpp
+         List.cpp
+     1>c:\cppfun\inlämningar\doublelinkedlist\doublelinkedlist\list.cpp(43): error C2955: 'Node' : use of class template requires template argument list
+                 c:\cppfun\inlämningar\doublelinkedlist\doublelinkedlist\node.h(5) : see declaration of 'Node'
+     1>Done Building Project "C:\cppFun\Inlämningar\DoubleLinkedList\DoubleLinkedList\DoubleLinkedList.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.08

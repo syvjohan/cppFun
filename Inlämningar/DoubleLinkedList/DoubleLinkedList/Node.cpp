@@ -1,22 +1,13 @@
 #include "Defs.h"
 #include "Node.h"
 
-Node::Node() {}
-
-Node::~Node() {}
-
-Node Node::*Prev() {
-
+template <class T>
+Node<T>::Node() {
+	nextNode = nullptr;
+	previousNode = nullptr;
 }
 
-Node Node::*Next() {
+template <class T>
+Node<T>::~Node() {}
 
-}
 
-Node Node::*InsertAfter(List *list, T data) {
-
-}
-
-Node Node::*InsertBefore(List *list, T data) {
-
-}

@@ -1,24 +1,24 @@
 #ifndef LIST_H
 #define LIST_H
 
+template <class T>
 class List {
-	friend class Node;
+	template <class T> friend class Node;
 public:
-	List() :first(), last() {}
+	List();
 	~List();
 
-	Node *PushFront(T data);
-	Node *PushBack(T data);
-	T PopFront();
-	T PopBack();
-	Node *First();
-	Node *Last();
-	bool Check(int count);
+	void PushFront(const T data);
+	void PushBack(const T data);
+	Node *PopFront();
+	Node *PopBack();
+	Node *Back();
+	Node *Front();
+	void ClearList();
+	inline bool IsNullptr(Node *nodePtr);
 
 private:
-	Node *last, *first;
+	Node *lastNode, *firstNode;
 };
-
-
 
 #endif //!LIST_H
