@@ -26,7 +26,8 @@ int main() {
 
 	//list.ClearList();
 
-	list.PrintList();
+	//list.PrintListForward();
+	list.PrintListReverse();
 
 	
 	system("pause");

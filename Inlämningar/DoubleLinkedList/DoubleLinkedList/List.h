@@ -19,16 +19,17 @@ public:
 	Node<T> *Back() const;
 	Node<T> *Front() const;
 	void ClearList();
-	void List<T>::PrintList();
-
+	void List<T>::PrintListForward();
+	void List<T>::PrintListReverse();
 
 private:
-	Node<T> *lastNode, *firstNode;
+	Node<T> *firstNode, *lastNode;
 };
 
 template <class T>
 List<T>::List() {
 	firstNode = nullptr;
+	lastNode = nullptr;
 }
 
 template <class T>
@@ -45,10 +46,9 @@ template <class T>
 void List<T>::PushFront(T data) {
 	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
 	newNode->data = data;
-	Node<T> *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
+	Node<T> *tempNode = firstNode;//Creating a temporary Node with the value of firstNode.
 	firstNode = newNode;
-	firstNode->nextNode = tempNode; //Points forward.
-	firstNode->previousNode = nullptr; //Points backwards.
+	firstNode->nextNode = tempNode; 
 }
 
 //Pushes a node at the end of the list.
@@ -56,18 +56,18 @@ template <class T>
 void List<T>::PushBack(T data) {
 	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
 	newNode->data = data;
-	Node<T> *tempNode = firstNode; //Creating a temporary Node with the value of firstNode.
-	if (firstNode != nullptr) {
-		//loop until tempNode don't have a value.
-		while (tempNode->nextNode) {
-			tempNode = tempNode->nextNode;
-		}
-		//When tempNode  don't have a value set it equal to newNode.
-		tempNode->nextNode = newNode; //Points forward.
-		newNode->previousNode = tempNode; //Points backward.
+	lastNode = firstNode->previousNode;
+	//Node<T> *tempNode = lastNode; //Creating a temporary Node with the value of lastNode
+	if (IsNullptr(firstNode)) {
+		return;
 	} else {
-		firstNode = newNode;
-		firstNode->previousNode = nullptr;
+		//One element in the List
+		if (firstNode == lastNode) {
+			firstNode = newNode;
+			// 2 or more elements in the List
+		} else {
+			lastNode->nextNode = newNode;
+		}
 	}
 }
 
@@ -141,13 +141,22 @@ void List<T>::ClearList() {
 }
 
 template <class T>
-void List<T>::PrintList() {
+void List<T>::PrintListForward() {
 	std::cout << "The values in the list are: \n" << std::endl;
 	while (firstNode != nullptr) {
 		std::cout << " --> " << firstNode->data;
 		firstNode = firstNode->nextNode;
 	}
+	std::cout << "\n" << endl;
+}
 
+template <class T>
+void List<T>::PrintListReverse() {
+	std::cout << "The values in the list are: \n" << std::endl;
+	while (firstNode != nullptr) {
+		std::cout << " <-- " << lastNode->data;
+		lastNode = lastNode->nextNode;
+	}
 	std::cout << "\n" << endl;
 }
 

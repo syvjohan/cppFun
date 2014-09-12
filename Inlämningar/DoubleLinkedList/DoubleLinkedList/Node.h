@@ -8,6 +8,9 @@ public:
 	Node();
 	~Node();
 
+	Node *InsertAfter(List<T> *list, T data);
+	Node *InsertBefore(List<T> *list, T data);
+
 	T data;
 	
 private:
@@ -23,6 +26,15 @@ Node<T>::Node() {
 template <class T>
 Node<T>::~Node() {}
 
+template <class T>
+Node<T>* Node<T>::InsertAfter( List<T> *list, T data) {
+
+}
+
+template <class T>
+Node<T>* Node<T>::InsertBefore(List<T> *list, T data) {
+	
+}
 
 
 
