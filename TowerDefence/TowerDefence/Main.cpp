@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string>
 #include "Defs.h"
+#include <stdint.h>
 
 SDL_Surface *pngSurface = nullptr;
 SDL_Surface *LoadSurface(std::string path);
@@ -13,6 +14,7 @@ SDL_Window* window = nullptr;
 void Window();
 bool LoadMedia();
 void Close();
+void GetPixels();
 
 int main(int argc, char* args[]) {
 	SDL_Init(SDL_INIT_EVERYTHING); //returns -1 when error occurce.
@@ -26,6 +28,9 @@ int main(int argc, char* args[]) {
 
 		//Update the surface
 		SDL_UpdateWindowSurface(window);
+
+		GetPixels();
+
 	} else {
 		printf("failed to load media");
 	}
@@ -39,7 +44,6 @@ int main(int argc, char* args[]) {
 }
 
 void Window() {
-
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -113,4 +117,17 @@ void Close() {
 	IMG_Quit;
 	SDL_Quit;
 
+}
+
+void GetPixels() {
+	short int x = 200;
+	short int y = 350;
+
+	uint32_t pixel = *((uint32_t *)screenSurface->pixels + y * screenSurface->w + x);
+
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+
+	SDL_GetRGB(pixel, screenSurface->format, &r, &g, &b);
 }
