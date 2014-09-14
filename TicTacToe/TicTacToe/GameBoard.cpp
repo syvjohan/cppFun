@@ -3,21 +3,20 @@
 
 
 GameBoard::GameBoard() {
-	size = 9;
-	board = new int[size];
+	size = 10;
+	boardMark = new char[size];
+	boardMark = "012345678";
 	nextIndex = 0;
 }
 
 GameBoard::~GameBoard() {
-	delete[] board;
+	delete[] boardMark;
 }
 
-int GameBoard::CreateBoard(int input) {
-	*board = 0, 1, 2, 3, 4, 5, 6, 7, 8;
+void GameBoard::ChangeGameBoard() {
 
-	for (int i = 0; i <= size; i++) {
-		if (input == i) {
-			return i;
-		} 
-	}
+	boardMark[0] = 'X';
+	
 }
+
+// O 79 88 X

@@ -4,7 +4,8 @@
 #include "GameBoard.h"
 #include "GameInfo.h"
 
-class Graphics : GameBoard, GameInfo {
+class Graphics {
+	friend class GameBoard;
 
 public:
 	Graphics();

@@ -8,11 +8,10 @@ public:
 	Controller();
 	~Controller();
 
-	void GetInput(int i);
-	bool CheckIndex(int i);
 	void InitializeGame();
 	void Start();
 	void StartGame();
+	void Mark();
 
 private:
 	

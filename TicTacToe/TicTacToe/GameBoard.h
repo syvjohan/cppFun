@@ -6,11 +6,11 @@ class GameBoard {
 public:
 	GameBoard();
 	~GameBoard();
+	char *boardMark;
 
-	int CreateBoard(int i);
+	void ChangeGameBoard();
 
 private:
-	int *board;
 	int size;
 	int nextIndex;
 };

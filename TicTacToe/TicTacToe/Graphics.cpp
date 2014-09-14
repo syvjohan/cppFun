@@ -20,11 +20,11 @@ void Graphics::Board() {
 	printf("\t\t|");
 	printf("\t\t|\n");
 	printf("\t\t|");
-	printf("\t%i", gameBoard.CreateBoard(0));
+	printf("\t%c", gameBoard.boardMark[0]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(1));
+	printf("\t%c", gameBoard.boardMark[1]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(2));
+	printf("\t%c", gameBoard.boardMark[2]);
 	printf("\t|\n");
 	printf("\t\t|");
 	printf("\t\t|");
@@ -37,11 +37,11 @@ void Graphics::Board() {
 	printf("\t\t|");
 	printf("\t\t|\n");
 	printf("\t\t|");
-	printf("\t%i", gameBoard.CreateBoard(3));
+	printf("\t%c", gameBoard.boardMark[3]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(4));
+	printf("\t%c", gameBoard.boardMark[4]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(5));
+	printf("\t%c", gameBoard.boardMark[5]);
 	printf("\t|\n");
 	printf("\t\t|");
 	printf("\t\t|");
@@ -54,11 +54,11 @@ void Graphics::Board() {
 	printf("\t\t|");
 	printf("\t\t|\n");
 	printf("\t\t|");
-	printf("\t%i", gameBoard.CreateBoard(6));
+	printf("\t%c", gameBoard.boardMark[6]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(7));
+	printf("\t%c", gameBoard.boardMark[7]);
 	printf("\t|");
-	printf("\t%i", gameBoard.CreateBoard(8));
+	printf("\t%c", gameBoard.boardMark[8]);
 	printf("\t|\n");
 	printf("\t\t|");
 	printf("\t\t|");
@@ -76,8 +76,8 @@ void Graphics::Stats() {
 
 void Graphics::Menu() {
 	printf("\t\t-------------------------------------------------\n");
-	printf("Press 1 to start a new game\n"
-		   "Press 2 to exit\n");
+	printf("\t\t\tPress 1 to start a new game\n"
+		   "\t\t\tPress 2 to exit\n");
 	printf("\t\t-------------------------------------------------\n");
 }
 
