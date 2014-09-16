@@ -11,7 +11,7 @@ public:
 	~Player();
 
 private:
-
+	
 };
 
 #endif //!PLAYER_H

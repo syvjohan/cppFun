@@ -1,8 +1,9 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-class Controller {
-	friend class Graphics;
+#include "Graphics.h"
+
+class Controller : public Graphics {
 
 public: 
 	Controller();
@@ -10,7 +11,8 @@ public:
 
 	void InitializeGame();
 	void Start();
-	void StartGame();
+	void UpdateGraphics();
+	bool Isdigit(int integer);
 	void Mark();
 
 private:

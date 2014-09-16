@@ -1,22 +1,24 @@
 #include "GameBoard.h"
 #include <iostream>
-
+#include <string>
 
 GameBoard::GameBoard() {
-	size = 10;
-	boardMark = new char[size];
 	boardMark = "012345678";
 	nextIndex = 0;
 }
 
 GameBoard::~GameBoard() {
-	delete[] boardMark;
+
+}
+bool GameBoard::ChangeGameBoard(const int mark){
+	if (isdigit(boardMark.at(mark))) {
+		boardMark.at(mark) = 'X';
+		return true;
+	}
+	return false;
 }
 
-void GameBoard::ChangeGameBoard() {
-
-	boardMark[0] = 'X';
-	
+char GameBoard::ReturnBoardMark(const int pos) const{
+	char s = boardMark.at(pos);
+	return s;
 }
-
-// O 79 88 X

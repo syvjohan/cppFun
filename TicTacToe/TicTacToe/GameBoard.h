@@ -1,17 +1,19 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
+#include <string>
+
 class GameBoard {
 
 public:
 	GameBoard();
 	~GameBoard();
-	char *boardMark;
+	std::string boardMark;
 
-	void ChangeGameBoard();
+	bool ChangeGameBoard(const int mark);
+	char ReturnBoardMark(const int pos) const;
 
 private:
-	int size;
 	int nextIndex;
 };
 

@@ -1,14 +1,10 @@
 #include <iostream>
 #include "Controller.h"
-#include "Player.h"
-#include "Graphics.h"
-#include "GameBoard.h"
 
-Graphics graphics;
-GameBoard board;
+using namespace std;
 
 Controller::Controller() {
-
+	
 }
 
 Controller::~Controller() {
@@ -17,7 +13,7 @@ Controller::~Controller() {
 
 //This function is called from int main() in main.cpp
 void Controller::InitializeGame() {
-	graphics.Menu();
+	Graphics::Menu();
 	Start();
 }
 
@@ -26,33 +22,43 @@ void Controller::Start() {
 	int choice = 0;
 
 	do {
-		std::cin >> choice;
+		cin >> choice;
 		if (choice >= 3 || choice < 1) {
 			printf("Not a valid input!\n");
 		} else if (choice == 1) {
-			StartGame();
+			UpdateGraphics();
 		} 
 	} while (choice != 2);
 }
 
-void Controller::StartGame() {
+void Controller::UpdateGraphics() {
 
-	graphics.Stats();
-	graphics.Board();
-	graphics.MenuChooseNumber();
+	Graphics::Stats();
+	Graphics::Board();
+	Graphics::MenuChooseMark();
 	Mark();
 }
 
 void Controller::Mark() {
 	int choice = -1;
-
-	std::cin >> choice;
+	cin >> choice;
 	
-	switch (choice) {
-		case 0:
-			board.ChangeGameBoard();
-			graphics.Board();
-			break;
-
+	if (Isdigit(choice)) {
+		if ((Graphics::ChangeGameBoard(choice))) {
+			UpdateGraphics();
+		} else {
+			printf("The number is already taken!\n");
+			UpdateGraphics();
+		}
+	} else {
+		printf("Invalid input");
 	}
+}
+
+bool Controller::Isdigit(int integer) {
+	if (cin.fail()) {
+		cin.clear();
+		return false;
+	}
+	return true;
 }
