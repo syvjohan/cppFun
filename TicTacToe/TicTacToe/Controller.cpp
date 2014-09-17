@@ -19,16 +19,42 @@ void Controller::InitializeGame() {
 
 void Controller::Start() {
 
-	int choice = 0;
+	int choice = -1;
 
 	do {
 		cin >> choice;
-		if (choice >= 3 || choice < 1) {
-			printf("Not a valid input!\n");
-		} else if (choice == 1) {
-			UpdateGraphics();
-		} 
+		if (Isdigit() && ValidNumber(choice, 0, 9)) {
+			if (choice == 1) {
+				PlayerSetup();			
+			} else {
+				printf("Choose a alternative in the menu, try again: ");
+			}
+		} else {
+			printf("Not a valid input, try again: ");
+		}
 	} while (choice != 2);
+}
+
+void Controller::PlayerSetup() {
+	string name1;
+	string name2;
+
+	//Ignore old data in cin.
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+	//Set name for player 1.
+	P1Name();
+	getline(cin, name1);
+	SetP1Name(name1);
+
+	//Set name for player 2.
+	P2Name();
+	getline(cin, name2);
+	SetP2Name(name2);
+	
+	
+	UpdateGraphics();
+	
 }
 
 void Controller::UpdateGraphics() {
@@ -43,7 +69,7 @@ void Controller::Mark() {
 	int choice = -1;
 	cin >> choice;
 	
-	if (Isdigit(choice)) {
+	if (Isdigit() && (!(ValidNumber(choice, 9, -1)))) {
 		if ((Graphics::ChangeGameBoard(choice))) {
 			UpdateGraphics();
 		} else {
@@ -52,13 +78,22 @@ void Controller::Mark() {
 		}
 	} else {
 		printf("Invalid input");
+		UpdateGraphics();
 	}
 }
 
-bool Controller::Isdigit(int integer) {
+bool Controller::Isdigit() {
 	if (cin.fail()) {
 		cin.clear();
 		return false;
 	}
 	return true;
+}
+
+//If input is bigger or equal to "high and input is smaller or equal to low.
+bool Controller::ValidNumber(int input, int high, int low) {
+	if (input >= high || input <= low) {
+		return true;
+	}
+	return false;
 }

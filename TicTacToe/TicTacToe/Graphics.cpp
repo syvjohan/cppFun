@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Graphics.h"
+#include <string>
 
 Graphics::Graphics() {
 
@@ -79,4 +80,14 @@ void Graphics::Menu() {
 
 void Graphics::MenuChooseMark() {
 	printf("\nTo put a mark in the gameboard press a number between 0 and 8: \n");
+}
+
+void Graphics::P1Name() {
+	printf("\t\t-------------------------------------------------\n");
+	printf("\t\t\tPlease write Player 1 name: ");
+}
+
+void Graphics::P2Name() {
+	printf("\t\t-------------------------------------------------\n");
+	printf("\t\t\tPlease write Player 2 name: ");
 }

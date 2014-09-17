@@ -14,6 +14,8 @@ public:
 	void Board();
 	void Menu();
 	void MenuChooseMark();
+	void P1Name();
+	void P2Name();
 
 private:
 

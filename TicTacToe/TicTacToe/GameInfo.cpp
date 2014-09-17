@@ -1,7 +1,6 @@
 #include <iostream>
 #include "GameInfo.h"
 
-
 GameInfo::GameInfo() {
 	numOfGames = -1;
 	wins = -1;

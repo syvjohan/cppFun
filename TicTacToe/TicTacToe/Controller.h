@@ -2,8 +2,9 @@
 #define CONTROLLER_H
 
 #include "Graphics.h"
+#include "Player.h"
 
-class Controller : public Graphics {
+class Controller : public Graphics, public Player {
 
 public: 
 	Controller();
@@ -12,11 +13,12 @@ public:
 	void InitializeGame();
 	void Start();
 	void UpdateGraphics();
-	bool Isdigit(int integer);
+	bool Isdigit();
+	bool ValidNumber(int input, int low, int high);
 	void Mark();
+	void PlayerSetup();
 
 private:
-	
 
 };
 
