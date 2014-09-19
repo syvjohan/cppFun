@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Peter">
+      <UniqueIdentifier>{9a464744-bc45-430e-9cfd-e45f5f93f66e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameBoardStates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameInfo.h">
@@ -49,6 +55,15 @@
     </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBoardStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PGameBoard.h">
+      <Filter>Peter</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameView.h">
+      <Filter>Peter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

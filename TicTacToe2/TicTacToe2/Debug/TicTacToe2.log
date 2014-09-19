@@ -1,0 +1,11 @@
+﻿Build started 2014-09-19 20:33:34.
+     1>Project "C:\cppFun\TicTacToe2\TicTacToe2\TicTacToe2.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ConsoleView.cpp
+         ConsoleView.cpp
+     1>c:\cppfun\tictactoe2\tictactoe2\consoleview.cpp(25): error C2659: '=' : function as left operand
+     1>Done Building Project "C:\cppFun\TicTacToe2\TicTacToe2\TicTacToe2.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.27

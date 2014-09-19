@@ -1,18 +1,21 @@
-﻿Build started 2014-09-17 03:52:17.
+﻿Build started 2014-09-19 09:42:46.
      1>Project "C:\cppFun\TicTacToe\TicTacToe\TicTacToe.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Controller.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt Controller.cpp
          Controller.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cppFun\TicTacToe\Debug\TicTacToe.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cppFun\TicTacToe\Debug\TicTacToe.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cppFun\TicTacToe\Debug\TicTacToe.lib" /MACHINE:X86 Debug\Controller.obj
          Debug\GameBoard.obj
+         Debug\GameBoardStates.obj
          Debug\GameInfo.obj
          Debug\Graphics.obj
          Debug\main.obj
          Debug\Player.obj
          TicTacToe.vcxproj -> C:\cppFun\TicTacToe\Debug\TicTacToe.exe
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\cppFun\TicTacToe\Debug\TicTacToe.bsc" /n Debug\Controller.sbr Debug\GameBoard.sbr Debug\GameBoardStates.sbr Debug\GameInfo.sbr Debug\Graphics.sbr Debug\main.sbr Debug\Player.sbr
      1>Done Building Project "C:\cppFun\TicTacToe\TicTacToe\TicTacToe.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.51
+Time Elapsed 00:00:01.02

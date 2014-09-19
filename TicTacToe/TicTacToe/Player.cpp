@@ -1,12 +1,10 @@
 #include <iostream>
 #include "Player.h"
-
-GameInfo gameInfo;
+#include <string>
 
 Player::Player() {
 	player1 = "Spelare 1";
 	player2 = "spelare 2";
-	int offset = 0;
 }
 
 Player::~Player() {
@@ -21,18 +19,11 @@ void Player::SetP2Name(std::string name) {
 	player2 = name;
 }
 
-void Player::Player1(std::string name, int wins, int loses, int numOfMoves) {
-	
-	loses = gameInfo.Loses();
-	wins = gameInfo.Wins();
-
-	int totNumbOfGames = loses + wins;
+std::string Player::GetP1Name() const {
+	return player1;
 }
 
-void Player::Player2(std::string name, int wins, int loses, int numOfMoves) {
-	loses = gameInfo.Loses();
-	wins = gameInfo.Wins();
-
-	int totNumbOfGames = loses + wins;
+std::string Player::GetP2Name() const {
+	return player2;
 }
 

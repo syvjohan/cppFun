@@ -8,13 +8,15 @@ class GameBoard {
 public:
 	GameBoard();
 	~GameBoard();
-	std::string boardMark;
 
-	bool ChangeGameBoard(const int mark);
+	void ChangeGameBoardX(const int mark);
+	void ChangeGameBoardO(const int mark);
 	char ReturnBoardMark(const int pos) const;
+	int ValidateMark(const int mark) const;
 
 private:
-	int nextIndex;
+	std::string boardMarks;
+
 };
 
 #endif //!GAMEBOARD_H

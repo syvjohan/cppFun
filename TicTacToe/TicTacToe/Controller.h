@@ -1,25 +1,24 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "Graphics.h"
-#include "Player.h"
-
-class Controller : public Graphics, public Player {
+class Controller {
 
 public: 
 	Controller();
 	~Controller();
 
 	void InitializeGame();
-	void Start();
+	void StartMenu();
 	void UpdateGraphics();
 	bool Isdigit();
 	bool ValidNumber(int input, int low, int high);
-	void Mark();
-	void PlayerSetup();
+	void PutMark();
+	void ChoosePlayerName();
+	void DecidePlayerTurn(int choice);
+	std::string GetNumbOfMoves();
 
 private:
 
 };
-
+ 
 #endif //!ControlLer

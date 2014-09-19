@@ -45,10 +45,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsCpp</CompileAs>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -67,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="GameBoard.cpp" />
+    <ClCompile Include="GameBoardStates.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="main.cpp" />
@@ -75,8 +80,11 @@
   <ItemGroup>
     <ClInclude Include="Controller.h" />
     <ClInclude Include="GameBoard.h" />
+    <ClInclude Include="GameBoardStates.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="IGameView.h" />
+    <ClInclude Include="PGameBoard.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
