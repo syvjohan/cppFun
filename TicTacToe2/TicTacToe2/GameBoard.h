@@ -14,13 +14,15 @@ public:
 	~GameBoard();
 
 	void InitializeGame();
-	void UpdateBorder(int row, int col, int newValue);
-	bool ValidateValue(const int newValue, const int oldValue) const;
+	bool UpdateBorder(int newValue);
+	bool ValidateInput(const int value) const;
+	bool ValidNumber(int input, int high, int low);
 	int Returnboarder(const int col, const int row) const;
-	int ReturnNumbOfMoves();
+	int NumbOfMoves();
+	bool ValidateMark(const int row, const int col);
+	int Turn();
+	bool IsRunning();
 	
-	//Call this function from main() in main.cpp
-	void StartGame(); 
 	void Reset();
 
 	// Returns 0 for no winner, or the actual winner if there is one.
@@ -32,12 +34,11 @@ public:
 private:
 	int size;
 	int **boarder;
-	int turn;
+	int numbOfMoves;
 	GameState currentState;
 
-	int numbOfMoves;
-	int wins;
-	int lost;
+	int p1Score;
+	int p2Score;
 };
 
 #endif //!GameBoard_H

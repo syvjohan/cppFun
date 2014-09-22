@@ -10,10 +10,12 @@ public:
 	~ConsoleView();
 
 	void HandleInput();
-	void Update();
+	void GameMode();
 	void DrawMainMenu();
-	void DrawSubMenu();
 	void DrawGameBoard();
+	void DrawWinner();
+
+	void Draw();
 
 private:
 };
