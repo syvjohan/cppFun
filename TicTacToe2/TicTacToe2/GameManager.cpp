@@ -1,3 +1,4 @@
+#include "Defs.h"
 #include "GameManager.h"
 #include "GameBoard.h"
 #include "IGameView.h"

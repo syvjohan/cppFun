@@ -1,4 +1,4 @@
-
+#include "Defs.h"
 #include "IGameView.h"
 #include "GameManager.h"
 #include "ConsoleView.h"
@@ -6,6 +6,7 @@
 //#define USE_SDL
 
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	GameView* view = nullptr;
 

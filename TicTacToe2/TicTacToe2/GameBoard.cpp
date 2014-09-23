@@ -1,4 +1,5 @@
 #include "GameBoard.h"
+#include "Defs.h"
 #include <iostream>
 
 typedef int** IntArray2D;
@@ -19,9 +20,9 @@ void GameBoard::InitializeGame() {
 	SetState(GS_MAINMENU);
 	numbOfMoves = 0;
 	size = 3;
-	boarder = new int*[size];
+	boarder = DBG_NEW int*[size];
 	for (int i = 0; i != size; i++) {
-		boarder[i] = new int[size];
+		boarder[i] = DBG_NEW int[size];
 		for (int j = 0; j != size; ++j) {
 			boarder[i][j] = 0;
 		}

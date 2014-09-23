@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleView.h" />
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IGameView.h" />
     <ClInclude Include="GameBoard.h" />

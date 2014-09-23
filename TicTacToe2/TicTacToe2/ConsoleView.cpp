@@ -1,11 +1,10 @@
+#include "Defs.h"
 #include "ConsoleView.h"
 #include "GameBoard.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
-
-//GameBoard gameBoard;
 
 ConsoleView::ConsoleView() {
 
@@ -28,11 +27,10 @@ void ConsoleView::HandleInput() {
 			} else if (choice == 2) {
 				model->SetState(GS_QUIT);
 				return;
-			} 
+			}
 		} else {
 			printf("\nInvalid input try again!\n");
-			cin.clear();
-			cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+			ClearStream();
 		}
 	} while (model->CurrentState() != GS_QUIT);
 }
@@ -56,17 +54,17 @@ void ConsoleView::DrawMainMenu() {
 
 void ConsoleView::DrawGameBoard() {
 	printf("\n\n");
-	for (int i = 0; i != 3; ++i)  {
+	for (int i = 0; i != 3; ++i) {
 		printf("\n\t\t-------------------------------------------------\n");
 		printf("\t\t|");
 		printf("\t\t|");
 		printf("\t\t|");
 		printf("\t\t|\n");
 		printf("\t\t|");
-		for (int j = 0; j != 3; ++j)  {
-			if (model->boarder[i][j] != 0)  {
+		for (int j = 0; j != 3; ++j) {
+			if (model->boarder[i][j] != 0) {
 				printf("\t%c", model->boarder[i][j] == 1 ? 'X' : 'O');
-			} else  {
+			} else {
 				printf("\t%i", i * 3 + j);
 			}
 			printf("\t|");
@@ -105,9 +103,16 @@ void ConsoleView::GameMode() {
 				}
 			} else {
 				printf("\nPlace is already occupied!\n");
+				ClearStream();
 			}
 		} else {
 			printf("\nInvalid input, try again!\n");
+			ClearStream();
 		}
 	} while (model->CurrentState() != GS_MAINMENU);
+}
+
+void ConsoleView::ClearStream() {
+	cin.clear();
+	cin.ignore(std::numeric_limits<streamsize>::max(), ' ');
 }

@@ -15,6 +15,7 @@ public:
 	void DrawGameBoard();
 	void DrawWinner();
 	void DrawHighscore();
+	void ClearStream();
 
 	void Draw();
 
