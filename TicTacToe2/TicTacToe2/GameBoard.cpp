@@ -7,23 +7,25 @@ typedef const int * const * ConstIntArray2D;
 int CheckTile(ConstIntArray2D board, int row, int col);
 
 GameBoard::GameBoard() {
-	currentState = GS_MAINMENU;
-	numbOfMoves = 0;
-	size = 3;
-	boarder = new int*[size];
-	for (int i = 0; i != size; i++) {
-		boarder[i] = new int[size];
-		for (int j = 0; j != size; ++j)  {
-			boarder[i][j] = 0;
-		}
-	}
+	InitializeGame();
+	p1Score = 0;
+	p2Score = 0;
 }
 GameBoard::~GameBoard() {
 	delete[] boarder;
 }
 
 void GameBoard::InitializeGame() {
-
+	SetState(GS_MAINMENU);
+	numbOfMoves = 0;
+	size = 3;
+	boarder = new int*[size];
+	for (int i = 0; i != size; i++) {
+		boarder[i] = new int[size];
+		for (int j = 0; j != size; ++j) {
+			boarder[i][j] = 0;
+		}
+	}
 }
 
 bool GameBoard::IsRunning() {
@@ -34,8 +36,8 @@ bool GameBoard::IsRunning() {
 }
 
 bool GameBoard::UpdateBorder(int newValue) {
-	int row = newValue % 3;
-	int col = newValue / 3;
+	int row = newValue / 3;
+	int col = newValue % 3;
 	if (ValidateMark(row, col)) {
 		boarder[row][col] = Turn();
 		return true;
@@ -69,7 +71,7 @@ bool GameBoard::ValidNumber(int input, int high, int low) {
 	return false;
 }
 
-int GameBoard::Returnboarder(const int col, const int row) const {
+int GameBoard::Returnboarder(const int row, const int col) const {
 	return boarder[row][col];
 }
 
@@ -83,9 +85,23 @@ GameState GameBoard::CurrentState() const {
 
 //Reset GameBoard.
 void GameBoard::Reset() {
-	memset(boarder, 0, sizeof(int) * 9);
-	numbOfMoves = 0;
-	currentState = GS_MAINMENU;
+	InitializeGame();
+}
+
+int GameBoard::GetP1Score() {
+	return p1Score;
+}
+
+int GameBoard::GetP2Score() {
+	return p2Score;
+}
+
+void GameBoard::HighScore() {
+	if (Turn() == 2) {
+		++p2Score;
+	} else {
+		++p1Score;
+	}
 }
 
 int GameBoard::CheckForWinner() const {
@@ -94,7 +110,7 @@ int GameBoard::CheckForWinner() const {
 
 	for (int i = 0; i != 3; ++i)
 	for (int j = 0; j != 3; ++j) {
-		if (!(i % 2 || j % 2)) {
+		if ((i % 2 || j % 2)) {
 			winner = CheckTile(boarder, i, j);
 			if (winner) {
 				return winner;
@@ -110,11 +126,15 @@ int CheckTile(ConstIntArray2D board, int row, int col) {
 	if (col == 1 && row == 1) {
 		if (board[row - 1][col - 1] == value && board[row + 1][col + 1] == value) return value;
 		if (board[row - 1][col + 1] == value && board[row + 1][col - 1] == value) return value;
-	} else if (col == 1) {
+	} 
+	
+	if (col == 1) {
 		// Check rows
 		if (board[row][col - 1] == value && board[row][col + 1] == value)
 			return value;
-	} else if (row == 1) {
+	} 
+	
+	if (row == 1) {
 		// Check columns
 		if (board[row - 1][col] == value && board[row + 1][col] == value)
 			return value;

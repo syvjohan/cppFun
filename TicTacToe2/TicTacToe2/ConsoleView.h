@@ -14,6 +14,7 @@ public:
 	void DrawMainMenu();
 	void DrawGameBoard();
 	void DrawWinner();
+	void DrawHighscore();
 
 	void Draw();
 

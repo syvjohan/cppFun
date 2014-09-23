@@ -17,11 +17,14 @@ public:
 	bool UpdateBorder(int newValue);
 	bool ValidateInput(const int value) const;
 	bool ValidNumber(int input, int high, int low);
-	int Returnboarder(const int col, const int row) const;
+	int Returnboarder(const int row, const int col) const;
 	int NumbOfMoves();
 	bool ValidateMark(const int row, const int col);
 	int Turn();
 	bool IsRunning();
+	void HighScore();
+	int GetP1Score();
+	int GetP2Score();
 	
 	void Reset();
 
@@ -31,9 +34,10 @@ public:
 	GameState SetState(GameState state);
 	GameState CurrentState() const;
 
+	int **boarder;
 private:
 	int size;
-	int **boarder;
+	
 	int numbOfMoves;
 	GameState currentState;
 
