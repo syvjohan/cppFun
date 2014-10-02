@@ -40,8 +40,7 @@ void List::PopBack(T data) {
 			} else /*if GetLastNode() == GetFirstNode()*/ {
 				InitializeList();
 			}
-		}
-		else {
+		} else {
 			printf("\nValue doesn't exist!\n");
 		}
 	} else {
@@ -63,8 +62,7 @@ void List::PopFront(T data) {
 		} else {
 			printf("\nValue does not exist in List!\n");
 		}
-	}
-	else {
+	} else {
 		printf("\nList is empty!\n");
 	}
 }
@@ -106,20 +104,20 @@ void List::PushBack(T data) {
 void List::DeleteNode(T data) {
 	Node *currentPtr = new Node;
 
-	if (GetFirstNode != nullptr) {
+	if (GetFirstNode() != nullptr) {
 		while (currentPtr->value != data) {
 			if (currentPtr->value == data) {
-				currentPtr->SetPrev(currentPtr->GetNext());
-			}
-			else {
+				currentPtr->GetNext()->SetPrev(currentPtr->GetPrev()->GetNext());
+				currentPtr->GetPrev()->SetNext(currentPtr->GetNext()->GetPrev());
+
+				delete currentPtr;
+			} else {
 				currentPtr = currentPtr->GetNext();
 			}
 		}
-	}
-	else {
+	} else {
 		printf("List is empty!");
 	}
-	
 
 	printf("Node could't be found in list!");
 }
@@ -133,7 +131,7 @@ void List::PrintList() {
 	} else {
 		printf("\nThe element(s) in the list are: ");
 		while (currentPtr != nullptr) {
-			printf("%i --> ", currentPtr);
+			printf("%i --> ", currentPtr->value);
 			currentPtr = currentPtr->GetNext();
 		}
 	}
