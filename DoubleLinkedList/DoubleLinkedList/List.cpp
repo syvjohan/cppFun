@@ -77,6 +77,9 @@ void List::PushFront(T data) {
 		newNode->SetNext(GetFirstNode());
 		newNode->SetPrev(GetLastNode());
 
+		GetFirstNode()->SetPrev(newNode);
+		SetFirstNode(newNode);
+
 	} else {
 	//If the list is empty.
 		SetFirstNode(newNode);
@@ -131,7 +134,7 @@ void List::PrintList() {
 	} else {
 		printf("\nThe element(s) in the list are: ");
 		while (currentPtr != nullptr) {
-			printf("%i --> ", currentPtr->value);
+			printf("%.4f --> ", currentPtr->value);
 			currentPtr = currentPtr->GetNext();
 		}
 	}
