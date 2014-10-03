@@ -21,7 +21,7 @@ public:
 	void PushFront(T data);
 	void PushBack(T data);
 
-	void DeleteNode(T data);
+	bool Check(T data);
 	void PrintList();
 
 private:

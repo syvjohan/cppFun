@@ -48,6 +48,7 @@ void List::PopFront() {
 	if (GetFirstNode() != nullptr) {
 		Node *tmp = GetFirstNode();
 		SetFirstNode(GetFirstNode()->GetNext());
+		GetFirstNode()->SetPrev(nullptr);
 		delete tmp;
 	}
 	else {
@@ -56,7 +57,7 @@ void List::PopFront() {
 }
 
 void List::PushFront(T data) {
-	Node *newNode = new Node;
+	Node *newNode = DBG_NEW Node;
 	newNode->value = data;
 
 	//If the list NOT is empty.
@@ -76,7 +77,7 @@ void List::PushFront(T data) {
 }
 
 void List::PushBack(T data) {
-	Node *newNode = new Node;
+	Node *newNode = DBG_NEW Node;
 	newNode->value = data;
 
 	if (GetFirstNode() != nullptr) {
@@ -95,31 +96,21 @@ void List::PushBack(T data) {
 	}
 }
 
-void List::DeleteNode(T data) {
-	Node *currentPtr = new Node;
+bool List::Check(T data) {
+	Node *currentPtr = DBG_NEW Node;
+	currentPtr = GetFirstNode();
 
-	if (GetFirstNode() != nullptr) {
-		while (currentPtr->value != data) {
-			if (currentPtr->value == data) {
-				currentPtr->GetNext()->SetPrev(currentPtr->GetPrev()->GetNext());
-				currentPtr->GetPrev()->SetNext(currentPtr->GetNext()->GetPrev());
-
-				delete currentPtr;
-			}
-			else {
-				currentPtr = currentPtr->GetNext();
-			}
+	while (currentPtr != nullptr) {
+		if (currentPtr->value == data) {
+			return true;
 		}
+		currentPtr = currentPtr->GetNext();
 	}
-	else {
-		printf("List is empty!");
-	}
-
-	printf("Node could't be found in list!");
+	return false;
 }
 
 void List::PrintList() {
-	Node *currentPtr = new Node;
+	Node *currentPtr = DBG_NEW Node;
 	currentPtr = GetFirstNode();
 
 	if (currentPtr == nullptr) {
@@ -127,6 +118,7 @@ void List::PrintList() {
 	}
 	else {
 		printf("\nThe element(s) in the list are: ");
+		printf("nullptr --> ");
 		while (currentPtr != nullptr) {
 			printf("%.4f --> ", currentPtr->value);
 			currentPtr = currentPtr->GetNext();
