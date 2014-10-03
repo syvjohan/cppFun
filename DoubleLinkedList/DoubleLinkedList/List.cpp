@@ -1,4 +1,5 @@
 #include "List.h"
+#include "Defs.h"
 
 #include <iostream>
 
@@ -31,57 +32,44 @@ Node* List::SetLastNode(Node *node) {
 	return lastNode = node;
 }
 
-void List::PopBack(T data) {
-	if (GetLastNode() != nullptr) {
-		if (GetLastNode()->value == data) {
-			if (GetLastNode() != GetFirstNode()) {
-				SetLastNode(GetLastNode()->GetPrev());
-				GetFirstNode()->SetPrev(GetLastNode()->GetPrev());
-			} else /*if GetLastNode() == GetFirstNode()*/ {
-				InitializeList();
-			}
-		} else {
-			printf("\nValue doesn't exist!\n");
-		}
-	} else {
+void List::PopBack() {
+	if (GetFirstNode() != nullptr) {
+		Node *tmp = GetLastNode();
+		SetLastNode(GetLastNode()->GetPrev());
+		GetLastNode()->SetNext(nullptr);
+		delete tmp;
+	}
+	else {
 		printf("\nList is empty!\n");
 	}
 }
 
-void List::PopFront(T data) {
+void List::PopFront() {
 	if (GetFirstNode() != nullptr) {
-		if (GetFirstNode()->value == data) {
-			if (GetFirstNode() != GetLastNode() && GetLastNode() != nullptr) {
-				SetFirstNode(GetFirstNode()->GetNext());
-				GetLastNode()->SetNext(GetFirstNode()->GetPrev());
-			}
-			//Finns det några fler scenarion?
-			else /*(GetFirstNode() == GetLastNode())*/ {
-				InitializeList(); //Set the first and last node to nullptr.
-			}
-		} else {
-			printf("\nValue does not exist in List!\n");
-		}
-	} else {
-		printf("\nList is empty!\n");
+		Node *tmp = GetFirstNode();
+		SetFirstNode(GetFirstNode()->GetNext());
+		delete tmp;
+	}
+	else {
+		printf("\nNo values in List to Pop!\n");
 	}
 }
 
 void List::PushFront(T data) {
 	Node *newNode = new Node;
 	newNode->value = data;
-	
+
 	//If the list NOT is empty.
-	if (GetFirstNode() != nullptr) 
-	{		
+	if (GetFirstNode() != nullptr)
+	{
 		newNode->SetNext(GetFirstNode());
 		newNode->SetPrev(GetLastNode());
 
 		GetFirstNode()->SetPrev(newNode);
 		SetFirstNode(newNode);
-
-	} else {
-	//If the list is empty.
+	}
+	else {
+		//If the list is empty.
 		SetFirstNode(newNode);
 		SetLastNode(newNode);
 	}
@@ -99,8 +87,8 @@ void List::PushBack(T data) {
 		GetLastNode()->SetNext(newNode);
 		SetLastNode(newNode);
 		GetLastNode()->SetNext(nullptr);
-		
-	} else {
+	}
+	else {
 		//If the list is empty.
 		SetFirstNode(newNode);
 		SetLastNode(newNode);
@@ -117,11 +105,13 @@ void List::DeleteNode(T data) {
 				currentPtr->GetPrev()->SetNext(currentPtr->GetNext()->GetPrev());
 
 				delete currentPtr;
-			} else {
+			}
+			else {
 				currentPtr = currentPtr->GetNext();
 			}
 		}
-	} else {
+	}
+	else {
 		printf("List is empty!");
 	}
 
@@ -134,11 +124,13 @@ void List::PrintList() {
 
 	if (currentPtr == nullptr) {
 		printf("\nList is empty!\n");
-	} else {
+	}
+	else {
 		printf("\nThe element(s) in the list are: ");
 		while (currentPtr != nullptr) {
 			printf("%.4f --> ", currentPtr->value);
 			currentPtr = currentPtr->GetNext();
 		}
+		printf("nullptr.\n");
 	}
 }

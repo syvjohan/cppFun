@@ -15,8 +15,8 @@ public:
 	Node* SetFirstNode(Node *node);
 	Node* SetLastNode(Node *node);
 
-	void PopBack(T data);
-	void PopFront(T data);
+	void PopBack();
+	void PopFront();
 
 	void PushFront(T data);
 	void PushBack(T data);

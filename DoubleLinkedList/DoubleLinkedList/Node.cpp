@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "Defs.h"
 
 Node::Node() {
 	InitializeNode();
