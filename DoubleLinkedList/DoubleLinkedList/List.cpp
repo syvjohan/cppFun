@@ -70,10 +70,10 @@ void List::PopFront(T data) {
 void List::PushFront(T data) {
 	Node *newNode = new Node;
 	newNode->value = data;
-
+	
 	//If the list NOT is empty.
 	if (GetFirstNode() != nullptr) 
-	{
+	{		
 		newNode->SetNext(GetFirstNode());
 		newNode->SetPrev(GetLastNode());
 
@@ -83,8 +83,7 @@ void List::PushFront(T data) {
 	} else {
 	//If the list is empty.
 		SetFirstNode(newNode);
-		GetFirstNode()->SetNext(nullptr);
-		GetFirstNode()->SetPrev(nullptr);
+		SetLastNode(newNode);
 	}
 }
 
@@ -93,14 +92,18 @@ void List::PushBack(T data) {
 	newNode->value = data;
 
 	if (GetFirstNode() != nullptr) {
-		newNode->SetPrev(GetLastNode());
+		//If the list is NOT empty.
 		newNode->SetNext(GetFirstNode());
+		newNode->SetPrev(GetLastNode());
 
+		GetLastNode()->SetNext(newNode);
+		SetLastNode(newNode);
+		GetLastNode()->SetNext(nullptr);
+		
 	} else {
 		//If the list is empty.
 		SetFirstNode(newNode);
-		GetFirstNode()->SetNext(nullptr);
-		GetFirstNode()->SetPrev(nullptr);
+		SetLastNode(newNode);
 	}
 }
 

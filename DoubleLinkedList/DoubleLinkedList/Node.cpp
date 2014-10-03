@@ -10,7 +10,7 @@ void Node::InitializeNode() {
 }
 
 Node::~Node() {
-	
+
 }
 
 Node* Node::GetPrev() {
