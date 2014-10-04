@@ -97,8 +97,7 @@ void List::PushBack(T data) {
 }
 
 bool List::Check(T data) {
-	Node *currentPtr = DBG_NEW Node;
-	currentPtr = GetFirstNode();
+	Node *currentPtr = GetFirstNode();
 
 	while (currentPtr != nullptr) {
 		if (currentPtr->value == data) {
@@ -110,8 +109,7 @@ bool List::Check(T data) {
 }
 
 int List::AmountOfNodes() {
-	Node *currentPtr = DBG_NEW Node;
-	currentPtr = GetFirstNode(); 
+	Node *currentPtr = GetFirstNode(); 
 	int count = 0;
 
 	while (currentPtr != nullptr) {
@@ -122,8 +120,7 @@ int List::AmountOfNodes() {
 }
 
 void List::PrintList() {
-	Node *currentPtr = DBG_NEW Node;
-	currentPtr = GetFirstNode();
+	Node *currentPtr = GetFirstNode();
 
 	if (currentPtr == nullptr) {
 		printf("\nList is empty!\n");

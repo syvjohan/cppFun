@@ -15,9 +15,9 @@ int main() {
 	list.PopFront();
 	list.PopBack();
 	
-	list.PushBack(24);
-	list.PushBack(25);
-	list.PushFront(17);
+	list.PushBack(27);
+	list.PushBack(28);
+	list.PushFront(29);
 
 	if (list.Check(25)) {
 		printf("true\n");
