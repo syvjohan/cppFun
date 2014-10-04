@@ -109,6 +109,18 @@ bool List::Check(T data) {
 	return false;
 }
 
+int List::AmountOfNodes() {
+	Node *currentPtr = DBG_NEW Node;
+	currentPtr = GetFirstNode(); 
+	int count = 0;
+
+	while (currentPtr != nullptr) {
+		count++;
+		currentPtr = currentPtr->GetNext();
+	}
+	return count;
+}
+
 void List::PrintList() {
 	Node *currentPtr = DBG_NEW Node;
 	currentPtr = GetFirstNode();

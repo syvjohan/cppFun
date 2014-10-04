@@ -19,13 +19,14 @@ int main() {
 	list.PushBack(25);
 	list.PushFront(17);
 
-	if (list.Check(35)) {
-		printf("true");
+	if (list.Check(25)) {
+		printf("true\n");
 	}
 	else {
-		printf("false");
+		printf("false\n");
 	}
 
+	printf("\nNumber of elements in the list are: %i", list.AmountOfNodes());
 	list.PrintList();
 
 	system("pause");

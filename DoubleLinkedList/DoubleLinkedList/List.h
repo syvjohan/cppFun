@@ -23,6 +23,7 @@ public:
 
 	bool Check(T data);
 	void PrintList();
+	int AmountOfNodes();
 
 private:
 	Node *firstNode;
