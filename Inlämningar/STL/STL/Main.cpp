@@ -6,20 +6,21 @@
 using namespace std;
 
 #define NUMBOFELEMENTS 10
+typedef int T;
 
 //Generall functions for the tasks!
 int GenerateRandomNumber(int size) {
 	return rand() % size + 1;
 }
 
-void FillVector(int size, int numbOfElements, vector<int> &container) {
+void FillVector(int numbOfElements, vector<T> &container) {
 	for (int i = 0; i != numbOfElements; i++) {
-		int r = GenerateRandomNumber(size);
+		int r = GenerateRandomNumber(numbOfElements);
 		container.push_back(r);
 	}
 }
 
-void PrintVector(const vector<int> container) {
+void PrintVector(const vector<T> container) {
 	for (const auto i : container) {
 		cout << i << " " << endl;
 	}
@@ -31,53 +32,152 @@ bool IsEven(int i) {
 	return (i % 2 != 0);
 }
 
-void RemoveEvenNumbers(vector<int> &container) {
+void RemoveEvenNumbers(vector<T> &container) {
 	container.erase(std::remove_if(std::begin(container), std::end(container), IsEven), std::end(container));
 }
 
-void HandleTask1(vector<int> container) {
-	FillVector(10, NUMBOFELEMENTS, container); // 1
+void HandleTask1(vector<T> container) {
+	FillVector(NUMBOFELEMENTS, container); // 1
+	cout << "Task 1" << endl;
 	PrintVector(container); // 2
 	cout << "\nEvent numbers: " << endl;
 
 	RemoveEvenNumbers(container); // 3
 	PrintVector(container); // 4
-	printf("\n");
+	cout << "--------------------------\n" << endl;
 }
 //End.
 
 //Task2.
-void SortInReverseOrder(vector<int> &container) {
+//template <class ForwardIterator>
+//void ForwardSort(ForwardIterator &begin, ForwardIterator end) {
+//	auto element = *begin;
+//	for (iterator it = begin; it != end; ++it) {
+//		if (it > element) {
+//			element[it];
+//		}
+//	}
+//
+//}
 
+void HandleTask2(vector<T> container) {
+	FillVector(NUMBOFELEMENTS, container); // 1
+	cout << "Task 2" << endl;
+	PrintVector(container); // 2
+	cout << "\nLinear sorted values: " << endl;
+
+	//ForwardSort(container.begin(), container.end()); // 3
+	PrintVector(container); // 4
+	cout << "--------------------------\n" << endl;
 }
 
+//End.
 
-void HandleTask2(vector<int> container) {
-	FillVector(10, NUMBOFELEMENTS, container); // 1
+//Task3a.
+
+void ReverseOrder(vector<T> &container) {
+	std::vector<T>::reverse_iterator rit = container.rbegin();
+	vector<T> tempContainer;
+
+	while (rit != container.rend()) {
+		tempContainer.push_back(*rit);
+		++rit;
+	}
+
+	container = tempContainer;
+}
+
+void HandleTask3A(vector<T> container) {
+	FillVector(NUMBOFELEMENTS, container); // 1
+	cout << "\nTask 3A" << endl;
 	PrintVector(container); // 2
 	cout << "\nSorted in reverse order: " << endl;
+	InsertSort(container);
+	ReverseOrder(container); // 3
+	PrintVector(container); // 4
+	cout << "--------------------------\n" << endl;
+}
+//End.
+
+//Task3b
+template <typename Predicate>
+void ReverseSort(vector<T> container, Predicate pred) {
+
+	//&(*begin) - 1;
+	//
+	//// begin+1 är sorterade delen.
+	//for (auto i = begin + 1; i != end; ++i) {
+
+	//	auto element = *i;
 
 
+	//	for (auto j = end - 1; &(*j) != &(*begin) - 1; --j) {
 
+	//		if (pred(element, *j)) {
+	//			//*(j + 1) = *j;
+	//		} else {
+	//			//*j = element;
+	//		}
+	//	}
+	//}
+}
+void InsertSort(vector<T> &container) {
+	T temp;
+	auto it1 = container.begin();
+
+	for (int it1 = 1; it1 != container.size(); it1++) {
+		temp = container[it1];
+		auto it2 = it1 - 1;
+
+		while (it2 >= 0 && container[it2] > temp) {
+			container[it2 + 1] = container[it2];
+			it2 = it2 - 1;
+		}
+		container[it2 + 1] = temp;
+	}
 }
 
+
+void HandleTask3B(vector<T> container) {
+	FillVector(NUMBOFELEMENTS, container); // 1
+	cout << "\nTask 3B" << endl;
+	PrintVector(container); // 2
+	ReverseSort(container.rbegin(), container.rend(), [](T x, T y) {return x > y; });
+	PrintVector(container);
+	cout << "--------------------------\n" << endl;
+
+}
 //End.
 
-//Task3.
-
-//End.
 
 //Task4.
+void Sort(vector<T> &container) {
+	std::sort(container.begin(), container.end());
+}
 
+
+void HandleTask4(vector<T> container) {
+	FillVector(NUMBOFELEMENTS, container); // 1
+	cout << "\nTask 4" << endl;
+	PrintVector(container); // 2
+
+	cout << "\nSorted with std::sort: " << endl;
+	Sort(container); //3
+	PrintVector(container); // 4
+	cout << "--------------------------\n" << endl;
+}
 //End.
 
 int main() {
 	srand(time(NULL)); /*sets the seed in random generator*/
 
-	vector<int> container;
+	vector<T> container;
 
-	HandleTask1(container);
-	HandleTask2(container);
+	//HandleTask1(container); //OK!
+	//HandleTask2(container);
+	//HandleTask3A(container);
+	//HandleTask3B(container);
+	HandleTask4(container);
 
 	system("pause");
 	return 0;
