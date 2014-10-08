@@ -49,16 +49,17 @@ void HandleTask1(vector<T> container) {
 //End.
 
 //Task2.
-//template <class ForwardIterator>
-//void ForwardSort(ForwardIterator &begin, ForwardIterator end) {
-//	auto element = *begin;
-//	for (iterator it = begin; it != end; ++it) {
-//		if (it > element) {
-//			element[it];
-//		}
-//	}
-//
-//}
+template <class ForwardIterator>
+void ForwardSort(ForwardIterator &begin, ForwardIterator &end) {
+	//BubbleSort!
+	for (auto it = begin; it != end; it++) {
+		for (auto it2 = begin; it2 != it; it2++) {
+			if (*it < *it2) {
+				std::swap(*it, *it2);
+			}
+		}
+	}
+}
 
 void HandleTask2(vector<T> container) {
 	FillVector(NUMBOFELEMENTS, container); // 1
@@ -66,7 +67,7 @@ void HandleTask2(vector<T> container) {
 	PrintVector(container); // 2
 	cout << "\nLinear sorted values: " << endl;
 
-	//ForwardSort(container.begin(), container.end()); // 3
+	ForwardSort(container.begin(), container.end()); // 3
 	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
 }
@@ -74,12 +75,15 @@ void HandleTask2(vector<T> container) {
 //End.
 
 //Task3a.
-
 void ReverseOrder(vector<T> &container) {
 	std::vector<T>::reverse_iterator rit = container.rbegin();
+	std::vector<T>::reverse_iterator rnd = container.rend();
 	vector<T> tempContainer;
 
-	while (rit != container.rend()) {
+	while (rit != rnd) {
+		if (*rit < *rnd) {
+			std::swap(*rit, *rnd);
+		}
 		tempContainer.push_back(*rit);
 		++rit;
 	}
@@ -92,7 +96,7 @@ void HandleTask3A(vector<T> container) {
 	cout << "\nTask 3A" << endl;
 	PrintVector(container); // 2
 	cout << "\nSorted in reverse order: " << endl;
-	InsertSort(container);
+	//InsertSort(container);
 	ReverseOrder(container); // 3
 	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
@@ -142,7 +146,7 @@ void HandleTask3B(vector<T> container) {
 	FillVector(NUMBOFELEMENTS, container); // 1
 	cout << "\nTask 3B" << endl;
 	PrintVector(container); // 2
-	ReverseSort(container.rbegin(), container.rend(), [](T x, T y) {return x > y; });
+	//ReverseSort(container.rbegin(), container.rend(), [](T x, T y) {return x > y; });
 	PrintVector(container);
 	cout << "--------------------------\n" << endl;
 
@@ -151,10 +155,10 @@ void HandleTask3B(vector<T> container) {
 
 
 //Task4.
-void Sort(vector<T> &container) {
-	std::sort(container.begin(), container.end());
+template <typename Predicate>
+void Sort(vector<T> &container, Predicate pred) {
+	std::sort(container.begin() + 4, container.end(), pred); //sort after index 4 and to the end of the vector.
 }
-
 
 void HandleTask4(vector<T> container) {
 	FillVector(NUMBOFELEMENTS, container); // 1
@@ -162,7 +166,7 @@ void HandleTask4(vector<T> container) {
 	PrintVector(container); // 2
 
 	cout << "\nSorted with std::sort: " << endl;
-	Sort(container); //3
+	Sort(container, [](T i, T k) { return (i < k); }); //3
 	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
 }
@@ -174,10 +178,10 @@ int main() {
 	vector<T> container;
 
 	//HandleTask1(container); //OK!
-	//HandleTask2(container);
-	//HandleTask3A(container);
+	//HandleTask2(container); // OK!
+	HandleTask3A(container);
 	//HandleTask3B(container);
-	HandleTask4(container);
+	//HandleTask4(container); //OK!
 
 	system("pause");
 	return 0;
