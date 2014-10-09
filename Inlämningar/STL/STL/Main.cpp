@@ -75,20 +75,17 @@ void HandleTask2(vector<T> container) {
 //End.
 
 //Task3a.
-void ReverseOrder(vector<T> &container) {
-	std::vector<T>::reverse_iterator rit = container.rbegin();
-	std::vector<T>::reverse_iterator rnd = container.rend();
-	vector<T> tempContainer;
-
-	while (rit != rnd) {
-		if (*rit < *rnd) {
-			std::swap(*rit, *rnd);
+template <class ReverseIterator>
+void ReversedSort(ReverseIterator &rbegin, ReverseIterator &rend) {
+	std::vector<T>::reverse_iterator rit = rbegin;
+	//BubbleSort!
+	for (auto it = rit; it != rend; it++) {
+		for (auto it2 = rit; it2 != it; it2++) {
+			if (*it < *it2) {
+				std::swap(*it, *it2);
+			}
 		}
-		tempContainer.push_back(*rit);
-		++rit;
 	}
-
-	container = tempContainer;
 }
 
 void HandleTask3A(vector<T> container) {
@@ -96,8 +93,7 @@ void HandleTask3A(vector<T> container) {
 	cout << "\nTask 3A" << endl;
 	PrintVector(container); // 2
 	cout << "\nSorted in reverse order: " << endl;
-	//InsertSort(container);
-	ReverseOrder(container); // 3
+	ReversedSort(container.rbegin(), container.rend());  // 3
 	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
 }
@@ -125,22 +121,6 @@ void ReverseSort(vector<T> container, Predicate pred) {
 	//	}
 	//}
 }
-void InsertSort(vector<T> &container) {
-	T temp;
-	auto it1 = container.begin();
-
-	for (int it1 = 1; it1 != container.size(); it1++) {
-		temp = container[it1];
-		auto it2 = it1 - 1;
-
-		while (it2 >= 0 && container[it2] > temp) {
-			container[it2 + 1] = container[it2];
-			it2 = it2 - 1;
-		}
-		container[it2 + 1] = temp;
-	}
-}
-
 
 void HandleTask3B(vector<T> container) {
 	FillVector(NUMBOFELEMENTS, container); // 1
@@ -152,7 +132,6 @@ void HandleTask3B(vector<T> container) {
 
 }
 //End.
-
 
 //Task4.
 template <typename Predicate>
@@ -186,3 +165,35 @@ int main() {
 	system("pause");
 	return 0;
 }
+
+//Extra functions
+
+
+//void ReverseOrder(vector<T> &container) {
+//	std::vector<T>::reverse_iterator rit = container.rbegin();
+//	auto rd = container.rend();
+//	vector<T> tempContainer;
+//
+//	while (rit != rd) {
+//		tempContainer.push_back(*rit);
+//		++rit;
+//	}
+//	container = tempContainer;
+//}
+
+
+//void InsertSort(vector<T> &container) {
+//	T temp;
+//	auto it1 = container.begin();
+//
+//	for (int it1 = 1; it1 != container.size(); it1++) {
+//		temp = container[it1];
+//		auto it2 = it1 - 1;
+//
+//		while (it2 >= 0 && container[it2] > temp) {
+//			container[it2 + 1] = container[it2];
+//			it2 = it2 - 1;
+//		}
+//		container[it2 + 1] = temp;
+//	}
+//}
