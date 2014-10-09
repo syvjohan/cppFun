@@ -71,7 +71,6 @@ void HandleTask2(vector<T> container) {
 	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
 }
-
 //End.
 
 //Task3a.
@@ -99,35 +98,26 @@ void HandleTask3A(vector<T> container) {
 }
 //End.
 
-//Task3b
-template <typename Predicate>
-void ReverseSort(vector<T> container, Predicate pred) {
-
-	//&(*begin) - 1;
-	//
-	//// begin+1 är sorterade delen.
-	//for (auto i = begin + 1; i != end; ++i) {
-
-	//	auto element = *i;
-
-
-	//	for (auto j = end - 1; &(*j) != &(*begin) - 1; --j) {
-
-	//		if (pred(element, *j)) {
-	//			//*(j + 1) = *j;
-	//		} else {
-	//			//*j = element;
-	//		}
-	//	}
-	//}
+//Task3B
+template <class ReverseIterator,typename Predicate>
+void SortReverse(ReverseIterator &rbegin, ReverseIterator &rend, Predicate pred) {
+	//BubbleSort!
+	for (auto it = rbegin; it != rend; it++) {
+		for (auto it2 = rbegin; it2 != it; it2++) {
+			if (pred(it, it2)) {
+				std::swap(*it, *it2);
+			}
+		}
+	}
 }
 
 void HandleTask3B(vector<T> container) {
 	FillVector(NUMBOFELEMENTS, container); // 1
 	cout << "\nTask 3B" << endl;
 	PrintVector(container); // 2
-	//ReverseSort(container.rbegin(), container.rend(), [](T x, T y) {return x > y; });
-	PrintVector(container);
+	cout << "\nSorted in reverse order: " << endl;
+		SortReverse(container.rbegin(), container.rend(), [&](T x, T y) {return x > y; }); // 3
+	PrintVector(container); // 4
 	cout << "--------------------------\n" << endl;
 
 }
@@ -158,16 +148,18 @@ int main() {
 
 	//HandleTask1(container); //OK!
 	//HandleTask2(container); // OK!
-	HandleTask3A(container);
-	//HandleTask3B(container);
+	//HandleTask3A(container); //OK!
+	HandleTask3B(container);
 	//HandleTask4(container); //OK!
 
 	system("pause");
 	return 0;
 }
 
-//Extra functions
 
+
+
+//Extra functions
 
 //void ReverseOrder(vector<T> &container) {
 //	std::vector<T>::reverse_iterator rit = container.rbegin();
