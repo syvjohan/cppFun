@@ -1,0 +1,31 @@
+
+//Extra functions
+
+//void ReverseOrder(vector<C> &container) {
+//	std::vector<C>::reverse_iterator rit = container.rbegin();
+//	auto rd = container.rend();
+//	vector<C> tempContainer;
+//
+//	while (rit != rd) {
+//		tempContainer.push_back(*rit);
+//		++rit;
+//	}
+//	container = tempContainer;
+//}
+
+
+//void InsertSort(vector<C> &container) {
+//	T temp;
+//	auto it1 = container.begin();
+//
+//	for (int it1 = 1; it1 != container.size(); it1++) {
+//		temp = container[it1];
+//		auto it2 = it1 - 1;
+//
+//		while (it2 >= 0 && container[it2] > temp) {
+//			container[it2 + 1] = container[it2];
+//			it2 = it2 - 1;
+//		}
+//		container[it2 + 1] = temp;
+//	}
+//}
