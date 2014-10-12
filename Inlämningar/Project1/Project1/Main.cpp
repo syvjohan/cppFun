@@ -6,13 +6,12 @@ int main() {
 
 
 	Rational<int> rat(1,1);
+	
 	const int a = 2;
 	const int b = 6;
 	const int c = 4;
 	const int d = 9;
 	
-
-
 	//printf("%i",rat + Rational<int>(4, 3));
 
 	system("pause");
