@@ -7,6 +7,10 @@ template <typename T>
 class Rational {
 public:
 	Rational<T> (T numerator, T denominator);
+	Rational<T>(T numerator);
+	Rational<T>();
+	~Rational<T>();
+
 	bool operator== (const Rational<T> &r);
 	Rational<T> operator= (const Rational<T> &r);
 	Rational<T> operator- (const Rational<T> &r);
@@ -19,7 +23,6 @@ public:
 	Rational<T> operator++ (int); //PostFix
 	std::ostream& operator<< (std::ostream &cout);
 	std::ostream& operator>> (std::ostream &cin);
-	~Rational();
 
 private:
 	T numerator;
