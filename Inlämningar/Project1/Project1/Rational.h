@@ -3,18 +3,6 @@
 
 #include <iostream>
 
-//Global Scope
-
-template <typename T>
-std::ostream& Rational<T>::operator<< (std::ostream &cout) {
-	return cout << this->numerator << '/' << this->denominator;
-}
-
-template <typename T>
-std::ostream& Rational<T>::operator>> (std::ostream &cin) {
-	return cin >> this->numerator >> this->denominator;
-}
-
 template <typename T> 
 class Rational {
 public:
@@ -164,4 +152,15 @@ Rational<T> Rational<T>::operator++(int) {
 	numerator += denominator;
 	Reduce(numerator, denominator);
 	return temp; //return the copy (the old value).
+}
+
+//Global Scope
+template <typename T>
+std::ostream& Rational<T>::operator<< (std::ostream &cout) {
+	return cout << this->numerator << '/' << this->denominator;
+}
+
+template <typename T>
+std::ostream& Rational<T>::operator>> (std::ostream &cin) {
+	return cin >> this->numerator >> this->denominator;
 }
