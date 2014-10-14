@@ -1,25 +1,13 @@
-﻿Build started 2014-10-14 20:05:17.
+﻿Build started 2014-10-14 23:22:46.
      1>Project "C:\cppFun\Inlämningar\Rational\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2835: user-defined conversion 'Rational<T>::operator Rational<T>' takes no formal parameters
-                 c:\cppfun\inlämningar\rational\project1\rational.h(52) : see reference to class template instantiation 'Rational<T>' being compiled
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2333: 'Rational<T>::operator Rational<T>' : error in function declaration; skipping function body
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2835: user-defined conversion 'Rational<short>::operator Rational<short>' takes no formal parameters
-                 c:\cppfun\inlämningar\rational\project1\main.cpp(14) : see reference to class template instantiation 'Rational<short>' being compiled
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2333: 'Rational<short>::operator Rational<short>' : error in function declaration; skipping function body
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2835: user-defined conversion 'Rational<int>::operator Rational<int>' takes no formal parameters
-                 c:\cppfun\inlämningar\rational\project1\main.cpp(15) : see reference to class template instantiation 'Rational<int>' being compiled
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2333: 'Rational<int>::operator Rational<int>' : error in function declaration; skipping function body
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2835: user-defined conversion 'Rational<__int64>::operator Rational<__int64>' takes no formal parameters
-                 c:\cppfun\inlämningar\rational\project1\main.cpp(16) : see reference to class template instantiation 'Rational<__int64>' being compiled
-     1>c:\cppfun\inlämningar\rational\project1\rational.h(31): error C2333: 'Rational<__int64>::operator Rational<__int64>' : error in function declaration; skipping function body
-     1>c:\cppfun\inlämningar\rational\project1\main.cpp(52): error C2440: 'static_cast' : cannot convert from 'Rational<__int64>' to 'int'
-                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cppFun\Inlämningar\Rational\Debug\Rational.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cppFun\Inlämningar\Rational\Debug\Rational.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cppFun\Inlämningar\Rational\Debug\Rational.lib" /MACHINE:X86 Debug\Main.obj
+     1>Main.obj : error LNK2019: unresolved external symbol "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl operator<<(class std::basic_ostream<char,struct std::char_traits<char> > &,class Rational<short> const &)" (??6@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@AAV01@ABV?$Rational@F@@@Z) referenced in function "void __cdecl TestFörGodkänt(void)" (?TestFörGodkänt@@YAXXZ)
+     1>Main.obj : error LNK2019: unresolved external symbol "class std::basic_istream<char,struct std::char_traits<char> > & __cdecl operator>>(class std::basic_istream<char,struct std::char_traits<char> > &,class Rational<short> const &)" (??5@YAAAV?$basic_istream@DU?$char_traits@D@std@@@std@@AAV01@ABV?$Rational@F@@@Z) referenced in function "void __cdecl TestFörGodkänt(void)" (?TestFörGodkänt@@YAXXZ)
+     1>C:\cppFun\Inlämningar\Rational\Debug\Rational.exe : fatal error LNK1120: 2 unresolved externals
      1>Done Building Project "C:\cppFun\Inlämningar\Rational\Project1\Project1.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.24
+Time Elapsed 00:00:00.12

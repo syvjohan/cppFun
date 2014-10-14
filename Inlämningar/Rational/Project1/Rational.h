@@ -19,20 +19,23 @@ public:
 	Rational<T>(T numerator = 0, T denominator = 1);
 	~Rational<T>();
 
-	////Makes it possible for different data types to interact.
-	//template<typename T2>
-	//operator Rational<T2>();
-
+	//Typecast to different data types of rational.
 	template<typename T2>
+	operator Rational<T2>();
+
+	/*template<typename T2>
 	operator Rational<T2>() {
 		return Rational<T2>((T2)numerator, (T2)denominator);
-	}
+	}*/
 
-	operator Rational<T>(const Rational<T> &r) {
-		return int i = numerator / denominator;
-	}
+	template<typename T2>
+	operator T2();
 
 	bool operator== (const Rational<T> &r);
+
+	template<typename T2>
+	bool operator==(T2 n) { return ((T2)*this) == n; };
+
 	Rational<T> operator= (const Rational<T> &r);
 	Rational<T> operator- (const Rational<T> &r);
 	Rational<T> operator+ (const Rational<T> &r);
@@ -65,11 +68,12 @@ Rational<T>::~Rational() {
 
 }
 
-////Makes it possible for different data types to interact.
-//template<typename T, typename T2>
-//Rational<T>::operator Rational<T2>() {
-//	return Rational<T2>((T2)numerator, (T2)denominator);
-//}
+//Typecast to different data types of rational.
+template<typename T>
+template<typename T2>
+Rational<T>::operator Rational<T2>() {
+	return Rational<T2>((T2)numerator, (T2)denominator);
+}
 
 template<typename T>
 T GCD(T A, T B) {
@@ -94,8 +98,14 @@ void Reduce(T &A, T &B) {
 }
 
 template<typename T>
+template<typename T2>
+Rational<T>::operator T2() {
+	return static_cast<T2>((double)numerator / (double)denominator);
+}
+
+template<typename T>
 bool Rational<T>::operator== (const Rational<T> &r) {
-	return (r.denominator == this->denominator && r.numerator == this->numerator);
+	return (r.denominator == denominator && r.numerator == numerator);
 }
 
 template<typename T>
@@ -114,6 +124,7 @@ Rational<T> Rational<T>::operator- (const Rational<T> &r) {
 	return Rational<T>(num, den);
 }
 
+//Operatorn finns i alla klasser!
 template<typename T>
 Rational<T> Rational<T>::operator= (const Rational<T> &r) {
 	this->numerator = r.numerator;
@@ -124,14 +135,14 @@ Rational<T> Rational<T>::operator= (const Rational<T> &r) {
 
 template<typename T>
 Rational<T> Rational<T>::operator+= (const Rational<T> &r) {
-	operator+(Rational<T>(r.numerator, r.denominator));
-	return Rational<T>(operator=(r.numerator, r.denominator));
+	*this = *this + r;
+	return *this;
 }
 
 template<typename T>
 Rational<T> Rational<T>::operator-= (const Rational<T> &r) {
-	operator-(r.numerator, r.denominator);
-	return Rational<T>(operator=(r.numerator, r.denominator))
+	*this = *this - r;
+	return *this;
 }
 
 //Unary numbers.
@@ -153,7 +164,7 @@ Rational<T>& Rational<T>::operator++() {
 //Postfix, i++.
 template<typename T>
 Rational<T> Rational<T>::operator++(int) {
-	Rational<T>(numerator, denominator) temp(numerator, denominator); //Create a copy
+	Rational<T> temp; //Create a copy
 	numerator += denominator;
 	Reduce(numerator, denominator);
 	return temp; //return the copy (the old value).
