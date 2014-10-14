@@ -28,6 +28,10 @@ public:
 		return Rational<T2>((T2)numerator, (T2)denominator);
 	}
 
+	operator Rational<T>(const Rational<T> &r) {
+		return int i = numerator / denominator;
+	}
+
 	bool operator== (const Rational<T> &r);
 	Rational<T> operator= (const Rational<T> &r);
 	Rational<T> operator- (const Rational<T> &r);
