@@ -1,5 +1,0 @@
-
-
-void Uppgift1() {
-
-}

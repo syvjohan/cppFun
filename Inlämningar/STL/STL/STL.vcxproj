@@ -65,11 +65,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Uppgift1.cpp" />
-    <ClCompile Include="Uppgift2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Uppgift1.h" />
     <ClInclude Include="UppgiftBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

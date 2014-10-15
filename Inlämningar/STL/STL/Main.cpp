@@ -44,8 +44,8 @@ void ForwardSort(ForwardIterator &begin, ForwardIterator &end, Predicate pred) {
 //End generall functions.
 
 //Task1.
-bool IsOdd(int i) {
-	return ((int)i % 2 != 1);
+bool IsOdd(C<NUMBOFELEMENTS> i) {
+	return ((int)i.value % 2 != 1);
 }
 
 void RemoveOddNumbers(vector<C<NUMBOFELEMENTS>> &container) {
@@ -138,11 +138,11 @@ int main() {
 
 	vector<C<NUMBOFELEMENTS>> container;
 	
-	//HandleTask1(container); //OK!
-	//HandleTask2(container); // OK!
-	//HandleTask3A(container); //OK!
-	//HandleTask3B(container);
-	//HandleTask4(); //OK!
+	HandleTask1(container); //OK!
+	HandleTask2(container); // OK!
+	HandleTask3A(container); //OK!
+	HandleTask3B(container);
+	HandleTask4(); //OK!
 
 	system("pause");
 	return 0;
