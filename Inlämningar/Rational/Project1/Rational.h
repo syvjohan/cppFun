@@ -4,32 +4,31 @@
 #include <iostream>
 #include <cassert>
 
-template<typename T>
-class Rational;
+//template<typename T>
+//class Rational;
 
-template<typename T>
-std::ostream& operator<< (std::ostream &cout, const Rational<T> &r);
-
-template<typename T>
-std::istream& operator>> (std::istream &cin, const Rational<T> &r);
+//template<typename T>
+//std::ostream& operator<< (std::ostream &cout, const Rational<T> r);
+//
+//template<typename T>
+//std::istream& operator>> (std::istream &cin, Rational<T> &r);
 
 template <typename T>
 class Rational {
 public:
 	Rational<T>(T numerator = 0, T denominator = 1);
+
+	template<typename T2>
+	Rational<T>(Rational<T2> r);
+
 	~Rational<T>();
 
 	//Typecast to different data types of rational.
 	template<typename T2>
-	operator Rational<T2>();
-
-	/*template<typename T2>
-	operator Rational<T2>() {
-		return Rational<T2>((T2)numerator, (T2)denominator);
-	}*/
+	explicit operator Rational<T2>();
 
 	template<typename T2>
-	operator T2();
+	explicit operator T2();
 
 	bool operator== (const Rational<T> &r);
 
@@ -45,10 +44,22 @@ public:
 	Rational<T>& operator++ (); //Prefix
 	Rational<T> operator++ (int); //PostFix
 
-	friend std::ostream& operator<< (std::ostream&, const Rational<T> &);
-	friend std::istream& operator>> (std::istream&, const Rational<T> &);
+	friend std::ostream& operator<< (std::ostream& cout, const Rational<T> r)
+	{
+		return cout << r.numerator << '/' << r.denominator;
+	}
 
-private:
+	friend std::istream& operator>> (std::istream& cin, Rational<T> &r)
+	{
+		cin >> r.numerator;
+		cin.get();
+		cin >> r.denominator;
+		cin.get();
+		Reduce(r.numerator, r.denominator);
+		return cin;
+	}
+
+public:
 	T numerator;
 	T denominator;
 
@@ -61,6 +72,13 @@ Rational<T>::Rational(T num, T den) {
 	denominator = den;
 
 	assert(den != 0 && "Division by zero");
+}
+
+template <typename T>
+template<typename T2>
+Rational<T>::Rational(const Rational<T2> r) {
+	this->numerator = r.numerator;
+	this->denominator = r.denominator;
 }
 
 template<typename T>
@@ -158,26 +176,28 @@ Rational<T>& Rational<T>::operator++() {
 	//Increment object.
 	numerator += denominator;
 	Reduce(numerator, denominator);
-	return Rational<T>(numerator, denominator);
+	return *this;
 }
 
 //Postfix, i++.
 template<typename T>
 Rational<T> Rational<T>::operator++(int) {
-	Rational<T> temp; //Create a copy
+	Rational<T> temp(numerator, denominator); //Create a copy
 	numerator += denominator;
-	Reduce(numerator, denominator);
+	Reduce(temp.numerator, temp.denominator);
 	return temp; //return the copy (the old value).
 }
 
 //Global Scope
-template<typename T>
-std::ostream& operator<< (std::ostream &cout, const Rational<T> &r) {
-	return cout << r.numerator << '/' << r.denominator;
-}
+//template<typename T>
+//std::ostream& operator<< (std::ostream &cout, const Rational<T> r) {
+//	return cout << r.numerator << '/' << r.denominator;
+//}
 
 //Global Scope
-template<typename T>
-std::istream& operator>> (std::istream &cin, const Rational<T> &r) {
-	return cin >> r.numerator >> r.denominator;
-}
+//template<typename T>
+//std::istream& operator>> (std::istream &cin, Rational<T> &r) {
+//	
+//	char temp;
+//	return cin >> r.numerator >> temp >> r.denominator;
+//}
