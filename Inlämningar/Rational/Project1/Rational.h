@@ -4,15 +4,6 @@
 #include <iostream>
 #include <cassert>
 
-//template<typename T>
-//class Rational;
-
-//template<typename T>
-//std::ostream& operator<< (std::ostream &cout, const Rational<T> r);
-//
-//template<typename T>
-//std::istream& operator>> (std::istream &cin, Rational<T> &r);
-
 template <typename T>
 class Rational {
 public:
@@ -187,17 +178,3 @@ Rational<T> Rational<T>::operator++(int) {
 	Reduce(temp.numerator, temp.denominator);
 	return temp; //return the copy (the old value).
 }
-
-//Global Scope
-//template<typename T>
-//std::ostream& operator<< (std::ostream &cout, const Rational<T> r) {
-//	return cout << r.numerator << '/' << r.denominator;
-//}
-
-//Global Scope
-//template<typename T>
-//std::istream& operator>> (std::istream &cin, Rational<T> &r) {
-//	
-//	char temp;
-//	return cin >> r.numerator >> temp >> r.denominator;
-//}
