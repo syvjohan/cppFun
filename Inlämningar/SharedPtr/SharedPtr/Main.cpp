@@ -1,8 +1,8 @@
-#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <cassert>
 #include <assert.h>
+#include "Defs.h"
 using namespace std;
 
 #include "SharedPtr.h"
@@ -10,7 +10,7 @@ using namespace std;
 
 struct C{
 	float value;
-	C(float value) :value(value){};
+	C(float value = 0.0f) :value(value){};
 };
 
 void TestG() {
@@ -20,19 +20,19 @@ void TestG() {
 	//	o	En pekare	G
 
 
-	/*SharedPtr<C> p11;
-	assert(!p11);
-	SharedPtr<C> p15(nullptr);
+	SharedPtr<C> p11;
+	//assert(!p11);
+	/*SharedPtr<C> p15(nullptr);
 	assert(!p15);
 	SharedPtr<C> p12(new C(12));
 	assert(p12);
 	SharedPtr<C> p13(p11);
 	assert(!p13);
 
-	assert(p12.unique());
+	assert(p12.Unique());
 	SharedPtr<C> p14(p12);
 	assert(p14);
-	assert(!p12.unique());*/
+	assert(!p12.Unique());*/
 
 
 	//-	Destruktor	G
@@ -118,9 +118,19 @@ void TestVG(){
 }
 
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TestG();
 	//TestVG();
 	//	system("Pause");
 	_CrtDumpMemoryLeaks();
+
+	SharedPtr<C> ptr1(new C);
+
+	if (ptr1)  {
+		SharedPtr<C> ptr2 = ptr1;
+
+
+	}
+	
 }
 

@@ -64,6 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="RelOps.h" />
     <ClInclude Include="SharedPtr.h" />
   </ItemGroup>

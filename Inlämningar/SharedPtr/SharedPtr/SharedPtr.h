@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Defs.h"
 #include <iostream>
 #include <cassert>
 
@@ -7,9 +8,14 @@ template<typename T>
 class SharedPtr {
 
 public:
-	SharedPtr<T>();
+	SharedPtr<T>(void);
 	SharedPtr<T>(SharedPtr<T> &sharedPtr);
 	SharedPtr<T>(T* ptr);
+
+	//Copy constructor.
+	template<typename T2>
+	SharedPtr<T>(SharedPtr<T2> r);
+
 	~SharedPtr<T>();
 
 	operator bool () const;
@@ -27,33 +33,62 @@ public:
 	bool Unique();
 
 private:
+	struct SharedPtrData {
+		T *ptr;
+		int count;
+	};
+
+	SharedPtrData *data;
+
 	T *ptr;
 	int count = 0;
 };
 
-
 template<typename T>
-SharedPtr<T>::SharedPtr() {
-	ptr = new T;
-	ptr* = nullptr;
-	count++;
+SharedPtr<T>::SharedPtr(void) {
+	data = NULL;
+
+	//ptr = DBG_NEW T[sizeof(SharedPtr<T>)];
+	//assert(ptr == nullptr && "ERROR, allocation of memory for ptr failed!");
+	//count++;
 }
 
 template<typename T>
-SharedPtr<T>::SharedPtr<T>(SharedPtr<T> &sharedPtr) {
+SharedPtr<T>::SharedPtr(const SharedPtr<T> &sharedPtr) {
+
+
+	data = sharedPtr.data;
+	data->count += 1;
+
+	++sharedPtr.count;
+
+	count = sharedPtr.count;
 
 }
 
 template<typename T>
-SharedPtr<T>::SharedPtr<T>(T* ptr) {
+SharedPtr<T>::SharedPtr(T* ptr) {
+
+	data = new SharedPtrData;
+	data->ptr = ptr;
+	data->count = 1;
+
+
 	ptr = new T;
 	count++;
+}
+
+//Copy constructor.
+template<typename T>
+template<typename T2>
+SharedPtr<T>::SharedPtr(SharedPtr<T2> r) {
+	ptr = new T;
+	*this->ptr = *r.ptr; //Copy the value.
 }
 
 template<typename T>
 SharedPtr<T>::~SharedPtr() {
 	delete ptr;
-	count--;
 }
 
 //if sharedPtr is an object return it.
