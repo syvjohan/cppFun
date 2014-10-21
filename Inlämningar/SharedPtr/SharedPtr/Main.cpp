@@ -21,8 +21,8 @@ void TestG() {
 
 
 	SharedPtr<C> p11;
-	//assert(!p11);
-	/*SharedPtr<C> p15(nullptr);
+	assert(!p11);
+	SharedPtr<C> p15(nullptr);
 	assert(!p15);
 	SharedPtr<C> p12(new C(12));
 	assert(p12);
@@ -32,39 +32,39 @@ void TestG() {
 	assert(p12.Unique());
 	SharedPtr<C> p14(p12);
 	assert(p14);
-	assert(!p12.Unique());*/
+	assert(!p12.Unique());
 
 
 	//-	Destruktor	G
 	//It will test itself
 	//-	Tilldelning från en	
 	//	o	En SharedPtr	G
-	/*p14 = p12;
+	p14 = p12;
 	assert(p14);
 
 	p14 = p14;
-	assert(p14);*/
+	assert(p14);
 
 	//-	Jämförelse med (== och <)
-	//SharedPtr<C> p31(new C(31));
+	SharedPtr<C> p31(new C(31));
 	//	o	En SharedPtr	G
-	//assert(p11 == nullptr);
-	//assert(p11 < p12);
-	//assert(!(p12 < p11));
-	//assert(p14 == p12);
-	//assert(!(p14 == p31));
-	//assert((p14 < p31) || (p31 < p14));
+	assert(p11 == nullptr);
+	assert(p11 < p12);
+	assert(!(p12 < p11));
+	assert(p14 == p12);
+	assert(!(p14 == p31)); //pekar på samma minnesadress.
+	assert((p14 < p31) || (p31 < p14));
 
 	//get, * och ->
 
-	/*SharedPtr<C> p41(new C(41));
+	SharedPtr<C> p41(new C(41));
 	SharedPtr<C> p42(new C(42));
-	assert((p41->value) == (p41.get()->value));
-	assert((p41->value) != (p42.get()->value));
-	assert(&(*p41) == (p41.get()));
+	//assert((p41->value) == (p41.Get()->value));
+	//assert((p41->value) != (p42.Get()->value));
+	//assert(&(*p41) == (p41.Get()));
 
-	p41.reset();
-	assert(!p41);*/
+	p41.Reset();
+	assert(!p41);
 }
 
 
@@ -124,13 +124,13 @@ int main() {
 	//	system("Pause");
 	_CrtDumpMemoryLeaks();
 
-	SharedPtr<C> ptr1(new C);
+	/*SharedPtr<C> ptr1(new C);
 
 	if (ptr1)  {
 		SharedPtr<C> ptr2 = ptr1;
 
 
-	}
+	}*/
 	
 }
 
