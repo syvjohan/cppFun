@@ -10,7 +10,7 @@ using namespace std;
 
 struct C{
 	float value;
-	C(float value = 0.0f) :value(value){};
+	C( float value) :value(value){};
 };
 
 void TestG() {
@@ -56,12 +56,11 @@ void TestG() {
 	assert((p14 < p31) || (p31 < p14));
 
 	//get, * och ->
-
 	SharedPtr<C> p41(new C(41));
 	SharedPtr<C> p42(new C(42));
-	//assert((p41->value) == (p41.Get()->value));
-	//assert((p41->value) != (p42.Get()->value));
-	//assert(&(*p41) == (p41.Get()));
+	assert((p41->value) == (p41.Get()->value));
+	assert((p41->value) != (p42.Get()->value));
+	assert(&(*p41) == (p41.Get()));
 
 	p41.Reset();
 	assert(!p41);

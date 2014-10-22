@@ -6,7 +6,6 @@
 
 template<typename T>
 class SharedPtr {
-
 public:
 	SharedPtr<T>(void);
 	SharedPtr<T>(const SharedPtr<T> &sharedPtr);
@@ -18,29 +17,33 @@ public:
 
 	~SharedPtr<T>();
 
-	operator bool () const;
+	inline operator bool() const;
 
-	bool operator== (const SharedPtr<T> &sharedPtr);
-	SharedPtr<T> operator= (const SharedPtr<T> &sharedPtr);
-	bool operator< (const SharedPtr<T> &sharedPtr);
-	T& operator* ();
+	inline bool operator==( const SharedPtr<T> &sharedPtr);
 
-	template<typename T>
-	T* SharedPtr<T>::*operator-> () {
-		return  data->ptr;
-	} 
+	inline SharedPtr<T> operator=( const SharedPtr<T> &sharedPtr);
 
-	void Reset();
-	T* Get();
-	bool Unique();
+	inline bool operator<( const SharedPtr<T> &sharedPtr);
+
+	inline T& operator*();
+	inline const T& operator*() const;
+
+	inline T* operator->();
+	inline const T* operator->() const;
+
+	inline T* operator&() {
+		return &data->ptr;
+	}
+
+	inline void Reset();
+	inline T* Get();
+	inline bool Unique();
 
 private:
 	struct SharedPtrData {
 		T *ptr = nullptr;
 		int count = 0;
-	};
-
-	SharedPtrData *data;
+	}*data;
 };
 
 template<typename T>
@@ -52,20 +55,16 @@ SharedPtr<T>::SharedPtr(void) {
 
 template<typename T>
 SharedPtr<T>::SharedPtr(const SharedPtr<T> &sharedPtr) {
-
-
 	data = sharedPtr.data;
 	data->count += 1;
 
 	++sharedPtr.data->count;
 	
 	data->count = sharedPtr.data->count;
-
 }
 
 template<typename T>
 SharedPtr<T>::SharedPtr(T* ptr) {
-
 	data = new SharedPtrData;
 	data->ptr = ptr;
 	data->count += 1;
@@ -108,8 +107,23 @@ bool SharedPtr<T>::operator< (const SharedPtr<T> &sharedPtr) {
 }
 
 template<typename T>
-T& SharedPtr<T>::operator* () {
+T& SharedPtr<T>::operator*() {
 	return data->ptr;
+}
+
+template<typename T>
+const T& SharedPtr<T>::operator*() const {
+	return data->ptr;
+}
+
+template<typename T>
+T* SharedPtr<T>::operator->() {
+	return  data->ptr;
+}
+
+template<typename T>
+const T* SharedPtr<T>::operator->() const {
+	return  data->ptr;
 }
 
 template<typename T>
