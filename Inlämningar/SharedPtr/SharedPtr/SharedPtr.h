@@ -157,7 +157,7 @@ void SharedPtr<T>::Reset() {
 }
 
 template<typename T>
-T* SharedPtr<T>::Get() {
+inline T* SharedPtr<T>::Get() {
 	return data->ptr;
 }
 
