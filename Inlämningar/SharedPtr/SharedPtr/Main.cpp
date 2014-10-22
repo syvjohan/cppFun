@@ -116,6 +116,11 @@ void TestVG(){
 	////	o	expired()		VG	Redan testat
 }
 
+struct str
+{
+	int v;
+};
+
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TestG();
@@ -130,6 +135,12 @@ int main() {
 
 
 	}*/
+
+	SharedPtr<int> i1 = new int(2);
+	SharedPtr<int> i2 = i1;
 	
+	i2 = i2;
+
+	system("pause");
 }
 
