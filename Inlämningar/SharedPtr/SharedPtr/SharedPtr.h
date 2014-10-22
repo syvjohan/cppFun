@@ -1,3 +1,4 @@
+//AB5785 Johan Fredriksson
 #pragma once
 
 #include "Defs.h"
@@ -14,25 +15,28 @@ public:
 
 	~SharedPtr<T>();
 
+	//Operators
 	operator bool() const;
 
-	bool operator==( const SharedPtr<T> &sharedPtr);
+	bool operator==(const SharedPtr<T> &sharedPtr);
 
-	const SharedPtr<T>& operator=( const SharedPtr<T> &sharedPtr);
+	const SharedPtr<T>& operator=(const SharedPtr<T> &sharedPtr);
 
-	bool operator<( const SharedPtr<T> &sharedPtr);
+	bool operator<(const SharedPtr<T> &sharedPtr);
 
 	T& operator*();
 	const T& operator*() const;
 
 	T* operator->();
 	const T* operator->() const;
+	//End operators.
 
 	void Reset();
 	T* Get();
 	bool Unique();
 
 private:
+	//Contains SharedPtr data.
 	struct SharedPtrData {
 		T *ptr = nullptr;
 		int count = 0;
@@ -60,7 +64,8 @@ SharedPtr<T>::SharedPtr(T* ptr) {
 		data = DBG_NEW SharedPtrData;
 		data->ptr = ptr;
 		data->count = 1;
-	} else {
+	}
+	else {
 		data = nullptr;
 	}
 }
@@ -73,6 +78,7 @@ SharedPtr<T>::~SharedPtr() {
 //if sharedPtr is an object return it.
 template<typename T>
 SharedPtr<T>::operator bool() const {
+	//The () is for prioritating the evaluating by the statement.
 	return data && (data->ptr != nullptr);
 }
 
@@ -81,38 +87,35 @@ template<typename T>
 inline bool SharedPtr<T>::operator== (const SharedPtr<T> &sharedPtr) {
 	if (data != nullptr) {
 		return sharedPtr.data && data->ptr == sharedPtr.data->ptr;
-	} else {
+	}
+	else {
 		return !sharedPtr.data;
 	}
 }
 
 template<typename T>
 inline const SharedPtr<T>& SharedPtr<T>::operator= (const SharedPtr<T> &sharedPtr) {
-	
-	if ( sharedPtr.data == data)
-		return *this;
-
-	Reset();
-
-	if ( sharedPtr.data != nullptr )
-	{
-		data = sharedPtr.data;
-		data->count++;
+	//If it is true dont do anything!
+	if (sharedPtr.data != data) {
+		Reset();
+		if (sharedPtr.data != nullptr)
+		{
+			data = sharedPtr.data;
+			data->count++;
+		}
 	}
-	
+
 	return *this;
 }
 
 //Operator< assumes that there is no negative pointers.
 template<typename T>
 inline bool SharedPtr<T>::operator< (const SharedPtr<T> &sharedPtr) {
-	if (data)
-	{
+	if (data != nullptr) {
 		return sharedPtr.data && data->ptr < sharedPtr.data->ptr;
 	}
-	else
-	{
-		return sharedPtr.data && sharedPtr.data->ptr;
+	else {
+		return sharedPtr.data != nullptr && sharedPtr.data->ptr != nullptr;
 	}
 }
 
@@ -130,7 +133,7 @@ inline const T& SharedPtr<T>::operator*() const {
 
 template<typename T>
 inline T* SharedPtr<T>::operator->() {
-	return  Get();
+	return Get();
 }
 
 template<typename T>
@@ -140,14 +143,13 @@ inline const T* SharedPtr<T>::operator->() const {
 
 template<typename T>
 void SharedPtr<T>::Reset() {
-	if (data == nullptr) return;
-
-	if (data->count == 1)  {
+	if (data == nullptr) {
+		return;
+	} else if (data->count == 1)  {
 		delete data->ptr;
 		delete data;
 		data = nullptr;
-	}
-	else  {
+	} else  {
 		--data->count;
 	}
 

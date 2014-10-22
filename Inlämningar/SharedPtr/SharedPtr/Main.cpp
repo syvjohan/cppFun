@@ -136,10 +136,10 @@ int main() {
 
 	}*/
 
-	SharedPtr<int> i1 = new int(2);
-	SharedPtr<int> i2 = i1;
-	
-	i2 = i2;
+	//SharedPtr<int> i1 = new int(2);
+	//SharedPtr<int> i2 = i1;
+	//
+	//i2 = i2;
 
 	system("pause");
 }
