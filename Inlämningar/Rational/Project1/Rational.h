@@ -14,17 +14,10 @@ public:
 
 	~Rational<T>();
 
-	//Typecast to different data types of rational.
-	template<typename T2>
-	explicit operator Rational<T2>();
-
 	template<typename T2>
 	explicit operator T2();
 
 	bool operator== (const Rational<T> &r);
-
-	template<typename T2>
-	bool operator==(T2 n) { return ((T2)*this) == n; };
 
 	Rational<T> operator= (const Rational<T> &r);
 	Rational<T> operator- (const Rational<T> &r);
@@ -78,13 +71,6 @@ Rational<T>::~Rational() {
 
 }
 
-//Typecast to different data types of rational.
-template<typename T>
-template<typename T2>
-Rational<T>::operator Rational<T2>() {
-	return Rational<T2>((T2)numerator, (T2)denominator);
-}
-
 template<typename T>
 T GCD(T A, T B) {
 	if (A<B)
@@ -109,12 +95,12 @@ void Reduce(T &A, T &B) {
 
 template<typename T>
 template<typename T2>
-Rational<T>::operator T2() {
+inline Rational<T>::operator T2() {
 	return static_cast<T2>((double)numerator / (double)denominator);
 }
 
 template<typename T>
-bool Rational<T>::operator== (const Rational<T> &r) {
+inline bool Rational<T>::operator== (const Rational<T> &r) {
 	return (r.denominator == denominator && r.numerator == numerator);
 }
 
@@ -144,27 +130,27 @@ Rational<T> Rational<T>::operator= (const Rational<T> &r) {
 }
 
 template<typename T>
-Rational<T> Rational<T>::operator+= (const Rational<T> &r) {
+inline Rational<T> Rational<T>::operator+= (const Rational<T> &r) {
 	*this = *this + r;
 	return *this;
 }
 
 template<typename T>
-Rational<T> Rational<T>::operator-= (const Rational<T> &r) {
+inline Rational<T> Rational<T>::operator-= (const Rational<T> &r) {
 	*this = *this - r;
 	return *this;
 }
 
 //Unary numbers.
 template<typename T>
-Rational<T> Rational<T>::operator- () {
+inline Rational<T> Rational<T>::operator- () {
 	numerator = -numerator;
 	return Rational<T>(numerator, denominator);
 }
 
 //Prefix, ++i.
 template<typename T>
-Rational<T>& Rational<T>::operator++() {
+inline Rational<T>& Rational<T>::operator++() {
 	//Increment object.
 	numerator += denominator;
 	Reduce(numerator, denominator);
@@ -173,7 +159,7 @@ Rational<T>& Rational<T>::operator++() {
 
 //Postfix, i++.
 template<typename T>
-Rational<T> Rational<T>::operator++(int) {
+inline Rational<T> Rational<T>::operator++(int) {
 	Rational<T> temp(numerator, denominator); //Create a copy
 	numerator += denominator;
 	Reduce(temp.numerator, temp.denominator);

@@ -38,7 +38,8 @@ public:
 private:
 	//Contains SharedPtr data.
 	struct SharedPtrData {
-		T *ptr = nullptr;
+
+		T *ptr;
 		int count = 0;
 	}*data;
 };
@@ -163,5 +164,8 @@ inline T* SharedPtr<T>::Get() {
 
 template<typename T>
 bool SharedPtr<T>::Unique() {
-	return data->count == 1;
+	if (data != nullptr) {
+		return data->count == 1;
+	}
+	return true;
 }

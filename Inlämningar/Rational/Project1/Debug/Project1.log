@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 2014-10-17 06:38:32.
      1>Project "C:\cppFun\Inlämningar\Rational\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
@@ -9,3 +10,23 @@
 Build succeeded.
 
 Time Elapsed 00:00:00.09
+=======
+﻿Build started 10/23/2014 2:30:48 PM.
+     1>Project "C:\Programmering\cppFun\Inlämningar\Rational\Project1\Project1.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
+     1>c:\programmering\cppfun\inlämningar\rational\project1\rational.h(64): warning C4244: '=' : conversion from 'const __int64' to 'short', possible loss of data
+                 c:\programmering\cppfun\inlämningar\rational\project1\main.cpp(26) : see reference to function template instantiation 'Rational<short>::Rational<__int64>(const Rational<__int64>)' being compiled
+                 c:\programmering\cppfun\inlämningar\rational\project1\main.cpp(26) : see reference to function template instantiation 'Rational<short>::Rational<__int64>(const Rational<__int64>)' being compiled
+     1>c:\programmering\cppfun\inlämningar\rational\project1\rational.h(65): warning C4244: '=' : conversion from 'const __int64' to 'short', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Programmering\cppFun\Inlämningar\Rational\Project1\Debug\Rational.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Programmering\cppFun\Inlämningar\Rational\Project1\Debug\Rational.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Programmering\cppFun\Inlämningar\Rational\Project1\Debug\Rational.lib" /MACHINE:X86 Debug\Main.obj
+         Project1.vcxproj -> C:\Programmering\cppFun\Inlämningar\Rational\Project1\Debug\Rational.exe
+     1>Done Building Project "C:\Programmering\cppFun\Inlämningar\Rational\Project1\Project1.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.78
+>>>>>>> 52a8e6fa978b35b8b3fc8c0b49965e4d3f10bc10

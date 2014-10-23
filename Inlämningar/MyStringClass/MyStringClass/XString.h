@@ -26,11 +26,10 @@ public:
 	int Lenght() const;
 	void Reserve(const int numb);
 	int Capacity() const;
-	//ShrinkToFit();
+	void ShrinkToFit();
 	void PushBack(const char c);
-	//Resize(int n);
+	void Resize(int n);
 
 private:
 	char *string;
-	char c;
 };

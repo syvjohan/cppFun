@@ -1,16 +1,16 @@
-﻿Build started 2014-10-23 12:03:02.
-     1>Project "C:\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/23/2014 2:43:13 PM.
+     1>Project "C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainString.cpp XString.cpp
          XString.cpp
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(75): error C2440: '=' : cannot convert from 'XString *' to 'char *'
+     1>c:\programmering\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(75): error C2440: 'initializing' : cannot convert from 'XString *' to 'char *'
                  Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
          Generating Code...
          Compiling...
          MainString.cpp
          Generating Code...
-     1>Done Building Project "C:\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" (Build target(s)) -- FAILED.
+     1>Done Building Project "C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.75
+Time Elapsed 00:00:00.56
