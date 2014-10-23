@@ -40,8 +40,8 @@ private:
 
 	SharedPtrData *data;
 
-	T *ptr;
-	int count = 0;
+	//T *ptr;
+	//int count = 0;
 };
 
 template<typename T>
