@@ -1,3 +1,4 @@
+//AB5785 Johan Fredriksson
 #pragma once
 
 #include "Defs.h"
@@ -6,34 +7,38 @@
 
 template<typename T>
 class SharedPtr {
-
 public:
 	SharedPtr<T>(void);
-	SharedPtr<T>(SharedPtr<T> &sharedPtr);
-	SharedPtr<T>(T* ptr);
-
 	//Copy constructor.
-	template<typename T2>
-	SharedPtr<T>(SharedPtr<T2> r);
+	SharedPtr<T>(const SharedPtr<T> &sharedPtr);
+	SharedPtr<T>(T* ptr);
 
 	~SharedPtr<T>();
 
-	operator bool () const;
-	bool operator== (const SharedPtr<T> *sharedPtr);
-	bool operator< (const SharedPtr<T> *sharedPtr);
-	T& operator* ();
+	//Operators
+	operator bool() const;
 
-	template<typename T>
-	T* SharedPtr<T>::*operator-> () {
-		return ptr;
-	} 
+	bool operator==(const SharedPtr<T> &sharedPtr);
 
-	SharedPtr<T> Reset();
+	const SharedPtr<T>& operator=(const SharedPtr<T> &sharedPtr);
+
+	bool operator<(const SharedPtr<T> &sharedPtr);
+
+	T& operator*();
+	const T& operator*() const;
+
+	T* operator->();
+	const T* operator->() const;
+	//End operators.
+
+	void Reset();
 	T* Get();
 	bool Unique();
 
 private:
+	//Contains SharedPtr data.
 	struct SharedPtrData {
+<<<<<<< HEAD
 		T *ptr;
 		int count;
 	};
@@ -42,88 +47,132 @@ private:
 
 	//T *ptr;
 	//int count = 0;
+=======
+		T *ptr = nullptr;
+		int count = 0;
+	}*data;
+>>>>>>> 04c1dace757d598424f6637c2c21a045e18dafeb
 };
 
+//No meaning to allocate memory for a nullptr.
 template<typename T>
 SharedPtr<T>::SharedPtr(void) {
-	data = NULL;
-
-	//ptr = DBG_NEW T[sizeof(SharedPtr<T>)];
-	//assert(ptr == nullptr && "ERROR, allocation of memory for ptr failed!");
-	//count++;
-}
-
-template<typename T>
-SharedPtr<T>::SharedPtr(const SharedPtr<T> &sharedPtr) {
-
-
-	data = sharedPtr.data;
-	data->count += 1;
-
-	++sharedPtr.count;
-
-	count = sharedPtr.count;
-
-}
-
-template<typename T>
-SharedPtr<T>::SharedPtr(T* ptr) {
-
-	data = new SharedPtrData;
-	data->ptr = ptr;
-	data->count = 1;
-
-
-	ptr = new T;
-	count++;
+	data = nullptr;
 }
 
 //Copy constructor.
 template<typename T>
-template<typename T2>
-SharedPtr<T>::SharedPtr(SharedPtr<T2> r) {
-	ptr = new T;
-	*this->ptr = *r.ptr; //Copy the value.
+SharedPtr<T>::SharedPtr(const SharedPtr<T> &sharedPtr) {
+	data = sharedPtr.data;
+	if (data != nullptr) {
+		data->count += 1;
+	}
+}
+
+template<typename T>
+SharedPtr<T>::SharedPtr(T* ptr) {
+	if (ptr != nullptr) {
+		data = DBG_NEW SharedPtrData;
+		data->ptr = ptr;
+		data->count = 1;
+	}
+	else {
+		data = nullptr;
+	}
 }
 
 template<typename T>
 SharedPtr<T>::~SharedPtr() {
-	delete ptr;
+	Reset();
 }
 
 //if sharedPtr is an object return it.
 template<typename T>
 SharedPtr<T>::operator bool() const {
-	return T* != nullptr;
+	//The () is for prioritating the evaluating by the statement.
+	return data && (data->ptr != nullptr);
+}
+
+//If they are equal return true!
+template<typename T>
+inline bool SharedPtr<T>::operator== (const SharedPtr<T> &sharedPtr) {
+	if (data != nullptr) {
+		return sharedPtr.data && data->ptr == sharedPtr.data->ptr;
+	}
+	else {
+		return !sharedPtr.data;
+	}
 }
 
 template<typename T>
-bool SharedPtr<T>::operator== (const SharedPtr<T> *sharedPtr) {
-	return *ptr == *sharedPtr->ptr;
+inline const SharedPtr<T>& SharedPtr<T>::operator= (const SharedPtr<T> &sharedPtr) {
+	//If it is true dont do anything!
+	if (sharedPtr.data != data) {
+		Reset();
+		if (sharedPtr.data != nullptr)
+		{
+			data = sharedPtr.data;
+			data->count++;
+		}
+	}
+
+	return *this;
+}
+
+//Operator< assumes that there is no negative pointers.
+template<typename T>
+inline bool SharedPtr<T>::operator< (const SharedPtr<T> &sharedPtr) {
+	if (data != nullptr) {
+		return sharedPtr.data && data->ptr < sharedPtr.data->ptr;
+	}
+	else {
+		return sharedPtr.data != nullptr && sharedPtr.data->ptr != nullptr;
+	}
+}
+
+//Return a reference to the value pointer points to.
+template<typename T>
+inline T& SharedPtr<T>::operator*() {
+	return *(Get());  //*() dereferencing the pointer.
+}
+
+//Return a reference to the value pointer points to.
+template<typename T>
+inline const T& SharedPtr<T>::operator*() const {
+	return *(Get()); //*() dereferencing the pointer.
 }
 
 template<typename T>
-bool SharedPtr<T>::operator< (const SharedPtr<T> *sharedPtr) {
-	return *ptr < *sharedPtr->ptr;
+inline T* SharedPtr<T>::operator->() {
+	return Get();
 }
 
 template<typename T>
-T& SharedPtr<T>::operator* () {
-	return *ptr;
+inline const T* SharedPtr<T>::operator->() const {
+	return Get();
 }
 
 template<typename T>
-SharedPtr<T> SharedPtr<T>::Reset() {
-	ptr* = nullptr;
-	count--;
+void SharedPtr<T>::Reset() {
+	if (data == nullptr) {
+		return;
+	} else if (data->count == 1)  {
+		delete data->ptr;
+		delete data;
+		data = nullptr;
+	} else  {
+		--data->count;
+	}
+
+	data = nullptr;
 }
 
 template<typename T>
-T* SharedPtr<T>::Get() {
-	return *ptr;
+inline T* SharedPtr<T>::Get() {
+	return data->ptr;
 }
 
 template<typename T>
 bool SharedPtr<T>::Unique() {
-	return count == 1;
+	return data->count == 1;
 }
