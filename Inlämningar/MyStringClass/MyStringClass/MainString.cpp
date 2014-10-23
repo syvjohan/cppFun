@@ -12,7 +12,7 @@ using namespace std;
 
 void TestFörGodkäntXString() {
 //-	XString()
-	XString s0;	assert (s0=="");
+	//XString s0;	assert (s0=="");
 
 //-	XString(Sträng sträng)
 	/*XString s1("foo"); assert(s1=="foo");
@@ -157,5 +157,12 @@ int main() {
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 	TestFörGodkäntXString();
 	//TestFörVälGodkäntXString();
+
+
+	XString xstring;
+	//xstring = "hej";
+	
+
+
 	cin.get();
 }

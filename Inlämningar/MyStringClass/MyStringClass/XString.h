@@ -24,10 +24,10 @@ public:
 	char& At(int i);
 	const char* Data() const;
 	int Lenght() const;
-	void Reserve(int);
+	void Reserve(const int numb);
 	int Capacity() const;
 	//ShrinkToFit();
-	void PushBack(char c);
+	void PushBack(const char c);
 	//Resize(int n);
 
 private:

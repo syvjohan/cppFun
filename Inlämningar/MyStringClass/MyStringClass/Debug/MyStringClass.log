@@ -1,20 +1,11 @@
-﻿Build started 2014-10-23 02:01:03.
+﻿Build started 2014-10-23 12:03:02.
      1>Project "C:\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainString.cpp XString.cpp
          XString.cpp
+     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(75): error C2440: '=' : cannot convert from 'XString *' to 'char *'
+                 Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
          Generating Code...
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(23): error C4716: 'XString::operator=' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(39): error C4716: 'XString::operator+=' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(35): error C4716: 'XString::operator+=' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(27): error C4716: 'XString::operator=' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(46): error C4716: 'XString::operator[]' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(31): error C4716: 'XString::operator=' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(50): error C4716: 'operator==' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(54): error C4716: 'XString::At' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(58): error C4716: 'XString::Data' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(62): error C4716: 'XString::Lenght' : must return a value
-     1>c:\cppfun\inlämningar\mystringclass\mystringclass\xstring.cpp(70): error C4716: 'XString::Capacity' : must return a value
          Compiling...
          MainString.cpp
          Generating Code...
@@ -22,4 +13,4 @@
 
 Build FAILED.
 
-Time Elapsed 00:00:00.40
+Time Elapsed 00:00:00.75
