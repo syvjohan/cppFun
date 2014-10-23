@@ -1,164 +1,243 @@
+//AB5785 Johan Fredriksson
 #ifndef LIST_H
 #define LIST_H
 
-#include <iostream>
+#include <cassert>
 #include "Node.h"
+
 
 template <class T>
 class List {
-	template <class T> friend class Node;
+	friend class Node<T>;
 public:
 	List();
 	~List();
+	void InitializeList();
 
-	bool IsNullptr(Node<T> *nodePtr) const;
-	void PushFront(const T data);
-	void PushBack(const T data);
-	Node<T> *PopFront();
-	Node<T> *PopBack();
-	Node<T> *Back() const;
-	Node<T> *Front() const;
-	void ClearList();
-	void List<T>::PrintListForward();
-	void List<T>::PrintListReverse();
+	Node<T>* GetFirstNode();
+	Node<T>* GetLastNode();
+	Node<T>* SetFirstNode(Node<T> *node);
+	Node<T>* SetLastNode(Node<T> *node);
+
+	void PopBack();
+	void PopFront();
+
+	void PushFront(const T& data);
+	void PushBack(const T& data);
+
+	bool SearchForNode(T data);
+	bool Check(int count);
+	void PrintList();
+	int AmountOfNodes();
+	void Clear();
 
 private:
-	Node<T> *firstNode, *lastNode;
+	int count;
+	Node<T> *firstNode;
+	Node<T> *lastNode;
 };
+
+#endif //!LIST_H
+
+// "List.cpp"
+#include "Defs.h"
+
+#include <iostream>
 
 template <class T>
 List<T>::List() {
+	InitializeList();
+}
+
+template <class T>
+List<T>::~List() {
+	Clear();
+}
+
+template <class T>
+void List<T>::Clear() {
+	Node<T> *currentPtr = GetFirstNode();
+
+	Node<T> *tmp;
+	while (currentPtr != nullptr) {
+		tmp = currentPtr;
+		currentPtr = currentPtr->GetNext();
+		delete tmp;
+	}
+}
+
+template <class T>
+void List<T>::InitializeList() {
 	firstNode = nullptr;
 	lastNode = nullptr;
+	count = 0;
 }
 
 template <class T>
-List<T>::~List() {}
-
-// Check either or not the pointer is a nullptr.
-template <class T>
-inline bool List<T>::IsNullptr(Node<T> *nodePtr) const {
-	return nodePtr == nullptr;
-}
-
-// Push a node to the first position in the list.
-template <class T>
-void List<T>::PushFront(T data) {
-	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
-	newNode->data = data;
-	Node<T> *tempNode = firstNode;//Creating a temporary Node with the value of firstNode.
-	firstNode = newNode;
-	firstNode->nextNode = tempNode; 
-}
-
-//Pushes a node at the end of the list.
-template <class T>
-void List<T>::PushBack(T data) {
-	Node<T> *newNode = new Node<T>; //Allocate memory for a new node.
-	newNode->data = data;
-	lastNode = firstNode->previousNode;
-	//Node<T> *tempNode = lastNode; //Creating a temporary Node with the value of lastNode
-	if (IsNullptr(firstNode)) {
-		return;
-	} else {
-		//One element in the List
-		if (firstNode == lastNode) {
-			firstNode = newNode;
-			// 2 or more elements in the List
-		} else {
-			lastNode->nextNode = newNode;
-		}
-	}
-}
-
-// Erase the first element in the list.
-template <class T>
-Node<T>* List<T>::PopFront() {
-	if (IsNullptr(firstNode)) {
-		return nullptr;
-	}
-
-	Node<T> *tempNode = firstNode;
-	firstNode = firstNode->nextNode;
-
-	return tempNode;
-}
-
-// Returns the last element in the list.
-template <class T>
-Node<T>* List<T>::PopBack() {
-	if (IsNullptr(firstNode)) {
-		return nullptr;
-	}
-
-	Node<T> *tempNode = firstNode;
-	Node<T> *previous = nullptr;
-	while (!(IsNullptr(tempNode->nextNode))) {
-		previous = tempNode;
-		tempNode = tempNode->nextNode; //Move one step forward in the list.
-	}
-	previous->nextNode = nullptr; //erase link to last element.
-
-	return tempNode;
-}
-
-// Returns the last element in the list.
-template <class T>
-Node<T>* List<T>::Back() const {
-	if (IsNullptr(firstNode)) {
-		return nullptr;
-	}
-
-	Node<T> *tempNode = firstNode;
-	Node<T> *previous = nullptr;
-	while (!(IsNullptr(tempNode->nextNode))) {
-		previous = tempNode;
-		tempNode = tempNode->nextNode; //Move one step forward in the list.
-	}
-
-	return tempNode;
-}
-
-// Returns the first element in the list.
-template <class T>
-Node<T>* List<T>::Front() const {
-	if (IsNullptr(firstNode)) {
-		return nullptr;
-	}
-
+Node<T>* List<T>::GetFirstNode() {
 	return firstNode;
 }
 
-//Clear all elements in the list.
 template <class T>
-void List<T>::ClearList() {
-	while (!(IsNullptr(firstNode))) {
-		Node<T> *tempNode = firstNode;
-		firstNode = firstNode->nextNode; // Move the pointer one step forward.
-		delete tempNode; // Delete previous node.
-	}
-	firstNode = nullptr;
+Node<T>* List<T>::GetLastNode() {
+	return lastNode;
 }
 
 template <class T>
-void List<T>::PrintListForward() {
-	std::cout << "The values in the list are: \n" << std::endl;
-	while (firstNode != nullptr) {
-		std::cout << " --> " << firstNode->data;
-		firstNode = firstNode->nextNode;
-	}
-	std::cout << "\n" << endl;
+Node<T>* List<T>::SetFirstNode(Node<T> *node) {
+	return firstNode = node;
 }
 
 template <class T>
-void List<T>::PrintListReverse() {
-	std::cout << "The values in the list are: \n" << std::endl;
-	while (firstNode != nullptr) {
-		std::cout << " <-- " << lastNode->data;
-		lastNode = lastNode->nextNode;
-	}
-	std::cout << "\n" << endl;
+Node<T>* List<T>::SetLastNode(Node<T> *node) {
+	return lastNode = node;
 }
 
-#endif //!LIST_H
+template <class T>
+void List<T>::PopBack() {
+	if (GetFirstNode() == GetLastNode() && GetFirstNode() != NULL) {
+		assert(count == 1);
+
+		delete firstNode;
+		firstNode = lastNode = NULL;
+		count = 0;
+	} else if (GetFirstNode() != nullptr) {
+		assert(count > 1);
+		Node<T> *tmp = GetLastNode();
+		SetLastNode(GetLastNode()->GetPrev());
+		GetLastNode()->SetNext(nullptr);
+		delete tmp;
+		--count;
+	} else {
+		assert(count == 0);
+		printf("\nList is empty!\n");
+	}
+}
+
+template <class T>
+void List<T>::PopFront() {
+	if (GetFirstNode() != nullptr) {
+		Node<T> *tmp = GetFirstNode();
+		SetFirstNode(GetFirstNode()->GetNext());
+		GetFirstNode()->SetPrev(nullptr);
+		delete tmp;
+		--count;
+	} else {
+		printf("\nNo values in List to Pop!\n");
+	}
+}
+
+template <class T>
+void List<T>::PushFront(const T& data) {
+	Node<T> *newNode = DBG_NEW Node<T>;
+	newNode->value = data;
+
+	//If the list NOT is empty.
+	if (GetFirstNode() != nullptr) {
+		newNode->SetNext(GetFirstNode());
+		newNode->SetPrev(GetLastNode());
+
+		GetFirstNode()->SetPrev(newNode);
+		SetFirstNode(newNode);
+	} else {
+		//If the list is empty.
+		SetFirstNode(newNode);
+		SetLastNode(newNode);
+	}
+
+	++count;
+}
+
+template <class T>
+void List<T>::PushBack(const T& data) {
+	Node<T> *newNode = DBG_NEW Node<T>;
+	newNode->value = data;
+
+	if (GetFirstNode() != nullptr) {
+		//If the list is NOT empty.
+		newNode->SetNext(GetFirstNode());
+		newNode->SetPrev(GetLastNode());
+
+		GetLastNode()->SetNext(newNode);
+		SetLastNode(newNode);
+		GetLastNode()->SetNext(nullptr);
+	} else {
+		//If the list is empty.
+		SetFirstNode(newNode);
+		SetLastNode(newNode);
+	}
+
+	++count;
+}
+
+
+//Check if a specified value exist in the list.
+template <class T>
+bool List<T>::SearchForNode(T data) {
+	Node<T> *currentPtr = GetFirstNode();
+
+	while (currentPtr != nullptr) {
+		if (currentPtr->value == data) {
+			return true;
+		}
+		currentPtr = currentPtr->GetNext();
+	}
+	return false;
+}
+
+//Counts the number of nodes in the list.
+template <class T>
+int List<T>::AmountOfNodes() {
+	Node<T> *currentPtr = GetFirstNode();
+	int count = 0;
+
+	while (currentPtr != nullptr) {
+		count++;
+		currentPtr = currentPtr->GetNext();
+	}
+	return count;
+}
+
+template <class T>
+bool List<T>::Check(int count) {
+	if (count != this->count) // Se till att vi räknat noderna rätt.
+		return false;
+
+	//count anger hur många noder som förväntas i strukturen.
+	//true betyder att allt var ok
+	if ((count == 0) ^ (firstNode == nullptr))
+		return false; //tom lista ska ha first=null och tvärtom.
+	if (firstNode == nullptr)
+		return (lastNode == nullptr && count == 0);
+	if ((lastNode == nullptr) || count == 0)
+		return false;
+	//nu är first och last != null och count!=0)
+	Node<T> *tmpNode = firstNode;
+	Node<T> *tail = nullptr;
+	while (tmpNode != nullptr && count > 0) {
+		if (tail != tmpNode->prev)
+			return false;
+		count--;
+		tail = tmpNode;
+		tmpNode = tmpNode->next;
+	}
+	return (tail == lastNode) && count == 0;
+}
+
+template <class T>
+void List<T>::PrintList() {
+	Node<T> *currentPtr = GetFirstNode();
+
+	if (currentPtr == nullptr) {
+		printf("\nList is empty!\n");
+	} else {
+		printf("\nThe element(s) in the list are: ");
+		printf("nullptr --> ");
+		while (currentPtr != nullptr) {
+			printf("%.4f --> ", currentPtr->value);
+			currentPtr = currentPtr->GetNext();
+		}
+		printf("nullptr.\n");
+	}
+}
 

@@ -65,6 +65,7 @@ Rational<T>::Rational(T num, T den) {
 	assert(den != 0 && "Division by zero");
 }
 
+//Copy constructor.
 template <typename T>
 template<typename T2>
 Rational<T>::Rational(const Rational<T2> r) {

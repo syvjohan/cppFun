@@ -12,7 +12,7 @@ TeleReg::TeleReg(int maxSize) {
 }
 
 TeleReg::~TeleReg() {
-	delete[] reg;
+	//delete[] reg;
 }
 
 void TeleReg::AddContact(const std::string &number, const std::string &name) {

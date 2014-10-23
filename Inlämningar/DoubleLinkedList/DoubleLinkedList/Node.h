@@ -1,41 +1,68 @@
+//AB5785 Johan Fredriksson
 #ifndef NODE_H
 #define NODE_H
 
+//Frammåt deklaration
+template<class T>
+class List;
+
 template <class T>
 class Node {
-	template <class T> friend class List;
+	friend class List<T>;
 public:
-	Node();
 	~Node();
+	Node();
+	void InitializeNode();
 
-	Node *InsertAfter(List<T> *list, T data);
-	Node *InsertBefore(List<T> *list, T data);
+	T value;
 
-	T data;
-	
+	Node* GetPrev();	
+	Node* GetNext();
+	Node* SetPrev(Node *node);
+	Node* SetNext(Node *node);
+
 private:
-	Node *nextNode, *previousNode;
+	Node *prev;
+	Node *next;
 };
+
+#endif //!NODE_H
+
+// "Node.cpp"
+#include "Defs.h"
 
 template <class T>
 Node<T>::Node() {
-	nextNode = nullptr;
-	previousNode = nullptr;
+	InitializeNode();
 }
 
 template <class T>
-Node<T>::~Node() {}
-
-template <class T>
-Node<T>* Node<T>::InsertAfter( List<T> *list, T data) {
+Node<T>::~Node() {
 
 }
 
 template <class T>
-Node<T>* Node<T>::InsertBefore(List<T> *list, T data) {
-	
+void Node<T>::InitializeNode() {
+	prev = nullptr;
+	next = nullptr;
 }
 
+template <class T>
+Node<T>* Node<T>::GetPrev() {
+	return prev;
+}
 
+template <class T>
+Node<T>* Node<T>::GetNext() {
+	return next;
+}
 
-#endif //!NODE_H
+template <class T>
+Node<T>* Node<T>::SetPrev(Node *node) {
+	return prev = node;
+}
+
+template <class T>
+Node<T>* Node<T>::SetNext(Node *node) {
+	return next = node;
+}
