@@ -38,20 +38,10 @@ public:
 private:
 	//Contains SharedPtr data.
 	struct SharedPtrData {
-<<<<<<< HEAD
+
 		T *ptr;
-		int count;
-	};
-
-	SharedPtrData *data;
-
-	//T *ptr;
-	//int count = 0;
-=======
-		T *ptr = nullptr;
 		int count = 0;
 	}*data;
->>>>>>> 04c1dace757d598424f6637c2c21a045e18dafeb
 };
 
 //No meaning to allocate memory for a nullptr.
@@ -174,5 +164,8 @@ inline T* SharedPtr<T>::Get() {
 
 template<typename T>
 bool SharedPtr<T>::Unique() {
-	return data->count == 1;
+	if (data != nullptr) {
+		return data->count == 1;
+	}
+	return true;
 }

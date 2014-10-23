@@ -33,6 +33,8 @@ void TestG() {
 	SharedPtr<C> p14(p12);
 	assert(p14);
 	assert(!p12.Unique());
+	SharedPtr<C> test;
+	test.Unique();
 
 
 	//-	Destruktor	G
