@@ -12,21 +12,22 @@ using namespace std;
 
 void TestFörGodkäntXString() {
 //-	XString()
-	//XString s0;	assert (s0=="");
+	XString s0;	
+	assert (s0=="");
 
 //-	XString(Sträng sträng)
-	/*XString s1("foo"); assert(s1=="foo");
+	XString s1("foo"); assert(s1=="foo");
 	XString s2(s1); assert(s2=="foo");
-	XString s3("bar");  assert(s3=="bar");*/
+	XString s3("bar");  assert(s3=="bar");
 
 //-	~XString() Kom ihåg destruktorn!
-	/*delete new XString("hej");*/
+	delete new XString("hej");
 
 //	-	operator =(Sträng sträng)
-	/*assert((s2=s3)==s3);
-	assert((s2=s2)==s3);
-	assert((s2=("foo"))=="foo");
-	assert((s2="bar")=="bar");*/
+	assert((s2=s3)==s3);
+	//assert((s2=s2)==s3);
+	//assert((s2=("foo"))=="foo");
+	//assert((s2="bar")=="bar");
 
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
@@ -154,15 +155,9 @@ void TestFörVälGodkäntXString() {
 
 
 int main() {
-	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TestFörGodkäntXString();
 	//TestFörVälGodkäntXString();
-
-
-	XString xstring;
-	//xstring = "hej";
 	
-
-
 	cin.get();
 }
