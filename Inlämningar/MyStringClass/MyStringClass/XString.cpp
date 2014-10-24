@@ -5,7 +5,7 @@
 
 //Help functions
 
-inline size_t XString::GetLenght(const char *cstr) const {
+inline size_t XString::StrLenght(const char *cstr) const {
 	size_t lenght = 0;
 	while (*cstr != '\0') {
 		cstr++;
@@ -15,15 +15,14 @@ inline size_t XString::GetLenght(const char *cstr) const {
 }
 
 inline int XString::ExpandStrSize(int lenght) {
-	int size = 10;
+
 	int newSize;
 	return newSize = ((lenght * 2) + size);
 }
 
-char* XString::Add_0() {
-	//Adding '\0' at end.
-	int index = GetLenght(string);
-	string[index] = '\0';
+//Adding '\0' at end of string.
+char* XString::AddTerminator() {
+	string[capacity] = '\0';
 
 	return string;
 }
@@ -31,23 +30,27 @@ char* XString::Add_0() {
 //End help functions
 
 XString::XString() {
-	string = new char[ExpandStrSize(0)];
+	string = NULL;
+	
+	string = new char[capacity];
 	memset(string, '\0', sizeof(string));
 }
 
 //Copy constructor.
 XString::XString(const XString& rhs) {
-	int len = GetLenght(rhs.string);
-	string = new char[ExpandStrSize(0)];
-	memcpy(string, rhs.string, len + 1);
-	Add_0();
+	capacity = rhs.capacity;
+	size = rhs.size;
+	
+	string = new char[capacity];
+	memcpy(string, rhs.string, rhs.size );
+	AddTerminator();
 }
 
 XString::XString(const char *cstr) {
-	int len = GetLenght(cstr);
-	string = new char[ExpandStrSize(len)];
-	memcpy(string, cstr, len + 1);
-	Add_0();
+	/*string = new char[capacity];
+
+	m*/emcpy(string, cstr, len + 1);
+	AddTerminator();
 }
 
 XString::~XString() {
@@ -55,30 +58,30 @@ XString::~XString() {
 }
 
 //Operatos
-inline XString& XString::operator=(const XString& rhs) {//Denna!
-	delete string; //Erase information!
+XString& XString::operator=(const XString& rhs) {//Denna!
+	delete[] string; //Erase information!
 
-	int len = GetLenght(rhs.string);
+	int len = StrLenght(rhs.string);
 	string = new char[ExpandStrSize(len)];
 	memcpy(string, rhs.string, len + 1);
-	Add_0();
+	AddTerminator();
 
 	return *this;
 }
 
-inline XString& XString::operator=(const char* cstr) {
+XString& XString::operator=(const char* cstr) {
 	delete string; //Erase information!
 
-	int len = GetLenght(cstr);
+	int len = StrLenght(cstr);
 	string = new char[ExpandStrSize(len)];
 	memcpy(string, cstr, len + 1);
-	Add_0();
+	AddTerminator();
 
 	return *this;
 }
 
 //Insert 1 character.
-inline XString& XString::operator=(char ch) {
+XString& XString::operator=(char ch) {
 	delete string; //Erase information!
 
 	string = new char[ExpandStrSize(1)];
@@ -88,23 +91,22 @@ inline XString& XString::operator=(char ch) {
 	return *this;
 }
 
-inline XString& XString::operator+=(const XString& rhs) {
-	int len = GetLenght(rhs.string); //Get lenght of strlen
+XString& XString::operator+=(const XString& rhs) {
+	int len = StrLenght(rhs.string); //Get lenght of strlen
 	rhs.string[len + 1] = '\0'; //add null terminal at end of cstr.
 	strcat(string, rhs.string); //strcat, rhs overwrites the '\0' in string.
 	return *this;
 }
 
-inline XString& XString::operator+=(char* cstr) {
-	int len = GetLenght(cstr); //Get lenght of strlen
+XString& XString::operator+=(char* cstr) {
+	int len = StrLenght(cstr); //Get lenght of strlen
 	cstr[len + 1] = '\0'; //add null terminal at end of cstr.
 	strcat(string, cstr); //strcat, cstr overwrites the '\0' in string.
 	return *this;
 }
 
-inline char& XString::operator[](int i) {
-	char out;
-	return out = string[i];
+char& XString::operator[](int i) {
+	return string[i];
 }
 
 XString& XString::operator+(const XString& lhs) {
@@ -129,8 +131,8 @@ const char* XString::Data() const {
 
 //The Lenght excludes the '\0'.
 int XString::Lenght() const {
-	int len = GetLenght(string);
-	return len + 1; //includes the '\0'
+	int len = StrLenght(string);
+	return len;
 }
 
 void XString::Reserve(const int numb) {
@@ -140,14 +142,13 @@ void XString::Reserve(const int numb) {
 		}
 		else {
 			char *newstring = DBG_NEW char[ExpandStrSize(numb)]; //Create a new string and increases the new strings size.
-			newstring = { 0 };
-			memcpy(&newstring, &string, sizeof(string)); //Copies to the beginning of the new char array.
+			memset(newstring, '\0', sizeof(newstring));
+			memcpy(&newstring, &string, sizeof(string + 1)); //Copies to the beginning of the new char array.
 			
 			*string = *newstring;
 			delete newstring;
 		}
 	}
-	return;
 }
 
 //Returns the size of the array.
@@ -165,7 +166,7 @@ void XString::ShrinkToFit() {
 }
 
 void XString::PushBack(const char c) {
-	int i = Lenght();
+	int i = StrLenght(string);
 	string[i] = c;
 	string[i + 1] = '\0';
 }

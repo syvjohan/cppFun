@@ -42,8 +42,10 @@ public:
 
 private:
 	int ExpandStrSize(int lenght);
-	size_t GetLenght(const char *cstr) const;
-	char* Add_0();
+	size_t StrLenght(const char *cstr) const;
+	char* AddTerminator();
 
 	char *string;
+	int size = 0;
+	int capacity = 10;
 };

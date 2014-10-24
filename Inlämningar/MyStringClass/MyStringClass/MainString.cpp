@@ -31,12 +31,12 @@ void TestFörGodkäntXString() {
 
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
-	/*(s2+=s1)+=(s3+=s1);
-	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");*/
+	//(s2+=s1)+=(s3+=s1);
+	/*assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");*/
 
 	//+= som får plats;
-	/*s3="bar"; s3.reserve(10);
-	s3+=s1;
+	//s3="bar"; s3.Reserve(10);
+	/*s3+=s1;
 	assert(s3=="barfoo");*/
 
 	//+= som inte får plats;
@@ -81,7 +81,7 @@ void TestFörGodkäntXString() {
 	assert(s2[1]=='a');*/
 
 //-	push_back(char c) lägger till ett tecken sist.
-	/*s2.push_back('a');
+	/*s2.PushBack('a');
 	assert(s2=="bara");*/
 
 	//-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
