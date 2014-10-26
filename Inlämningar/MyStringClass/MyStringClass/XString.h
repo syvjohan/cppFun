@@ -38,14 +38,15 @@ public:
 	int Capacity() const;
 	void ShrinkToFit();
 	void PushBack(const char c);
-	void Resize(int n);
+	void RestringLenght(int n);
 
 private:
-	int ExpandStrSize(int lenght);
+	int ExpandStrstringLenght(int lenght);
 	size_t StrLenght(const char *cstr) const;
+	char* StrCat(char *dest, char *src);
 	char* AddTerminator();
 
 	char *string;
-	int size = 0;
+	int stringLenght = 0;
 	int capacity = 10;
 };

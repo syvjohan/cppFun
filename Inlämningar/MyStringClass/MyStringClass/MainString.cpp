@@ -145,7 +145,7 @@ void TestFörVälGodkäntXString() {
 //o	All onödig allokering av dynamiskt minne kostar!
 //DETTA KAN MAN BARA KOLLA GENOM ATT TITTA PÅ KODEN
 
-//-	operator[](int i) som indexerar utan range check – ni måste uppfylla ”if pos == size(), a reference to the character with value CharT() (the null character) is returned.”
+//-	operator[](int i) som indexerar utan range check – ni måste uppfylla ”if pos == stringLenght(), a reference to the character with value CharT() (the null character) is returned.”
 	/*s2=""; assert(s2[s2.length()]=='\0');
 	s2="bar"; assert(s2[s2.length()]=='\0');
 */
