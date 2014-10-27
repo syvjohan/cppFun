@@ -28,17 +28,28 @@ char* XString::StrCat(char *dest, char *src) {
 
 		string = new char[capacity];
 		memcpy(string, dest, sizeof(lenDest));
-		memcpy(string + (lenDest + 1), src, sizeof(capacity));
+		memcpy(string + (lenDest + 1), src, capacity);
 		string[capacity] = '\0';
 	}
 	else {
 		memcpy(string, dest, sizeof(lenDest));
-		memcpy(string + (lenDest + 1), src, sizeof(capacity));
+		memcpy(string + (lenDest + 1), src, capacity);
 		string[capacity] = '\0';
 	}
 
 	return string;
 }
+//
+//int XString::StrCmp(char *str1, char *str2) {
+//	while (*str1 != '\0' && *str2 != '\0') {
+//		if (*str1 != *str2) {
+//			return 1;
+//		}
+//		++str1;
+//		++str2;
+//	}
+//	return 0;
+//}
 
 //Adding '\0' at end of string.
 char* XString::AddTerminator() {
@@ -51,10 +62,9 @@ char* XString::AddTerminator() {
 
 XString::XString() {
 	string = NULL;
-	stringLenght = 1;
-	capacity = stringLenght;
+	capacity = 1;
 	string = new char[capacity];
-	memset(string, '\0', sizeof(capacity));
+	memset(string, '\0', stringLenght);
 }
 
 //Copy constructor.
@@ -63,7 +73,7 @@ XString::XString(const XString& rhs) {
 	stringLenght = rhs.stringLenght;
 
 	string = new char[capacity];
-	memcpy(string, rhs.string, sizeof(capacity));
+	memcpy(string, rhs.string, capacity);
 	AddTerminator();
 }
 
@@ -73,13 +83,13 @@ XString::XString(const char *cstr) {
 	capacity = len + 1;
 
 	string = new char[capacity];
-	memcpy(string, cstr, sizeof(capacity));
+	memcpy(string, cstr, capacity);
 
 	AddTerminator();
 }
 
 XString::~XString() {
-	delete string;
+	delete[] string;
 }
 
 //Operatos
@@ -91,10 +101,10 @@ XString& XString::operator=(const XString& rhs) {
 	if (capacity < stringLenght + 1) {
 		capacity = stringLenght + 1;
 		string = new char[capacity];
-		memcpy(string, rhs.string, sizeof(capacity));
+		memcpy(string, rhs.string, capacity);
 	}
 	else {
-		memcpy(string, rhs.string, sizeof(capacity));
+		memcpy(string, rhs.string, capacity);
 	}
 
 	AddTerminator();
@@ -110,10 +120,10 @@ XString& XString::operator=(const char* cstr) {
 	if (capacity < len + 1) {
 		capacity = len + 1;
 		string = new char[capacity];
-		memcpy(string, cstr, sizeof(capacity));
+		memcpy(string, cstr, capacity);
 	}
 	else {
-		memcpy(string, cstr, sizeof(capacity));
+		memcpy(string, cstr, capacity);
 	}
 
 	AddTerminator();
@@ -207,7 +217,7 @@ void XString::Reserve(const int numb) {
 		capacity = numb * 2;
 		char *temp = DBG_NEW char[capacity];
 		memset(temp, '\0', sizeof(temp));
-		memcpy(temp, string, sizeof(capacity));
+		memcpy(temp, string, capacity);
 
 		delete[] string;
 		string = temp;

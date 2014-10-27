@@ -43,6 +43,7 @@ public:
 private:
 	size_t StrLenght(const char *cstr) const;
 	char* StrCat(char *dest, char *src);
+	//int StrCmp(char *str1, char *str2);
 	char* AddTerminator();
 
 	char *string;
