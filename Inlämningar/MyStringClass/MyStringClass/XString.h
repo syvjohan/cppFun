@@ -38,10 +38,9 @@ public:
 	int Capacity() const;
 	void ShrinkToFit();
 	void PushBack(const char c);
-	void RestringLenght(int n);
+	void Resize(int n);
 
 private:
-	int ExpandStrstringLenght(int lenght);
 	size_t StrLenght(const char *cstr) const;
 	char* StrCat(char *dest, char *src);
 	char* AddTerminator();

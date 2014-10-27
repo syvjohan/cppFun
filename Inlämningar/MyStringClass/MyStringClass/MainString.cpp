@@ -16,15 +16,15 @@ void TestFörGodkäntXString() {
 	assert (s0=="");
 
 //-	XString(Sträng sträng)
-	XString s1("foo"); assert(s1=="foo");
+	/*XString s1("foo"); assert(s1=="foo");
 	XString s2(s1); assert(s2=="foo");
-	XString s3("bar");  assert(s3=="bar");
+	XString s3("bar");  assert(s3=="bar");*/
 
 //-	~XString() Kom ihåg destruktorn!
-	delete new XString("hej");
+	//delete new XString("hej");
 
 //	-	operator =(Sträng sträng)
-	assert((s2=s3)==s3);
+	//assert((s2=s3)==s3);
 	//assert((s2=s2)==s3);
 	//assert((s2=("foo"))=="foo");
 	//assert((s2="bar")=="bar");
