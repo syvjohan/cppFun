@@ -1,16 +1,14 @@
-﻿Build started 10/27/2014 1:11:13 PM.
-     1>Project "C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2014-10-29 05:14:36.
+     1>Project "C:\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainString.cpp XString.cpp
-         XString.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MainString.cpp
          MainString.cpp
-         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.lib" /MACHINE:X86 Debug\MainString.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.lib" /MACHINE:X86 Debug\MainString.obj
          Debug\XString.obj
-         MyStringClass.vcxproj -> C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.exe
-     1>Done Building Project "C:\Programmering\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" (Build target(s)).
+         MyStringClass.vcxproj -> C:\cppFun\Inlämningar\MyStringClass\MyStringClass\Debug\MyStringClass.exe
+     1>Done Building Project "C:\cppFun\Inlämningar\MyStringClass\MyStringClass\MyStringClass.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.79
+Time Elapsed 00:00:00.54

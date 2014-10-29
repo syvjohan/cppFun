@@ -7,74 +7,76 @@
 #include <iostream>
 #include <cassert>
 #include <utility>
-using namespace std;
+//using namespace std;
 
 
 void TestFörGodkäntXString() {
 //-	XString()
 	XString s0;	
-	assert (s0=="");
+
+
+	assert(s0 == "");
 
 //-	XString(Sträng sträng)
-	/*XString s1("foo"); assert(s1=="foo");
+	XString s1("foo"); assert(s1=="foo");
 	XString s2(s1); assert(s2=="foo");
-	XString s3("bar");  assert(s3=="bar");*/
+	XString s3("bar");  assert(s3=="bar");
 
 //-	~XString() Kom ihåg destruktorn!
-	//delete new XString("hej");
+	delete new XString("hej");
 
 //	-	operator =(Sträng sträng)
-	//assert((s2=s3)==s3);
-	//assert((s2=s2)==s3);
-	//assert((s2=("foo"))=="foo");
-	//assert((s2="bar")=="bar");
+	assert((s2=s3)==s3);
+	assert((s2=s2)==s3);
+	assert((s2=("foo"))=="foo");
+	assert((s2="bar")=="bar");
 
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
-	//(s2+=s1)+=(s3+=s1);
-	/*assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");*/
+	(s2+=s1)+=(s3+=s1);
+	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");
 
 	//+= som får plats;
-	//s3="bar"; s3.Reserve(10);
-	/*s3+=s1;
-	assert(s3=="barfoo");*/
+	s3="bar"; s3.Reserve(10);
+	s3+=s1;
+	assert(s3=="barfoo");
 
 	//+= som inte får plats;
-	/*s3="bar"; s3.reserve(5);
+	s3="bar"; s3.Reserve(5);
 	s3+=s1;
-	assert(s3=="barfoo");*/
+	assert(s3=="barfoo");
 
 	//+= som får plats; Själv
-	//s3="bar"; s3.reserve(10);
-	//s3+=s3;
-	//assert(s3=="barbar");
+	s3="bar"; s3.Reserve(10);
+	s3+=s3;
+	assert(s3=="barbar");
 
 	//+= som inte får plats; Själv
-	/*s3="bar"; s3.reserve(5);
+	s3="bar"; s3.Reserve(5);
 	s3+=s3;
-	assert(s3=="barbar");*/
+	assert(s3=="barbar");
 
 //-	operator+ räcker med bara XString+XString
-	/*s2="bar";*/
-	//auto sss=s1+s2;
-	//sss=="foobar";
-	//assert(sss=="foobar");
-	////assert(s1+s2=="foobar" && s1=="foo");
-	//assert(s1+s2=="foobar" && s1=="foo");
+	s2="bar";
+	auto sss=s1+s2;
+	sss=="foobar";
+	assert(sss=="foobar");
+	assert(s1+s2=="foobar" && s1=="foo");
+	assert(s1+s2=="foobar" && s1=="foo");
 
 //-	operator== räcker med XString==Sträng
 	//testas överallt!
 
 //-	at(int i) som indexerar med range check
-	/*try {
-	 s2.at(-1);
-	 assert(false);
-	} catch (std::out_of_range&) {};
-	try {
-	 s2.at(3);
-	 assert(false);
-	} catch (std::out_of_range&) {};
-	assert(s2.at(2)='r');*/
+	//try {
+	// s2.at(-1);
+	// assert(false);
+	//} catch (std::out_of_range&) {};
+	//try {
+	// s2.at(3);
+	// assert(false);
+	//} catch (std::out_of_range&) {};
+	//assert(s2.at(2)='r');
 
 //-	operator[](int i) som indexerar utan range check.
 	/*s2[-1]; s2[1000];
@@ -145,7 +147,7 @@ void TestFörVälGodkäntXString() {
 //o	All onödig allokering av dynamiskt minne kostar!
 //DETTA KAN MAN BARA KOLLA GENOM ATT TITTA PÅ KODEN
 
-//-	operator[](int i) som indexerar utan range check – ni måste uppfylla ”if pos == stringLenght(), a reference to the character with value CharT() (the null character) is returned.”
+//-	operator[](int i) som indexerar utan range check – ni måste uppfylla ”if pos == stringLength(), a reference to the character with value CharT() (the null character) is returned.”
 	/*s2=""; assert(s2[s2.length()]=='\0');
 	s2="bar"; assert(s2[s2.length()]=='\0');
 */
@@ -159,5 +161,5 @@ int main() {
 	TestFörGodkäntXString();
 	//TestFörVälGodkäntXString();
 	
-	cin.get();
+	std::cin.get();
 }
