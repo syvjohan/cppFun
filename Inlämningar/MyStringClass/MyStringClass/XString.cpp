@@ -4,6 +4,7 @@
 #include <string.h>
 #include <cassert>
 #include <algorithm>
+#include <stdexcept>
 
 XString::XString()
 {
@@ -26,15 +27,15 @@ XString::XString(const char *cstr) {
 	stringLength = StrLength(cstr);
 	capacity = stringLength + 1;
 	string = DBG_NEW char[capacity];
-	// Will include '\0' since cstr must be null-terminated, or StrLen would already have crashed.
+	// Will include '\0' since cstr must be null-terminated, or StrLength would already have crashed.
 	memcpy(string, cstr, stringLength + 1); 
 }
 
-XString::XString(char c) : XString() {
-	Reserve(2);
-	string[0] = c;
-	string[1] = '\0';
-}
+//XString::XString(char c) : XString() {
+//	Reserve(2);
+//	string[0] = c;
+//	string[1] = '\0';
+//}
 
 XString::~XString() {
 	if (string != NULL) {
@@ -44,10 +45,9 @@ XString::~XString() {
 
 //Operators
 XString& XString::operator=(const XString& rhs) {
-
-	// CRUEL UNIT TESTS, I DO NOT APPROVE
-	if (rhs.string == string)
+	if (rhs.string == string) {
 		return *this;
+	}
 
 	delete[] string;
 	string = NULL;
@@ -62,15 +62,14 @@ XString& XString::operator=(const char* cstr) {
 	return (*this = XString(cstr));
 }
 
-//Insert 1 character.
 XString& XString::operator=(char ch) {
 	if (capacity <= 2) {
 		Reserve(2);
 	}
 
 	// ???
-	string[0] = ch;
-	string[1] = '\0'; 
+	/*string[0] = ch;
+	string[1] = '\0'; */
 
 	return *this;
 }
@@ -104,7 +103,18 @@ XString XString::operator+(const char* cstr) {
 //End operators
 
 char& XString::At(int i) {
+	if (i >= stringLength || i < 0) {
+		throw std::out_of_range("Index of array(string) out of bound!");
+	}
 	return string[i];
+}
+
+const char& XString::At(int i) const {
+	if (i >= stringLength || i < 0) {
+		throw std::out_of_range("Index of array(string) out of bound!");
+	}
+	return string[i];
+	
 }
 
 const char* XString::Data() const {
@@ -116,12 +126,12 @@ int XString::Length() const {
 	return stringLength;
 }
 
-void XString::Reserve(const int numb) {
-	if (numb < capacity || numb == capacity) {
+void XString::Reserve(const int num) {
+	if (num < capacity || num == capacity) {
 		return;
 	}
-
-	capacity = numb;
+	
+	capacity = num;
 	char *temp = DBG_NEW char[capacity];
 	memcpy(temp, string, capacity);
 
@@ -135,16 +145,12 @@ int XString::Capacity() const {
 }
 
 void XString::ShrinkToFit() {
-	capacity = capacity - (stringLength + 1);
+	capacity = stringLength;
 	char *temp = DBG_NEW char[capacity];
 	memcpy(temp, string, capacity);
 
 	delete[] string;
 	string = temp;
-}
-
-void XString::PushBack(const char c) {
-	Concat(XString(c));
 }
 
 void XString::Resize(int n) {
@@ -159,8 +165,6 @@ void XString::Resize(int n) {
 	}
 }
 
-//Help functions
-
 inline size_t XString::StrLength(const char *cstr) const {
 	size_t Length = 0;
 	while (*cstr != '\0') {
@@ -169,6 +173,22 @@ inline size_t XString::StrLength(const char *cstr) const {
 	}
 
 	return Length;
+}
+
+void XString::PushBack(const char c) {
+	capacity = capacity + 1;
+
+	char *temp = DBG_NEW char[capacity];
+	memcpy(temp, string, stringLength);
+
+	temp[stringLength] = c;
+	temp[stringLength + 1] = '\0';
+	stringLength = stringLength + 1;
+
+	delete[] string;
+	string = temp;
+
+	//Concat(XString(c));
 }
 
 // One method to rule them all.
@@ -180,6 +200,8 @@ void XString::Concat(const XString &r) {
 		capacity = newLen + 1;
 		string = DBG_NEW char[capacity];
 	} else if (newLen + 1 >= capacity) {
+
+		//Returns the largest of argument 1 and 2. If they are equivalent argument 1 is returned.
 		int newCapacity = std::max(newLen + 1, capacity * 2);
 
 		char* tmp = string;
@@ -195,22 +217,14 @@ void XString::Concat(const XString &r) {
 bool XString::StrCmp(char *str1, char *str2) {
 	do
 	{
-		if (*str1 != *str2)
+		if (*str1 != *str2) {
 			return false;
+		}
 
 	} while (*str1++ != '\0' && *str2++ != '\0');
 
 	return true;
 }
-
-//Adding '\0' at end of string.
-char* XString::AddTerminator() {
-	string[stringLength] = '\0';
-
-	return string;
-}
-
-//End help functions
 
 //In C++ 'a' is an char, 1 byte. Char a is 1 byte.
 //In C 'a' is an int, 4 bytes. Char a is 1 byte

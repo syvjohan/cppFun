@@ -1,13 +1,15 @@
 #pragma once
 
-//#include <string.h>
 #include <cassert>
-#define NULL 0
+#include <iostream>
 
 class XString;
 
 bool operator==(const XString& lhs, const XString& rhs);
+bool operator!=(const XString& lhs, const XString& rhs);
 
+std::ostream& operator<< (std::ostream& cout, const XString str);
+	
 class XString
 {
 public:
@@ -28,19 +30,17 @@ public:
 	XString operator+(const XString& rhs);
 	XString operator+(const char* cstr);
 
-	//operator<<();
+	friend std::ostream& operator<< (std::ostream& cout, const XString str);
 
 	char& operator[](int i);
 
 	friend bool operator==(const XString &, const XString &);
-
-	friend bool operator!=(const XString& lhs, const XString& rhs) {
-		return !(lhs == rhs);
-	}
+	friend bool operator!=(const XString& lhs, const XString& rhs);
 
 	//End operators
 
 	char& At(int i);
+	const char& At(int i) const;
 	const char* Data() const;
 	int Length() const;
 	void Reserve(const int numb);
@@ -53,7 +53,6 @@ public:
 private:
 	size_t StrLength(const char *cstr) const;
 	static bool StrCmp(char *str1, char *str2);
-	char* AddTerminator();
 
 	char *string;
 	int stringLength;
@@ -62,4 +61,13 @@ private:
 
 inline bool operator==(const XString& lhs, const XString& rhs) {
 	return XString::StrCmp(lhs.string, rhs.string);
+}
+
+inline bool operator!=(const XString& lhs, const XString& rhs) {
+	return !(lhs == rhs);
+}
+
+inline std::ostream& operator<< (std::ostream& cout, const XString str)
+{
+	return cout << str;
 }
