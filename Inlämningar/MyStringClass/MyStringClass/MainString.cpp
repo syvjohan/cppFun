@@ -29,17 +29,26 @@ void TestFörGodkäntXString() {
 	assert((s2=("foo"))=="foo");
 	assert((s2="bar")=="bar");
 
+//- operator=(char ch).
+	XString s666;
+	s666 = "b";
+	char ch = 'l';
+
+	s666 = ch;
+	assert(s666 == "l");
+
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
 	(s2+=s1)+=(s3+=s1);
 	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");
+
 
 	//+= som får plats;
 	s3="bar"; s3.Reserve(10);
 	s3+=s1;
 	assert(s3=="barfoo");
 
-	//+= som inte får plats;
+	////+= som inte får plats;
 	s3="bar"; s3.Reserve(5);
 	s3+=s1;
 	assert(s3=="barfoo");
@@ -49,7 +58,7 @@ void TestFörGodkäntXString() {
 	s3+=s3;
 	assert(s3=="barbar");
 
-	//+= som inte får plats; Själv
+	////+= som inte får plats; Själv
 	s3="bar"; s3.Reserve(5);
 	s3+=s3;
 	assert(s3=="barbar");
@@ -87,8 +96,9 @@ void TestFörGodkäntXString() {
 //- Overloading operator <<.
 	std::cout << "The value in the string is: " << s2.Data() << std::endl;
 	std::cout << "String lenght is: " << s2.Length() << std::endl;
+	printf("\n");
 
-	//-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
+//-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
 	int len=s2.Length();
 	s2.ShrinkToFit();
 	assert(s2.Length()==s2.Capacity());
@@ -113,8 +123,17 @@ void TestFörGodkäntXString() {
 		s2.Reserve(len+1); assert(cap!=s2.Capacity()); //change
 	}
 
+//- Resize(int)
+	XString s111;
+	s111 = "hejPåDig";
+	s111.Resize(3);
+	assert(s111 == "hej");
+
+	s111.Resize(10);
+	assert(s111 != "hej");
+
 //-	const char* c_str()
-	//tested above!
+//	tested above!
 }
 
 void TestFörVälGodkäntXString() {

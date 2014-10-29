@@ -16,7 +16,6 @@ public:
 	XString();
 	XString(const XString& rhs); //Copy constructor.
 	XString(const char* cstr);
-	explicit XString(char c);
 	~XString();
 	
 	//Operatos

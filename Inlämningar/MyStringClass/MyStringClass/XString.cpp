@@ -16,7 +16,6 @@ XString::XString()
 
 //Copy constructor.
 XString::XString(const XString& rhs) {
-
 	string = NULL;
 	capacity = 0;
 	stringLength = 0;
@@ -30,12 +29,6 @@ XString::XString(const char *cstr) {
 	// Will include '\0' since cstr must be null-terminated, or StrLength would already have crashed.
 	memcpy(string, cstr, stringLength + 1); 
 }
-
-//XString::XString(char c) : XString() {
-//	Reserve(2);
-//	string[0] = c;
-//	string[1] = '\0';
-//}
 
 XString::~XString() {
 	if (string != NULL) {
@@ -67,9 +60,8 @@ XString& XString::operator=(char ch) {
 		Reserve(2);
 	}
 
-	// ???
-	/*string[0] = ch;
-	string[1] = '\0'; */
+	string[0] = ch;
+	string[1] = '\0'; 
 
 	return *this;
 }
@@ -114,7 +106,6 @@ const char& XString::At(int i) const {
 		throw std::out_of_range("Index of array(string) out of bound!");
 	}
 	return string[i];
-	
 }
 
 const char* XString::Data() const {
@@ -132,7 +123,8 @@ void XString::Reserve(const int num) {
 	}
 	
 	capacity = num;
-	char *temp = DBG_NEW char[capacity];
+	char* temp = string;
+	string = DBG_NEW char[capacity];
 	memcpy(temp, string, capacity);
 
 	delete[] string;
@@ -146,18 +138,16 @@ int XString::Capacity() const {
 
 void XString::ShrinkToFit() {
 	capacity = stringLength;
-	char *temp = DBG_NEW char[capacity];
-	memcpy(temp, string, capacity);
-
+	char *temp = string;
 	delete[] string;
-	string = temp;
+	string = DBG_NEW char[capacity];
+	memcpy(string, temp, capacity); 
 }
 
 void XString::Resize(int n) {
-	if (n < Capacity()) {
-		for (int i = n; i != '\0'; i++) {
-			string[i] = '\0';
-		}
+	if (n < capacity) {
+		memset(string + n, '\0', capacity);
+		stringLength = n;
 	}
 	//If n is bigger or equal to Capacity expand the char array.
 	else {
@@ -176,19 +166,7 @@ inline size_t XString::StrLength(const char *cstr) const {
 }
 
 void XString::PushBack(const char c) {
-	capacity = capacity + 1;
-
-	char *temp = DBG_NEW char[capacity];
-	memcpy(temp, string, stringLength);
-
-	temp[stringLength] = c;
-	temp[stringLength + 1] = '\0';
-	stringLength = stringLength + 1;
-
-	delete[] string;
-	string = temp;
-
-	//Concat(XString(c));
+	Concat(&c);
 }
 
 // One method to rule them all.
@@ -197,6 +175,7 @@ void XString::Concat(const XString &r) {
 
 	if (string == NULL) {
 		assert(stringLength == 0 && capacity == 0);
+
 		capacity = newLen + 1;
 		string = DBG_NEW char[capacity];
 	} else if (newLen + 1 >= capacity) {
