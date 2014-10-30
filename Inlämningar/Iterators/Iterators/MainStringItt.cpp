@@ -186,33 +186,33 @@ void TestFörVälGodkäntString() {
 
 void TestFörGodkäntItt() {
 
-//-	typdefs för iterator, const_iterator,  reverse_iterator och const_revers_iterator
-	String::iterator Str;
-	String::const_iterator cStr;
-	String::reverse_iterator rStr;
-	String::const_reverse_iterator crStr;
-
-//-	funktionerna begin, end, cbegin, cend, rbegin, rend, crbegin och crend.
-
-//Iteratorerna ska kunna göra:
-//-	*it, ++it, it++, (it+i), it[i], == och !=
-	TestIttPart();
-	TestIttPartc();
-	TestIttPartr();
-	TestIttPartcr();
-
-
-//-	default constructor, copy constructor och tilldelning (=) 
-	String s("foobar");
-	Str=s.begin();
-	cStr=s.cbegin();
-	rStr=s.rbegin();
-	crStr=s.crbegin();
-	*Str='a';
-//	*(cStr+1)='b';	//Sak ge kompileringsfel!
-	*(rStr+2)='c';
-//	*(crStr+3)='d';	//Sak ge kompileringsfel!
-	assert(s=="aoocar");
+////-	typdefs för iterator, const_iterator,  reverse_iterator och const_revers_iterator
+//	String::iterator Str;
+//	String::const_iterator cStr;
+//	String::reverse_iterator rStr;
+//	String::const_reverse_iterator crStr;
+//
+////-	funktionerna begin, end, cbegin, cend, rbegin, rend, crbegin och crend.
+//
+////Iteratorerna ska kunna göra:
+////-	*it, ++it, it++, (it+i), it[i], == och !=
+//	TestIttPart();
+//	TestIttPartc();
+//	TestIttPartr();
+//	TestIttPartcr();
+//
+//
+////-	default constructor, copy constructor och tilldelning (=) 
+//	String s("foobar");
+//	Str=s.begin();
+//	cStr=s.cbegin();
+//	rStr=s.rbegin();
+//	crStr=s.crbegin();
+//	*Str='a';
+////	*(cStr+1)='b';	//Sak ge kompileringsfel!
+//	*(rStr+2)='c';
+////	*(crStr+3)='d';	//Sak ge kompileringsfel!
+//	assert(s=="aoocar");
 
 }
 
