@@ -21,21 +21,21 @@ void TestFörGodkäntXString() {
 	XString s3("bar");  assert(s3=="bar");
 
 //-	~XString() Kom ihåg destruktorn!
-	delete new XString("hej");
-
-//	-	operator =(Sträng sträng)
-	assert((s2=s3)==s3);
-	assert((s2=s2)==s3);
-	assert((s2=("foo"))=="foo");
+//	delete new XString("hej");
+//
+////	-	operator =(Sträng sträng)
+//	assert((s2=s3)==s3);
+//	assert((s2=s2)==s3);
+//	assert((s2=("foo"))=="foo");
 	assert((s2="bar")=="bar");
-
-//- operator=(char ch).
-	XString s666;
-	s666 = "b";
-	char ch = 'l';
-
-	s666 = ch;
-	assert(s666 == "l");
+//
+////- operator=(char ch).
+//	XString s666;
+//	s666 = "b";
+//	char ch = 'l';
+//
+//	s666 = ch;
+//	assert(s666 == "l");
 
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
@@ -108,12 +108,18 @@ void TestFörGodkäntXString() {
 		//lagrar strängen med \0
 		const char * p1 = s2.Data();
 		s2.Reserve(len); assert(p1==s2.Data()); //no change
-		p1= s2.Data(); s2.Reserve(len+1); assert(p1!=s2.Data()); //change
-		p1= s2.Data(); s2.ShrinkToFit();  assert(p1!=s2.Data()); //change
+		
+		p1= s2.Data(); 
+		s2.Reserve(len+1);
+		assert(p1!=s2.Data()); //change
 		
 		p1= s2.Data(); 
 		s2.ShrinkToFit();  
-		//assert(p1==s2.Data()); //no change
+		assert(p1!=s2.Data()); //change
+		
+		p1= s2.Data(); 
+		s2.ShrinkToFit();  
+		assert(p1==s2.Data()); //no change
 	} else {
 		//lagrar strängen utan \0
 		int cap;
@@ -130,7 +136,8 @@ void TestFörGodkäntXString() {
 	assert(s111 == "hej");
 
 	s111.Resize(10);
-	assert(s111 != "hej");
+	assert(s111 == "hej");
+	assert(s111.Capacity() - s111.Length() == 7);
 
 //-	const char* c_str()
 //	tested above!

@@ -6,8 +6,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-XString::XString()
-{
+XString::XString() {
 	string = NULL;
 	capacity = 0;
 	stringLength = 0;
@@ -28,12 +27,14 @@ XString::XString(const char *cstr) {
 	string = DBG_NEW char[capacity];
 	// Will include '\0' since cstr must be null-terminated, or StrLength would already have crashed.
 	memcpy(string, cstr, stringLength + 1); 
+	string[stringLength] = '\0';
 }
 
 XString::~XString() {
 	if (string != NULL) {
 		delete[] string;
 	}
+	else std::cout << "what";
 }
 
 //Operators
@@ -124,11 +125,9 @@ void XString::Reserve(const int num) {
 	
 	capacity = num;
 	char* temp = string;
-	string = DBG_NEW char[capacity];
-	memcpy(temp, string, capacity);
 
-	delete[] string;
-	string = temp;
+	string = DBG_NEW char[capacity];
+	memcpy(string, temp, capacity);
 }
 
 //Returns the stringLength of the array.
@@ -137,11 +136,14 @@ int XString::Capacity() const {
 }
 
 void XString::ShrinkToFit() {
-	capacity = stringLength;
-	char *temp = string;
-	delete[] string;
-	string = DBG_NEW char[capacity];
-	memcpy(string, temp, capacity); 
+	if (capacity != stringLength) {
+		capacity = stringLength;
+		char *temp = string;
+		string = DBG_NEW char[capacity + 1];
+		string[capacity] = '\0';
+		memcpy(string, temp, capacity);
+		//delete[] string;
+	}
 }
 
 void XString::Resize(int n) {
@@ -178,19 +180,33 @@ void XString::Concat(const XString &r) {
 
 		capacity = newLen + 1;
 		string = DBG_NEW char[capacity];
+		memcpy(string, r.string, capacity);
+
+		memcpy(string + stringLength, r.string, r.stringLength);
+		stringLength = newLen;
+		string[stringLength] = '\0';
 	} else if (newLen + 1 >= capacity) {
 
 		//Returns the largest of argument 1 and 2. If they are equivalent argument 1 is returned.
 		int newCapacity = std::max(newLen + 1, capacity * 2);
 
-		char* tmp = string;
-		string = DBG_NEW char[newCapacity];
-		memcpy(string, tmp, stringLength);
-	}
+		char *tmp = DBG_NEW char[newCapacity];
+		memcpy(tmp, string, stringLength);
 
-	memcpy(string + stringLength, r.string, r.stringLength);
-	stringLength = newLen;
-	string[stringLength] = '\0';
+		memcpy(tmp + stringLength, r.string, r.stringLength);
+		stringLength = stringLength + r.stringLength;
+		tmp[stringLength] = '\0';
+		delete[] string;
+		string = tmp;
+		capacity = newCapacity;
+
+	}
+	else
+	{
+		memcpy(string + stringLength, r.string, r.stringLength);
+		stringLength = newLen;
+		string[stringLength] = '\0';
+	}
 }
 
 bool XString::StrCmp(char *str1, char *str2) {
