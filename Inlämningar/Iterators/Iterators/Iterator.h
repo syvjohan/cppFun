@@ -4,16 +4,19 @@ template<typename T>
 class Iterator;
 
 template<typename T>
-bool operator==(const T &lhs, const T &rhs);
+bool operator==(Iterator<T> lhs, Iterator<T> rhs);
 
 template<typename T>
-bool operator!=(const T &lhs, const T &rhs);
+bool operator!=(Iterator<T> lhs, Iterator<T> rhs);
 
 template<typename T>
 class Iterator {
 public:
-	Iterator<T>(T *obj);
+	Iterator<T>(T *first, T *last, T *current);
+	Iterator<T>(const int);
 	~Iterator<T>();
+
+	Iterator<T> SelectIterator(int select);
 
 	typedef Iterator<T> ForwardIterator;
 	typedef Iterator<T> ReverseIterator;
@@ -21,8 +24,8 @@ public:
 	typedef Iterator<const T> ConstReverseIterator;
 
 	//Operators
-	friend bool operator==(const T &lhs, const T &rhs);
-	friend bool operator!=(const T &lhs, const T &rhs);
+	friend bool operator==(Iterator<T> lhs, Iterator<T> rhs);
+	friend bool operator!=(Iterator<T> lhs, Iterator<T> rhs);
 
 	Iterator<T>& operator++(); //Prefix
 	Iterator<T> operator++(int); //Postfix
@@ -30,7 +33,7 @@ public:
 	Iterator<T>& operator--(); //Prefix
 	Iterator<T> operator--(int); //Postfix
 
-	Iterator<T> operator+(const Iterator<T> &it);
+	//Iterator<T> operator+(const Iterator<T> &it);
 	T& operator[](int i);
 	T& operator*();
 	const T& operator*() const;
@@ -53,28 +56,24 @@ public:
 	T* ConstReverseEnd();
 
 private:
-	T Size(const T *container) const;
-	int LastElement(const T *container);
-	bool CompareValues(const T *obj1, const T *obj2);
+	int NumbOfElement();
+	int GetOffset();
 
-	struct Container {
-		T *container;
-	}*con;
-	
-	struct IteratorData {
-		Container *first;
-		Container *last;
-		Container *current;
-	}*iterData;
+	T *first;
+	T *last;
+	T *current;
 };
 
 template<typename T>
-Iterator<T>::Iterator(T *obj) {
-	con->container = obj;
+Iterator<T>::Iterator(T *first, T *last, T *current) {
+	this->first = first;
+	this->last = last;
+	current = NULL;
+}
 
-	iterData->last = nullptr;
-	iterdat->first = nullptr;
-	iterData->current = nullptr;
+template<typename T>
+Iterator<T>::Iterator(const int index) {
+	
 }
 
 template<typename T>
@@ -83,67 +82,72 @@ Iterator<T>::~Iterator() {
 }
 
 template<typename T>
-Iterator<T> Iterator<T>::operator+(const Iterator<T> &it) {
-	return iterData->current + it;
+Iterator<T> Iterator<T>::SelectIterator(int select) {
+	if (select == 1) {
+		//ForwardIterator.
+
+	} 
+	else if (select == 2) {
+		//ReverseIterator.
+
+	} 
+	else if (select == 3) {
+		//Const Iterator.
+
+	} 
+	else if (select == 4) {
+		//Const Reverse Iterator.
+
+	}
+	else {
+
+	}
 }
+
+//template<typename T>
+//Iterator<T> Iterator<T>::operator+(const Iterator<T> &it, const int index) {
+//
+//	//int offset = iterData->current - iterData->first;
+//	////offset + it. skapa en operator för att plussa int och klassen iterator.
+//	//return iterData->current + it;
+//}
 
 //Prefix ++i.
 template<typename T>
 Iterator<T>& Iterator<T>::operator++() {
 	//Increment object.
-	if (iterData->current == iterData->last) {
-		return *this;
-	}
-	else {
-		++iterData->current;
-		return *this;
-	}
+	++iterData->current;
+	return *this;
 }
 
 //Postfix i++
 template<typename T>
 Iterator<T> Iterator<T>::operator++(int) {
-	if (iterData->current != iterData->last) {
-		T *tmp = IterData->current;
-		++iterdata->current;
-	}
-	else {
-		return *this;
-	}
-	
+	Iterator<T> *tmp = IterData->current;
+	++iterdata->current;
 	return tmp;
+	
 }
 
 //Prefix --i.
 template<typename T>
 Iterator<T>& Iterator<T>::operator--() {
 	//Increment object.
-	if (iterData->current == iterData->first) {
-		return *this;
-	}
-	else {
-		--iterData->current;
-		return *this;
-	}
+	--iterData->current;
+	return *this;
 }
 
 //Postfix i--.
 template<typename T>
 Iterator<T> Iterator<T>::operator--(int) {
-	if (iterData->current != iterData->first) {
-		T *tmp = IterData->current;
-		--iterdata->current;
-	}
-	else {
-		return *this;
-	}
-
+	Iterator<T> *tmp = IterData->current;
+	--iterdata->current;
 	return tmp;
 }
 
 template<typename T>
 T& Iterator<T>::operator[](int i) {
-	return con->container[i];
+	return *((*this) + i).get();
 }
 
 //Return a reference to the value current points to.
@@ -218,43 +222,22 @@ T* Iterator<T>::ConstReverseEnd() {
 //END, Const reverse iterator
 
 template<typename T>
-inline int Iterator<T>::LastElement(const T *container) {
-	int last = (sizeof(container) / sizeof(container[0]) - 1);
-	return last;
+inline int Iterator<T>::NumbOfElement() {
+	return last - first;
 }
 
 template<typename T>
-inline T Iterator<T>::Size(const T *container) const {
-	int last = LastElement(container);
-	size_t length = 0;
-	while (*container != last) {
-		container++;
-		length++;
-	}
-
-	return length;
-}
-
-template<typename T>
-inline bool Iterator<T>::CompareValues(const T *obj1, const T *obj2) {
-	int last1 = LastElement(obj1);
-	int last2 = LastElement(obj2);
-	do {
-		if (*obj1 != *obj2) {
-			return false;
-		}
-	} while (++obj1 != last1 && ++obj2 != last2);
-
-	return true;
+inline int Iterator<T>::GetOffset() {
+	return current - first;
 }
 
 //Global scope!
 template<typename T>
-inline bool operator==(const T &lhs, const T &rhs) {
-	return Iterator<T>::CompareValues(lhs, rhs);
+inline bool operator==(Iterator<T> lhs, Iterator<T> rhs) {
+	return lhs == rhs;
 }
 
 template<typename T>
-inline bool operator!=(const T &lhs, const T &rhs) {
+inline bool operator!=(Iterator<T> lhs, Iterator<T> rhs) {
 	return !(lhs == rhs);
 }

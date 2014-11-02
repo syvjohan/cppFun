@@ -213,13 +213,67 @@ void TestFörGodkäntItt() {
 //	*(rStr+2)='c';
 ////	*(crStr+3)='d';	//Sak ge kompileringsfel!
 //	assert(s=="aoocar");
-
+/*
 	Iterator<string> *it;
 	
 	string s;
 	s = "hej";
 	cout << s;
+
+	int *arr = new int[100];
+
+	int *begin = arr;
+	int *end = arr + 100;
+
+	*(begin + 10);*/
 }
+
+
+
+
+//template<typename T>
+//class Iterator
+//{
+//public:
+//	FIterator(T* beg, T*end, T* current = NULL) {
+//		this->beg = beg;
+//		this->end = end;
+//
+//		static_assert(N == 1 || N == -1);
+//
+//		if (N == 1) {
+//			this->current = current ? current : beg;
+//		}
+//		else if (N == -1) {
+//			this->current = current ? current : end - 1;
+//		}
+//	}
+//
+//	// Generic method showing the concept...
+//	Iterator<N, T> add(int n) {
+//		Iterator<N, T> it = *this;
+//		it.current += N * n;
+//
+//		if (N == 1) {
+//			assert(it.current < end + 1);
+//		}
+//		else {
+//			assert(it.current > beg - 1);
+//		}
+//
+//		return it;
+//	}
+//
+//private:
+//	int getOffset() {
+//		return current - beg;
+//	}
+//
+//	T* beg, *end, *current;
+//};
+//
+//typedef Iterator<1, char> ForwardIterator;
+//typedef Iterator<-1, char> ReverseIterator;
 
 int main() {
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -227,4 +281,7 @@ int main() {
 	TestFörVälGodkäntString();
 	TestFörGodkäntItt();
 	cin.get();
+
+	
+
 }
