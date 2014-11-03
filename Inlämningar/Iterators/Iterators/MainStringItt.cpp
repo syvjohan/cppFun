@@ -1,120 +1,133 @@
-#define _CRTDBG_MAP_ALLOC
-#ifdef _DEBUG
-	#ifndef DBG_NEW
-		#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-		#define new DBG_NEW
-	#endif
-#endif  // _DEBUG
 #include <stdlib.h>
 #include <crtdbg.h>
 
+#include "Defs.h"
 #include "Iterator.h"
+#include "XString.h"
 
-#include <string>
 #include <iostream>
 #include <cassert>
 #include <utility>
+
 using namespace std;
 
-
 void TestFörGodkäntString() {
-////-	String()
-//	string s0;	assert (s0=="");
-//
-////-	String(Sträng sträng)
-//	string s1("foo"); assert(s1=="foo");
-//	string s2(s1); assert(s2=="foo");
-//	string s3("bar");  assert(s3=="bar");
-//
-////-	~String() Kom ihåg destruktorn!
-//	delete new string("hej");
-//
-////	-	operator =(Sträng sträng)
-//	assert((s2=s3)==s3);
-//	assert((s2=s2)==s3);
-//	assert((s2=("foo"))=="foo");
-//	assert((s2="bar")=="bar");
-//
-////-	operator+=(Sträng sträng) som tolkas som konkatenering.
-//	//foo, bar, bar
-//	(s2+=s1)+=(s3+=s1);
-//	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");
-//
-//	//+= som får plats;
-//	s3="bar"; s3.reserve(10);
-//	s3+=s1;
-//	assert(s3=="barfoo");
-//
-//	//+= som inte får plats;
-//	s3="bar"; s3.reserve(5);
-//	s3+=s1;
-//	assert(s3=="barfoo");
-//
-//	//+= som får plats; Själv
-//	s3="bar"; s3.reserve(10);
-//	s3+=s3;
-//	assert(s3=="barbar");
-//
-//	//+= som inte får plats; Själv
-//	s3="bar"; s3.reserve(5);
-//	s3+=s3;
-//	assert(s3=="barbar");
-//
-////-	operator+ räcker med bara String+String
-//	s2="bar";
-//	//auto sss=s1+s2;
-//	//sss=="foobar";
-//	//assert(sss=="foobar");
-//	////assert(s1+s2=="foobar" && s1=="foo");
-//	assert(s1+s2=="foobar" && s1=="foo");
-//
-////-	operator== räcker med String==Sträng
-//	//testas överallt!
-//
-////-	at(int i) som indexerar med range check
-//	try {
-//	 s2.at(-1);
-//	 assert(false);
-//	} catch (std::out_of_range&) {};
-//	try {
-//	 s2.at(3);
-//	 assert(false);
-//	} catch (std::out_of_range&) {};
-//	assert(s2.at(2)='r');
-//
-////-	operator[](int i) som indexerar utan range check.
-//	s2[-1]; s2[1000];
-//	assert(s2[1]=='a');
-//
-////-	push_back(char c) lägger till ett tecken sist.
-//	s2.push_back('a');
-//	assert(s2=="bara");
-//
-//	//-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
-//
-//	int len=s2.length();
-//	s2.shrink_to_fit();
-//	assert(s2.length()==s2.capacity());
-//
-//	s2.data();
-//	if(s2.length()==s2.capacity()) {
-//		//lagrar strängen med \0
-//		const char * p1 = s2.data();
-//		s2.reserve(len); assert(p1==s2.data()); //no change
-//		p1= s2.data(); s2.reserve(len+1); assert(p1!=s2.data()); //change
-//		p1= s2.data(); s2.shrink_to_fit();  assert(p1!=s2.data()); //change
-//		p1= s2.data(); s2.shrink_to_fit();  assert(p1==s2.data()); //no change
-//	} else {
-//		//lagrar strängen utan \0
-//		int cap;
-//		s2.data(); cap=s2.capacity(); s2.shrink_to_fit(); assert(cap!=s2.capacity()); //change
-//		cap=s2.capacity(); s2.data(); assert(cap!=s2.capacity()); //change
-//		s2.shrink_to_fit(); cap=s2.capacity(); s2.reserve(len); assert(cap==s2.capacity()); //change
-//		s2.reserve(len+1); assert(cap!=s2.capacity()); //change
-//	}
-//
-////-	const char* c_str()
-//	//tested above!
+//-	String()
+	XString s0;	assert (s0=="");
+
+//-	String(Sträng sträng)
+	XString s1("foo"); assert(s1=="foo");
+	XString s2(s1); assert(s2=="foo");
+	XString s3("bar");  assert(s3=="bar");
+
+//- operator=(char ch).
+	XString s666;
+	s666 = "b";
+	char ch = 'l';
+
+	s666 = ch;
+	assert(s666 == "l");
+
+//-	~String() Kom ihåg destruktorn!
+	delete new string("hej");
+
+//	-	operator =(Sträng sträng)
+	assert((s2=s3)==s3);
+	assert((s2=s2)==s3);
+	assert((s2=("foo"))=="foo");
+	assert((s2="bar")=="bar");
+
+//-	operator+=(Sträng sträng) som tolkas som konkatenering.
+	//foo, bar, bar
+	(s2+=s1)+=(s3+=s1);
+	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");
+
+	//+= som får plats;
+	s3="bar"; s3.Reserve(10);
+	s3+=s1;
+	assert(s3=="barfoo");
+
+	//+= som inte får plats;
+	s3="bar"; s3.Reserve(5);
+	s3+=s1;
+	assert(s3=="barfoo");
+
+	//+= som får plats; Själv
+	s3="bar"; s3.Reserve(10);
+	s3+=s3;
+	assert(s3=="barbar");
+
+	//+= som inte får plats; Själv
+	s3="bar"; s3.Reserve(5);
+	s3+=s3;
+	assert(s3=="barbar");
+
+//-	operator+ räcker med bara String+String
+	s2="bar";
+	auto sss=s1+s2;
+	sss=="foobar";
+	assert(sss=="foobar");
+	assert(s1+s2=="foobar" && s1=="foo");
+	assert(s1+s2=="foobar" && s1=="foo");
+
+//-	operator== räcker med String==Sträng
+	//testas överallt!
+
+//-	at(int i) som indexerar med range check
+	try {
+	 s2.At(-1);
+	 assert(false);
+	} catch (std::out_of_range&) {};
+	try {
+	 s2.At(3);
+	 assert(false);
+	} catch (std::out_of_range&) {};
+	assert(s2.At(2)='r');
+
+//- Overloading operator <<.
+	std::cout << "The value in the string is: " << s2.Data() << std::endl;
+	std::cout << "String lenght is: " << s2.Length() << std::endl;
+	printf("\n");
+
+//-	operator[](int i) som indexerar utan range check.
+	s2[-1]; s2[1000];
+	assert(s2[1]=='a');
+
+//-	push_back(char c) lägger till ett tecken sist.
+	s2.PushBack('a');
+	assert(s2=="bara");
+
+	//-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
+
+	int len=s2.Length();
+	s2.ShrinkToFit();
+	assert(s2.Length()+1==s2.Capacity());
+
+	s2.Data();
+	if(s2.Length()+1==s2.Capacity()) {
+		//lagrar strängen med \0
+		const char * p1 = s2.Data();
+		s2.Reserve(len); assert(p1==s2.Data()); //no change
+		p1= s2.Data(); s2.Reserve(len+1); assert(p1!=s2.Data()); //change
+		p1= s2.Data(); s2.ShrinkToFit();  assert(p1!=s2.Data()); //change
+		p1= s2.Data(); s2.ShrinkToFit();  assert(p1==s2.Data()); //no change
+	} else {
+		//lagrar strängen utan \0
+		int cap;
+		s2.Data(); cap=s2.Capacity(); s2.ShrinkToFit(); assert(cap!=s2.Capacity()); //change
+		cap=s2.Capacity(); s2.Data(); assert(cap!=s2.Capacity()); //change
+		s2.ShrinkToFit(); cap=s2.Capacity(); s2.Reserve(len); assert(cap==s2.Capacity()); //change
+		s2.Reserve(len+1); assert(cap!=s2.Capacity()); //change
+	}
+
+//-	const char* c_str()
+	//tested above!
+
+//- Resize(int)
+	XString s111;
+	s111 = "hejPåDig";
+	s111.Resize(3);
+	assert(s111 == "hejP");
 
 }
 
@@ -159,129 +172,67 @@ void TestFörVälGodkäntString() {
 
 }
 
-//
-//#define MACROTestIttPart(CR)							
-//	/*	*it, ++it, it++, (it+i), it[i], == och !=	*/	
-//	void TestIttPart##CR() {							
-//	String s1("foobar");								
-//	for (auto i=s1.CR##begin(); i!=s1.CR##end(); i++)	
-//		cout << *i;										
-//	cout << endl;										
-//	if (#CR=="r" || #CR=="cr")							
-//		s1="raboof";									
-//	auto it = s1.CR##begin();							
-//	assert(*it=='f');									
-//	assert(*(it++)=='f' && *it == 'o');					
-//	++it;												
-//	assert(*++it=='b');									
-//	assert(*(it+1)=='a');								
-//	assert(it[2]=='r');									
-//}
+#define MACROTestIttPart(CR)							\
+	/*	*it, ++it, it++, (it+i), it[i], == och !=	*/	\
+	void TestIttPart##CR() {                            \
+	XString s1("foobar");								\
+for (auto i = s1.CR##begin(); i != s1.CR##end(); i++)	\
+	cout << *i;										    \
+	cout << endl;										\
+if (#CR == "r" || #CR == "cr")							\
+	s1 = "raboof";									    \
+	auto it = s1.CR##begin();							\
+	assert(*it == 'f');									\
+	assert(*(it++) == 'f' && *it == 'o');				\
+	++it;												\
+	assert(*++it == 'b');								\
+	assert(*(it + 1) == 'a');							\
+	assert(it[2] == 'r');								\
+}
 
-//MACROTestIttPart(,);	//, ger tomt argument
-//MACROTestIttPart(c);
-//MACROTestIttPart(r);
-//MACROTestIttPart(cr);
+MACROTestIttPart(,);	//, ger tomt argument
+MACROTestIttPart(c);
+MACROTestIttPart(r);
+MACROTestIttPart(cr);
 
 
 void TestFörGodkäntItt() {
+	//
+	////-	typdefs för iterator, const_iterator,  reverse_iterator och const_revers_iterator
+	XString::ForIterator Str;
+	XString::ConstForwardIterator cStr;
+	XString::RevIterator rStr;
+	XString::ConstReverseIterator crStr;
 
-//-	typdefs för iterator, const_iterator,  reverse_iterator och const_revers_iterator
-	//String::iterator Str;
-	//String::const_iterator cStr;
-	//String::reverse_iterator rStr;
-	//String::const_reverse_iterator crStr;
-
-//-	funktionerna begin, end, cbegin, cend, rbegin, rend, crbegin och crend.
-
-//Iteratorerna ska kunna göra:
-//-	*it, ++it, it++, (it+i), it[i], == och !=
-	//TestIttPart();
-	//TestIttPartc();
-	//TestIttPartr();
-	//TestIttPartcr();
-
-
-//-	default constructor, copy constructor och tilldelning (=) 
-//	String s("foobar");
-//	Str=s.begin();
-//	cStr=s.cbegin();
-//	rStr=s.rbegin();
-//	crStr=s.crbegin();
-//	*Str='a';
-////	*(cStr+1)='b';	//Sak ge kompileringsfel!
-//	*(rStr+2)='c';
-////	*(crStr+3)='d';	//Sak ge kompileringsfel!
-//	assert(s=="aoocar");
-/*
-	Iterator<string> *it;
-	
-	string s;
-	s = "hej";
-	cout << s;
-
-	int *arr = new int[100];
-
-	int *begin = arr;
-	int *end = arr + 100;
-
-	*(begin + 10);*/
+	//
+	////-	funktionerna begin, end, cbegin, cend, rbegin, rend, crbegin och crend.
+	//
+	////Iteratorerna ska kunna göra:
+	////-	*it, ++it, it++, (it+i), it[i], == och !=
+	TestIttPart();
+	TestIttPartc();
+	TestIttPartr();
+	TestIttPartcr();
+	//
+	//
+	////-	default constructor, copy constructor och tilldelning (=) 
+	XString s("foobar");
+	Str = s.begin();
+	rStr = s.rbegin(); 
+	crStr = s.crbegin();
+	*Str = 'a';
+	//*(cStr + 1) = 'b';	//Ska ge kompileringsfel! // you cannot assign to a variable that is const.
+	*(rStr + 2) = 'c';
+	//*(crStr + 3) = 'd';	//Ska ge kompileringsfel! you cannot assign to a variable that is const.
+	assert(s == "aoocar");
 }
 
 
-
-
-//template<typename T>
-//class Iterator
-//{
-//public:
-//	FIterator(T* beg, T*end, T* current = NULL) {
-//		this->beg = beg;
-//		this->end = end;
-//
-//		static_assert(N == 1 || N == -1);
-//
-//		if (N == 1) {
-//			this->current = current ? current : beg;
-//		}
-//		else if (N == -1) {
-//			this->current = current ? current : end - 1;
-//		}
-//	}
-//
-//	// Generic method showing the concept...
-//	Iterator<N, T> add(int n) {
-//		Iterator<N, T> it = *this;
-//		it.current += N * n;
-//
-//		if (N == 1) {
-//			assert(it.current < end + 1);
-//		}
-//		else {
-//			assert(it.current > beg - 1);
-//		}
-//
-//		return it;
-//	}
-//
-//private:
-//	int getOffset() {
-//		return current - beg;
-//	}
-//
-//	T* beg, *end, *current;
-//};
-//
-//typedef Iterator<1, char> ForwardIterator;
-//typedef Iterator<-1, char> ReverseIterator;
-
 int main() {
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	TestFörGodkäntString();
-	TestFörVälGodkäntString();
-	TestFörGodkäntItt();
-	cin.get();
-
+	//TestFörGodkäntString();
+	//TestFörVälGodkäntString();
 	
-
+	TestFörGodkäntItt();
+	system("PAUSE");
 }

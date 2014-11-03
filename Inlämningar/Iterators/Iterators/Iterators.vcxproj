@@ -65,10 +65,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Defs.h" />
+    <ClInclude Include="ForwardIterator.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="ReverseIterator.h" />
+    <ClInclude Include="XString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainStringItt.cpp" />
+    <ClCompile Include="XString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
