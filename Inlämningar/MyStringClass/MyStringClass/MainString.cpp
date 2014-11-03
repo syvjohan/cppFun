@@ -7,11 +7,9 @@
 #include <iostream>
 #include <cassert>
 #include <utility>
-//using namespace std;
-
 
 void TestFörGodkäntXString() {
-//-	XString()
+////-	XString()
 	XString s0;	
 	assert(s0 == "");
 
@@ -21,28 +19,28 @@ void TestFörGodkäntXString() {
 	XString s3("bar");  assert(s3=="bar");
 
 //-	~XString() Kom ihåg destruktorn!
-//	delete new XString("hej");
-//
-////	-	operator =(Sträng sträng)
-//	assert((s2=s3)==s3);
-//	assert((s2=s2)==s3);
-//	assert((s2=("foo"))=="foo");
+	delete new XString("hej");
+
+//	-	operator =(Sträng sträng)
+	assert((s2=s3)==s3);
+	assert((s2=s2)==s3);
+	assert((s2=("foo"))=="foo");
 	assert((s2="bar")=="bar");
-//
-////- operator=(char ch).
-//	XString s666;
-//	s666 = "b";
-//	char ch = 'l';
-//
-//	s666 = ch;
-//	assert(s666 == "l");
+
+//- operator=(char ch).
+	XString s666;
+	s666 = "b";
+	char ch = 'l';
+
+	s666 = ch;
+	assert(s666 == "l");
 
 //-	operator+=(Sträng sträng) som tolkas som konkatenering.
 	//foo, bar, bar
 	(s2+=s1)+=(s3+=s1);
 	assert(s3=="barfoo" && s2=="barfoobarfoo" && s1=="foo");
-
-
+//
+//
 	//+= som får plats;
 	s3="bar"; s3.Reserve(10);
 	s3+=s1;
@@ -101,10 +99,10 @@ void TestFörGodkäntXString() {
 //-	length(), reserve(), capacity() och shrink_to_fit() är funktioner som finns i container klasserna i STL.
 	int len=s2.Length();
 	s2.ShrinkToFit();
-	assert(s2.Length()==s2.Capacity());
+	assert(s2.Length()+1==s2.Capacity());
 
 	s2.Data();
-	if(s2.Length()==s2.Capacity()) {
+	if(s2.Length()+1==s2.Capacity()) {
 		//lagrar strängen med \0
 		const char * p1 = s2.Data();
 		s2.Reserve(len); assert(p1==s2.Data()); //no change
@@ -133,11 +131,7 @@ void TestFörGodkäntXString() {
 	XString s111;
 	s111 = "hejPåDig";
 	s111.Resize(3);
-	assert(s111 == "hej");
-
-	s111.Resize(10);
-	assert(s111 == "hej");
-	assert(s111.Capacity() - s111.Length() == 7);
+	assert(s111 == "hejP");
 
 //-	const char* c_str()
 //	tested above!
@@ -184,11 +178,12 @@ void TestFörVälGodkäntXString() {
 
 }
 
+#include <string>
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	TestFörGodkäntXString();
 	//TestFörVälGodkäntXString();
-	
-	std::cin.get();
+
+	system("PAUSE");
 }

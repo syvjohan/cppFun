@@ -119,15 +119,17 @@ int XString::Length() const {
 }
 
 void XString::Reserve(const int num) {
-	if (num < capacity || num == capacity) {
+	int newCapacity = num + 1;
+	if (newCapacity < capacity || newCapacity == capacity) {
 		return;
 	}
 	
-	capacity = num;
+	capacity = newCapacity;
 	char* temp = string;
 
 	string = DBG_NEW char[capacity];
 	memcpy(string, temp, capacity);
+	delete[] temp;
 }
 
 //Returns the stringLength of the array.
@@ -136,19 +138,19 @@ int XString::Capacity() const {
 }
 
 void XString::ShrinkToFit() {
-	if (capacity != stringLength) {
-		capacity = stringLength;
+	if (capacity > stringLength + 1) {
+		capacity = stringLength + 1;
 		char *temp = string;
 		string = DBG_NEW char[capacity + 1];
-		string[capacity] = '\0';
-		memcpy(string, temp, capacity);
-		//delete[] string;
+		string[stringLength] = '\0';
+		memcpy(string, temp, stringLength + 1);
+		delete[] temp;
 	}
 }
 
 void XString::Resize(int n) {
 	if (n < capacity) {
-		memset(string + n, '\0', capacity);
+		string[n + 1] = '\0';
 		stringLength = n;
 	}
 	//If n is bigger or equal to Capacity expand the char array.
@@ -173,40 +175,28 @@ void XString::PushBack(const char c) {
 
 // One method to rule them all.
 void XString::Concat(const XString &r) {
+	
 	int newLen = stringLength + r.stringLength;
-
+	
 	if (string == NULL) {
 		assert(stringLength == 0 && capacity == 0);
-
 		capacity = newLen + 1;
 		string = DBG_NEW char[capacity];
-		memcpy(string, r.string, capacity);
-
-		memcpy(string + stringLength, r.string, r.stringLength);
-		stringLength = newLen;
-		string[stringLength] = '\0';
+		
 	} else if (newLen + 1 >= capacity) {
-
-		//Returns the largest of argument 1 and 2. If they are equivalent argument 1 is returned.
 		int newCapacity = std::max(newLen + 1, capacity * 2);
-
-		char *tmp = DBG_NEW char[newCapacity];
-		memcpy(tmp, string, stringLength);
-
-		memcpy(tmp + stringLength, r.string, r.stringLength);
-		stringLength = stringLength + r.stringLength;
-		tmp[stringLength] = '\0';
-		delete[] string;
-		string = tmp;
+			
+		char* tmp = string;
+		string = DBG_NEW char[newCapacity];
 		capacity = newCapacity;
-
+		memcpy(string, tmp, stringLength);
+		delete[] tmp;
 	}
-	else
-	{
-		memcpy(string + stringLength, r.string, r.stringLength);
-		stringLength = newLen;
-		string[stringLength] = '\0';
-	}
+		
+	assert(stringLength + r.stringLength < capacity);
+	memcpy(string + stringLength, r.string, r.stringLength);
+	stringLength = newLen;
+	string[stringLength] = '\0';
 }
 
 bool XString::StrCmp(char *str1, char *str2) {
