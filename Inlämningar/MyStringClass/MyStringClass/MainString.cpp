@@ -121,10 +121,22 @@ void TestFörGodkäntXString() {
 	} else {
 		//lagrar strängen utan \0
 		int cap;
-		s2.Data(); cap=s2.Capacity(); s2.ShrinkToFit(); assert(cap!=s2.Capacity()); //change
-		cap=s2.Capacity(); s2.Data(); assert(cap!=s2.Capacity()); //change
-		s2.ShrinkToFit(); cap=s2.Capacity(); s2.Reserve(len); assert(cap==s2.Capacity()); //change
-		s2.Reserve(len+1); assert(cap!=s2.Capacity()); //change
+		s2.Data(); 
+		cap=s2.Capacity(); 
+		s2.ShrinkToFit(); 
+		assert(cap!=s2.Capacity()); //change
+
+		cap=s2.Capacity(); 
+		s2.Data(); 
+		assert(cap!=s2.Capacity()); //change
+
+		s2.ShrinkToFit(); 
+		cap=s2.Capacity(); 
+		s2.Reserve(len); 
+		assert(cap==s2.Capacity()); //change
+
+		s2.Reserve(len+1); 
+		assert(cap!=s2.Capacity()); //change
 	}
 
 //- Resize(int)

@@ -184,8 +184,8 @@ void XString::ShrinkToFit() {
 		capacity = stringLength + 1;
 		char *temp = string;
 		string = DBG_NEW char[capacity + 1];
-		string[stringLength] = '\0';
 		memcpy(string, temp, stringLength + 1);
+		string[stringLength] = '\0';
 		delete[] temp;
 	}
 }
