@@ -14,7 +14,7 @@ class ReverseIterator {
 public:
 	friend class XString;
 
-	ReverseIterator<T>(T *first = NULL, T *last = NULL); // =NULL is for the default constructor.
+	ReverseIterator<T>(T *ptr = NULL); // =NULL is for the default constructor.
 	~ReverseIterator<T>();
 
 	//Operators
@@ -43,12 +43,10 @@ private:
 };
 
 template<typename T>
-ReverseIterator<T>::ReverseIterator(T *first, T *last) {
+ReverseIterator<T>::ReverseIterator(T *ptr) {
 	//-1 is for reverse version!
 	direction = -1;  
-	this->first = last - 1; 
-	this->last = first - 1; 
-	this->current = this->first;
+	current = ptr - 1;
 }
 
 template<typename T>
@@ -65,8 +63,8 @@ ReverseIterator<T> ReverseIterator<T>::operator+(int n) {
 
 template<typename T>
 ReverseIterator<T> ReverseIterator<T>::operator+(const ReverseIterator<T> &rhs) {
-	ReverseIterator<T> it(first, last);
-	it.current = first + GetOffset() + rhs.GetOffset();
+	ReverseIterator<T> it(ptr);
+	it.current = ptr + GetOffset() + rhs.GetOffset();
 	return it;
 }
 
@@ -88,7 +86,8 @@ ReverseIterator<T> ReverseIterator<T>::operator++(int) {
 
 template<typename T>
 inline T& ReverseIterator<T>::operator[](int i) {
-	return *((*this) + i).Get();
+	//*((*this) + i).Get();
+	return current[i*direction];
 }
 
 //Return a reference to the value current points to.

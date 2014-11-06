@@ -67,7 +67,6 @@
   <ItemGroup>
     <ClInclude Include="Defs.h" />
     <ClInclude Include="ForwardIterator.h" />
-    <ClInclude Include="Iterator.h" />
     <ClInclude Include="ReverseIterator.h" />
     <ClInclude Include="XString.h" />
   </ItemGroup>
