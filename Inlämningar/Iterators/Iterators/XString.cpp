@@ -39,42 +39,36 @@ XString::~XString() {
 
 //Iterator Functions
 XString::ForIterator XString::begin() {
-	return ForIterator(string, string + stringLength);
+	return ForIterator(string);
 }
 
 XString::ForIterator XString::end() {
-	ForIterator it(string, string + stringLength);
-	it.current += stringLength;
-	return it;
+	return ForIterator (string + stringLength);
 }
 
 XString::ConstForwardIterator XString::cbegin() {
-	return ConstForwardIterator(string, string + stringLength);
+	return ConstForwardIterator(string);
 }
 
 XString::ConstForwardIterator XString::cend() {
-	ConstForwardIterator it(string, string + stringLength);
-	it.current += stringLength;
-	return it;
+	return ConstForwardIterator(string + stringLength);
 }
 
 XString::RevIterator XString::rbegin() {
-	return RevIterator(string, string + stringLength);
+	return RevIterator(string + stringLength );
 }
 
 XString::RevIterator XString::rend() {
-	RevIterator it(string, string + stringLength);
-	it.current = string - 1;
+	RevIterator it(string );
 	return it;
 }
 
 XString::ConstReverseIterator XString::crbegin() {
-	return ConstReverseIterator(string, string + stringLength);
+	return ConstReverseIterator(string + stringLength );
 }
 
 XString::ConstReverseIterator XString::crend() {
-	ConstReverseIterator it(string, string + stringLength);
-	it.current = string - 1;
+	ConstReverseIterator it(string );
 	return it;
 }
 //END iterator functions

@@ -14,7 +14,7 @@ class ForwardIterator {
 public:
 	friend class XString;
 
-	ForwardIterator<T>(T *first = NULL, T *last = NULL); // =NULL is for the default constructor.
+	ForwardIterator<T>(T *ptr = NULL); // =NULL is for the default constructor.
 	~ForwardIterator<T>();
 
 	//Operators
@@ -43,11 +43,9 @@ private:
 };
 
 template<typename T>
-ForwardIterator<T>::ForwardIterator(T *first, T *last) {
+ForwardIterator<T>::ForwardIterator(T *ptr) {
 	direction = 1; //1 is for forward version.
-	this->first = first;
-	this->last = last;
-	this->current = this->first;
+	current = ptr;
 }
 
 template<typename T>
@@ -64,8 +62,8 @@ ForwardIterator<T> ForwardIterator<T>::operator+(int n) {
 
 template<typename T>
 ForwardIterator<T> ForwardIterator<T>::operator+(const ForwardIterator<T> &rhs) {
-	ForwardIterator<T> it(first, last);
-	it.current = first + GetOffset() + rhs.GetOffset();
+	ForwardIterator<T> it(ptr);
+	it.current = ptr + GetOffset() + rhs.GetOffset();
 	return it;
 }
 
@@ -88,7 +86,8 @@ ForwardIterator<T> ForwardIterator<T>::operator++(int) {
 
 template<typename T>
 inline T& ForwardIterator<T>::operator[](int i) {
-	return *((*this) + i).Get();
+	//*((*this) + i).Get();
+	return current[i*direction];
 }
 
 //Return a reference to the value current points to.
