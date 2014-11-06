@@ -30,6 +30,7 @@ XString::XString(const char *cstr) {
 	string[stringLength] = '\0';
 }
 
+
 XString::~XString() {
 	if (string != NULL) {
 		delete[] string;
@@ -120,7 +121,7 @@ int XString::Length() const {
 
 void XString::Reserve(const int num) {
 	int newCapacity = num + 1;
-	if (newCapacity < capacity || newCapacity == capacity) {
+	if (newCapacity <= capacity) {
 		return;
 	}
 	
