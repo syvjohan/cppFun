@@ -1,5 +1,7 @@
 #include "Manager.h"
 
+using namespace std;
+
 Manager::Manager() {
 	symbols = { '+', '-', '*', '/', '(', ')', '<', '>', '=' };
 	keywords = { "INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
@@ -34,16 +36,19 @@ void Manager::LoadFile() {
 	int key;
 	ifstream file("test.txt");
 	if (file.is_open()) {
+		//Get the first number in line and store it as key in containerKey.
 	START:while (file >> key) {
+		//Get the keyword in line and store it as value in containerKey.
 			while (file >> line) {
-				//Bör kontrollera om det är ett keyword innan det lagras.
+				//TOFO! kontrollera om det är ett keyword innan det lagras.
 				for (int i = 0; i != keywords.size(); ++i) {
 					if (line == keywords[i]) {
 						containerKey.insert(std::pair<int, string>(key, line));
 						break;
 					}					
 				}	
-
+				//Get the rest content in the line and store it as value in contrainerString.
+				//Key value is the same as key in containerKey.
 				while (getline(file, line)) {
 					containerString.insert(std::pair<int, string>(key, line));
 					goto START;
@@ -109,23 +114,33 @@ void Manager::Print(const int &key) {
 }
 
 void Manager::Let(const int &key) {
-	variable *var = new variable;
-	list<variable> listVar;
+	var = new Variable;
+
+	char op;
+	string Stmp = containerString.find(key)->second;
+	//Search for operator in the string.
+	SearchForOperator(op, Stmp, var->expression);
 	
 	var->name = containerKey.find(key)->second;
-
-	string tmp = containerString.find(key)->second;
-	char c = SearchForOperator(tmp);
-	CheckOperatorMatch(c, var->name);
+	//Evaluate type of operator.
+	CheckOperatorMatch(op, var->name, var->expression);
 
 	//var->size = sizeof(containerKey.find(key)->second);
 }
 
-char Manager::SearchForOperator(string tmp) {
-	for (char &c : tmp) {
+//Trollfejs på denna funktion....
+void Manager::SearchForOperator(char &cTmp, string sTmp, int &expression) {
+	string con;
+	for (char &c = sTmp[0]; c != '\0'; ++c) {
 		for (int j = 0; j != symbols.size(); ++j) {
-			if (tmp[c] == symbols[j]) { 
-				return c;
+			if (sTmp[c] == symbols[j]) { 
+				cTmp = c; //Store the operator.
+
+				//Get the rhs after operator.
+				for (char i = sTmp[c]; i != '\0'; ++i) {
+					con += i;
+				}
+				expression = atoi(con.c_str()); //convert string to int.
 			}
 		}	
 	}
@@ -150,7 +165,7 @@ bool Manager::If(const int &key) {
 	return true;
 }
 
-void Manager::CheckOperatorMatch(char &c, string varName) {
+void Manager::CheckOperatorMatch(char &c, string &varName, int &expression) {
 	if (c == '+') {
 
 	}
@@ -176,14 +191,14 @@ void Manager::CheckOperatorMatch(char &c, string varName) {
 
 	}
 	else if (c == '=') {
-		void IsEqual();
+		IsEqual(varName, expression);
 	}
 	else {
 		return;
 	}
 }
 
-void Manager::IsEqual() {
-
+void Manager::IsEqual(string &varName, int &expression) {
+	
 }
 

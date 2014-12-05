@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Variable.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -7,8 +9,6 @@
 #include <map>
 #include <list>
 #include <cassert>
-
-using namespace std;
 
 class Manager {
 public:
@@ -18,19 +18,17 @@ public:
 	void Initializer();
 	void LoadFile();
 	void CheckKeywordMatch();
-	void CheckOperatorMatch(char &c, string varName);
+	void CheckOperatorMatch(char &c, std::string &varName, int &expression);
 
 
 private:
-	vector<string> keywords;
-	vector<char> symbols;
-	map<int, string> containerString;
-	map<int, string> containerKey;
+	Variable *var;
 
-	typedef struct variable {
-		int size;
-		string name;
-	};
+	std::list<Variable> listVar; //Storage for variables.
+	std::vector<std::string> keywords;
+	std::vector<char> symbols;
+	std::map<int, std::string> containerString;
+	std::map<int, std::string> containerKey;
 	
 	//Keywords.
 	void Print(const int &key);
@@ -52,9 +50,9 @@ private:
 	void OpenParanthesis();
 	void Less();
 	void More();
-	void IsEqual();
+	void IsEqual(std::string &varName, int &expression);
 
-	char SearchForOperator(string tmp);
+	void SearchForOperator(char &cTmp, std::string sTmp, int &expression);
 	
 
 };
