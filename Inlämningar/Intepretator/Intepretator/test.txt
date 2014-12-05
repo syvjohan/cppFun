@@ -1,0 +1,3 @@
+10 PRINT "Välkommen till Gissa Tal"
+30 LET antal
+210 GOTO 100
