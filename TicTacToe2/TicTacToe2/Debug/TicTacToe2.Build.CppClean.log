@@ -1,9 +1,13 @@
 c:\cppfun\tictactoe2\tictactoe2\debug\vc120.pdb
 c:\cppfun\tictactoe2\tictactoe2\debug\vc120.idb
 c:\cppfun\tictactoe2\tictactoe2\debug\consoleview.obj
-c:\cppfun\tictactoe2\tictactoe2\debug\model.obj
-c:\cppfun\tictactoe2\tictactoe2\debug\player.obj
+c:\cppfun\tictactoe2\tictactoe2\debug\gamemanager.obj
+c:\cppfun\tictactoe2\tictactoe2\debug\main.obj
+c:\cppfun\tictactoe2\tictactoe2\debug\gameboard.obj
 c:\cppfun\tictactoe2\tictactoe2\debug\sdlgraphics.obj
+c:\cppfun\tictactoe2\debug\tictactoe2.ilk
+c:\cppfun\tictactoe2\debug\tictactoe2.exe
+c:\cppfun\tictactoe2\debug\tictactoe2.pdb
 c:\cppfun\tictactoe2\tictactoe2\debug\tictactoe2.tlog\cl.command.1.tlog
 c:\cppfun\tictactoe2\tictactoe2\debug\tictactoe2.tlog\cl.read.1.tlog
 c:\cppfun\tictactoe2\tictactoe2\debug\tictactoe2.tlog\cl.write.1.tlog

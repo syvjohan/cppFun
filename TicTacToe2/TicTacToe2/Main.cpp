@@ -2,8 +2,9 @@
 #include "IGameView.h"
 #include "GameManager.h"
 #include "ConsoleView.h"
+#include "SDLGraphics.h"
 
-//#define USE_SDL
+#define USE_SDL
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -11,11 +12,10 @@ int main() {
 	GameView* view = nullptr;
 
 #ifdef USE_SDL
-	view = new SDLView();
+	view = new SDLGraphics();
 #else
 	view = new ConsoleView();
 #endif 
-
 
 	GameManager manager;
 	manager.AttachView(view);
