@@ -18,9 +18,9 @@ static int isOperator(char ch) {
 static std::string trimWs(const std::string &exp) {
     std::string str;
     for (const char ch : exp) {
-	if (!(ch == ' ' || ch == '\n')) {
-	    str += ch;
-	}
+		if (!(ch == ' ' || ch == '\n')) {
+			str += ch;
+		}
     }
     return str;
 }

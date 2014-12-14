@@ -20,15 +20,26 @@ public:
 	void LoadFile();
 	int provide(const std::string &expr) const;
 	std::string GetFirstWord(std::string str);
-	std::string GetRestOfString(std::string str, int length);
+	std::string GetVarName(std::string str, int len);
+	std::string GetVarExpression(std::string str, int len);
 	void CheckKeywordMatch();
 
 	//Keywords.
 	void Print(std::string str);
-	int Goto(const int &key);
+	int Goto(std::string str);
 	void End();
+	void Let(std::string str, int len);
 
 private:
 	std::vector<std::string> instructions;
 	std::map<int, std::string> container;
+
+	struct var {
+		void *pVoid;
+		int sizeInt;
+		std::string sizeString;
+		void *expr;
+	}variable;
+
+	std::vector<var> varContainer;
 };

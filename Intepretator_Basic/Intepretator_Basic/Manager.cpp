@@ -7,6 +7,7 @@ Manager::Manager() {
 	instructions.push_back("INPUT");
 	instructions.push_back("PRINT");
 	instructions.push_back("GOTO");
+
 }
 
 Manager::~Manager() {
@@ -30,7 +31,7 @@ void Manager::LoadFile() {
 	ifstream file("test.txt");
 	if (file.is_open()) {
 		while (file >> key && getline(file, line)) {
-			container.insert(std::pair<int, string>(key, line));
+			container.insert(std::pair<int, string>(key, line.substr(1, line.length() - 1)));
 		}
 		file.close();
 	} else {
@@ -55,15 +56,17 @@ void Manager::CheckKeywordMatch() {
 	map<int, string>::iterator it;
 	it = container.begin();
 
-	while (it != container.end()) {
+	do {
 
-	value = it->second;
-	key = it->first;
-	string keyword = GetFirstWord(value);
+		value = it->second;
+		key = it->first;
 
-	int len = keyword.length();
-	string str = GetRestOfString(value, len);
+		std::cout << key << " | "<< value << std::endl;
 
+		string keyword = GetFirstWord(value);
+
+		int len = keyword.length();
+		string str = value.substr(len, value.length() - len); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
 			Print(str);
@@ -72,7 +75,8 @@ void Manager::CheckKeywordMatch() {
 
 		}
 		else if (keyword == "LET") {
-
+			
+			Let(str, len);
 		}
 		else if (keyword == "IF") {
 
@@ -90,7 +94,8 @@ void Manager::CheckKeywordMatch() {
 
 		}
 		else if (keyword == "GOTO") {
-			key = Goto(key);
+			key = Goto(str);
+			it = container.find(key);
 			continue;
 		}
 		else {
@@ -98,35 +103,52 @@ void Manager::CheckKeywordMatch() {
 		}
 
 		++it;
-	}	
+	} while (it != container.end());
 }
 
 std::string Manager::GetFirstWord(std::string str) {
 	size_t found;
-	found = str.find_first_of('\"'); 
+	found = str.find_first_of(' ');
 
-	string word = str.substr(1, (found - 2));
+	string word = str.substr(0, found);
 
 	return word;
 }
 
-std::string Manager::GetRestOfString(std::string str, int length) {
+std::string Manager::GetVarExpression(std::string str, int len) {
 	size_t found;
-	found = str.find_last_of('"');
+	found = str.find_first_of('=');
 
-	string restOfStr = str.substr((length + 1), (found - 2));
+	string word = str.substr(len, found);
 
-	return restOfStr;
+	return word;
+}
+
+std::string Manager::GetVarName(std::string str, int len) {
+	size_t found;
+	found = str.find_first_of('=');
+
+	string word = str.substr(len, found - len);
+
+	return word;
 }
 
 void Manager::Print(std::string str) {
 	cout << str << endl;
 }
 
-int Manager::Goto(const int &key) {
-	string str = container.find(key)->second;
+int Manager::Goto(std::string str) {
 	int number = atoi(str.c_str()); //convert string to int.
 	return number;
+}
+
+void Manager::Let(std::string str, int len) {
+	string varExpr = GetVarExpression(str, len);
+	string varName = GetVarName(str, len);
+
+	var *newVar = new var;
+
+	variable.expr = &varExpr;
 }
 
 void Manager::End() {
