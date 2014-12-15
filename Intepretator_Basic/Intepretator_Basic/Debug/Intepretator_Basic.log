@@ -1,0 +1,22 @@
+﻿Build started 2014-12-14 23:58:51.
+     1>Project "C:\cppFun\Intepretator_Basic\Intepretator_Basic\Intepretator_Basic.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Manager.cpp main.cpp
+         Manager.cpp
+     1>c:\cppfun\intepretator_basic\intepretator_basic\manager.cpp(19): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\cppfun\intepretator_basic\intepretator_basic\manager.cpp(149): error C2664: 'void std::vector<Manager::var,std::allocator<_Ty>>::push_back(const Manager::var &)' : cannot convert argument 1 from 'std::string' to 'Manager::var &&'
+                 with
+                 [
+                     _Ty=Manager::var
+                 ]
+                 Reason: cannot convert from 'std::string' to 'Manager::var'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+         Generating Code...
+         Compiling...
+         main.cpp
+         Generating Code...
+     1>Done Building Project "C:\cppFun\Intepretator_Basic\Intepretator_Basic\Intepretator_Basic.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.92

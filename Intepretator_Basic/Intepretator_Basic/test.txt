@@ -1,0 +1,3 @@
+10 PRINT "Valkommen till Gissa Tal"
+210 GOTO 10
+30 LET antal = 0
