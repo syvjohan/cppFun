@@ -35,5 +35,11 @@
     <ClInclude Include="parser.h">
       <Filter>MathLib</Filter>
     </ClInclude>
+    <ClInclude Include="DoProviding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Variable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

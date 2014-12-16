@@ -1,3 +1,4 @@
 10 PRINT "Valkommen till Gissa Tal"
-210 GOTO 10
-30 LET antal = 0
+20 GOTO 10
+30 LET antal = 10 * 10
+40 PRINT antal

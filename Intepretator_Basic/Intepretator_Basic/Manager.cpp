@@ -31,22 +31,12 @@ void Manager::LoadFile() {
 	ifstream file("test.txt");
 	if (file.is_open()) {
 		while (file >> key && getline(file, line)) {
-			container.insert(std::pair<int, string>(key, line.substr(1, line.length() - 1)));
+			container.insert(pair<int, string>(key, line.substr(1, line.length() - 1)));
 		}
 		file.close();
 	} else {
 		std::cout << "Unable to open file" << endl;
 	}
-}
-
-int Manager::provide(const std::string &expr) const {
-	if (expr == "RANDOM") {
-		return rand();
-	} else if (expr == "INT") {
-		//TODO typecast INT(blabla)
-	}
-
-	return ValueProvider::provide(expr);
 }
 
 void Manager::CheckKeywordMatch() {
@@ -66,7 +56,7 @@ void Manager::CheckKeywordMatch() {
 		string keyword = GetFirstWord(value);
 
 		int len = keyword.length();
-		string str = value.substr(len, value.length() - len); //Get the rest of the string, keyword - value.
+		string str = value.substr(len + 2, (value.length() - len - 3)); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
 			Print(str);
@@ -76,7 +66,7 @@ void Manager::CheckKeywordMatch() {
 		}
 		else if (keyword == "LET") {
 			
-			Let(str, len);
+			Let(str);
 		}
 		else if (keyword == "IF") {
 
@@ -106,7 +96,7 @@ void Manager::CheckKeywordMatch() {
 	} while (it != container.end());
 }
 
-std::string Manager::GetFirstWord(std::string str) {
+std::string Manager::GetFirstWord(string str) {
 	size_t found;
 	found = str.find_first_of(' ');
 
@@ -115,42 +105,56 @@ std::string Manager::GetFirstWord(std::string str) {
 	return word;
 }
 
-std::string Manager::GetVarExpression(std::string str, int len) {
+string Manager::GetVarExpression(string str, string varName) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(len, found);
+	string word = str.substr(found + 2, str.length());
 
 	return word;
 }
 
-std::string Manager::GetVarName(std::string str, int len) {
+string Manager::GetVarName(string str) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(len, found - len);
+	string word = str.substr(0, found);
 
 	return word;
 }
 
-void Manager::Print(std::string str) {
+void Manager::Print(string str) {
 	cout << str << endl;
 }
 
-int Manager::Goto(std::string str) {
+int Manager::Goto(string str) {
 	int number = atoi(str.c_str()); //convert string to int.
 	return number;
 }
 
-void Manager::Let(std::string str, int len) {
-	string varExpr = GetVarExpression(str, len);
-	string varName = GetVarName(str, len);
+void Manager::Let(string str) {
+	string varName = GetVarName(str);
+	string varExpr = GetVarExpression(str, varName);
+	
+	variable *newVar = new variable;
 
-	var *newVar = new var;
+	int exprResult = EvaluateMathExpr(varExpr);
 
-	variable.expr = &varExpr;
+	newVar->expr = &exprResult;
+	newVar->name = varName;
 }
 
 void Manager::End() {
 
 }
+
+int Manager::EvaluateMathExpr(string exp) {
+	DoProviding valProvider;
+	MathExpr expr(exp);
+	expr.setValueProvider(&valProvider);
+	int result = expr.eval();
+
+	return result;
+}
+
+

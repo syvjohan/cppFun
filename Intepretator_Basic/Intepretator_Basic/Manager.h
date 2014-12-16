@@ -10,36 +10,43 @@
 #include <string>
 
 #include "parser.h"
+#include "DoProviding.h"
 
-class Manager : public ValueProvider {
+class Manager {
 public:
 	Manager();
 	~Manager();
 	
 	void Initializer();
 	void LoadFile();
-	int provide(const std::string &expr) const;
-	std::string GetFirstWord(std::string str);
-	std::string GetVarName(std::string str, int len);
-	std::string GetVarExpression(std::string str, int len);
+
 	void CheckKeywordMatch();
 
-	//Keywords.
-	void Print(std::string str);
-	int Goto(std::string str);
-	void End();
-	void Let(std::string str, int len);
-
-private:
-	std::vector<std::string> instructions;
-	std::map<int, std::string> container;
-
-	struct var {
+	typedef struct {
+		std::string name;
 		void *pVoid;
 		int sizeInt;
 		std::string sizeString;
 		void *expr;
 	}variable;
 
-	std::vector<var> varContainer;
+private:
+	std::vector<std::string> instructions;
+	std::map<int, std::string> container;
+
+
+
+	std::vector<variable> varContainer;
+
+	//Keywords.
+	void Print(std::string str);
+	int Goto(std::string str);
+	void End();
+	void Let(std::string str);
+
+	//Evaluate functions
+	int EvaluateMathExpr(std::string exp);
+	std::string GetFirstWord(std::string str);
+	std::string GetVarName(std::string str);
+	std::string GetVarExpression(std::string str, std::string str2);
 };
