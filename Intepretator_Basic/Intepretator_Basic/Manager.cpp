@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "Defs.h"
 
 using namespace std;
 
@@ -34,7 +35,8 @@ void Manager::LoadFile() {
 			container.insert(pair<int, string>(key, line.substr(1, line.length() - 1)));
 		}
 		file.close();
-	} else {
+	}
+	else {
 		std::cout << "Unable to open file" << endl;
 	}
 }
@@ -47,25 +49,30 @@ void Manager::CheckKeywordMatch() {
 	it = container.begin();
 
 	do {
-
 		value = it->second;
 		key = it->first;
 
-		std::cout << key << " | "<< value << std::endl;
+		//cout << key << " | " << value << endl;
 
 		string keyword = GetFirstWord(value);
-
 		int len = keyword.length();
-		string str = value.substr(len + 2, (value.length() - len - 3)); //Get the rest of the string, keyword - value.
+		string str = value.substr(len , (value.length() - len)); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
-			Print(str);
+			string expr = "";
+			if (FindVariable(str, expr) == true) {
+				str = expr;
+				Print(str);
+			}
+			else {
+				str = FormatString(str);
+				Print(str);
+			}
 		}
 		else if (keyword == "INPUT") {
 
 		}
 		else if (keyword == "LET") {
-			
 			Let(str);
 		}
 		else if (keyword == "IF") {
@@ -96,6 +103,24 @@ void Manager::CheckKeywordMatch() {
 	} while (it != container.end());
 }
 
+bool Manager::FindVariable(string str, string &expr) {
+	vector<variable>::iterator it;
+	for (it = varContainer.begin(); it != varContainer.end(); ++it) {
+		if (it->name == str) {			
+			expr = to_string(it->expr);
+			return true;
+		}
+	}
+	return false;
+}
+
+string Manager::FormatString(string str) {
+	string newStr;
+	newStr = str.substr(+2, str.length() - 3);
+	return newStr;
+	//string str = value.substr(len, (value.length() - len));
+}
+
 std::string Manager::GetFirstWord(string str) {
 	size_t found;
 	found = str.find_first_of(' ');
@@ -109,7 +134,7 @@ string Manager::GetVarExpression(string str, string varName) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(found + 2, str.length());
+	string word = str.substr(found +2, str.length());
 
 	return word;
 }
@@ -118,7 +143,7 @@ string Manager::GetVarName(string str) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(0, found);
+	string word = str.substr(0, found -1);
 
 	return word;
 }
@@ -135,13 +160,15 @@ int Manager::Goto(string str) {
 void Manager::Let(string str) {
 	string varName = GetVarName(str);
 	string varExpr = GetVarExpression(str, varName);
-	
+	 
 	variable *newVar = new variable;
-
+	
 	int exprResult = EvaluateMathExpr(varExpr);
 
-	newVar->expr = &exprResult;
+	newVar->expr = exprResult;
 	newVar->name = varName;
+
+	varContainer.push_back(*newVar);
 }
 
 void Manager::End() {

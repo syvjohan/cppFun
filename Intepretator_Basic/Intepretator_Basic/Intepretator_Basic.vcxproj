@@ -71,6 +71,7 @@
     <ClCompile Include="parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="DoProviding.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="parser.h" />

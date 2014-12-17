@@ -27,15 +27,12 @@ public:
 		void *pVoid;
 		int sizeInt;
 		std::string sizeString;
-		void *expr;
+		int expr;
 	}variable;
 
 private:
 	std::vector<std::string> instructions;
 	std::map<int, std::string> container;
-
-
-
 	std::vector<variable> varContainer;
 
 	//Keywords.
@@ -49,4 +46,7 @@ private:
 	std::string GetFirstWord(std::string str);
 	std::string GetVarName(std::string str);
 	std::string GetVarExpression(std::string str, std::string str2);
+	std::string FormatString(std::string str);
+	//int IsString(std::string str);
+	bool FindVariable(std::string str, std::string &expr);
 };
