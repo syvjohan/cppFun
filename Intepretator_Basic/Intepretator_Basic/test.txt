@@ -1,4 +1,8 @@
 10 PRINT "Valkommen till Gissa Tal"
 30 LET antal = 10 * 10
 40 PRINT antal
+50 INPUT gissning
+60 IF gissning > antal
 
+
+600 GOTO 10

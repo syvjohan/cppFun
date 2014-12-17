@@ -3,11 +3,22 @@
 
 using namespace std;
 
+static std::string trimWs(const std::string &exp) {
+	std::string str;
+	for (const char ch : exp) {
+		if (!(ch == ' ' || ch == '\n')) {
+			str += ch;
+		}
+	}
+	return str;
+}
+
 Manager::Manager() {
 	//keywords = {"INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
 	instructions.push_back("INPUT");
 	instructions.push_back("PRINT");
 	instructions.push_back("GOTO");
+	instructions.push_back("END");
 
 }
 
@@ -59,34 +70,35 @@ void Manager::CheckKeywordMatch() {
 		string str = value.substr(len , (value.length() - len)); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
-			string expr = "";
-			if (FindVariable(str, expr) == true) {
-				str = expr;
-				Print(str);
+			vector<variable>::iterator it;
+			for (it = varContainer.begin(); it != varContainer.end(); ++it) {
+				if (it->name == str) {
+					str = to_string(it->expr);
+					Print(str);
+				}
+				else {
+					str = GetLhs(str);
+					Print(str);
+				}
 			}
-			else {
-				str = FormatString(str);
-				Print(str);
-			}
+			
 		}
 		else if (keyword == "INPUT") {
-
+			Let(str);
 		}
 		else if (keyword == "LET") {
 			Let(str);
 		}
 		else if (keyword == "IF") {
-
+			If(str);
 		}
 		else if (keyword == "THEN") {
 
 		}
 		else if (keyword == "END") {
-
+			exit(0);
 		}
-		else if (keyword == "RANDOM") {
 
-		}
 		else if (keyword == "INT") {
 
 		}
@@ -114,13 +126,6 @@ bool Manager::FindVariable(string str, string &expr) {
 	return false;
 }
 
-string Manager::FormatString(string str) {
-	string newStr;
-	newStr = str.substr(+2, str.length() - 3);
-	return newStr;
-	//string str = value.substr(len, (value.length() - len));
-}
-
 std::string Manager::GetFirstWord(string str) {
 	size_t found;
 	found = str.find_first_of(' ');
@@ -130,7 +135,7 @@ std::string Manager::GetFirstWord(string str) {
 	return word;
 }
 
-string Manager::GetVarExpression(string str, string varName) {
+string Manager::GetRhs(string str, string varName) {
 	size_t found;
 	found = str.find_first_of('=');
 
@@ -139,11 +144,11 @@ string Manager::GetVarExpression(string str, string varName) {
 	return word;
 }
 
-string Manager::GetVarName(string str) {
+string Manager::GetLhs(string str) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(0, found -1);
+	string word = str.substr(1, found -2);
 
 	return word;
 }
@@ -158,8 +163,8 @@ int Manager::Goto(string str) {
 }
 
 void Manager::Let(string str) {
-	string varName = GetVarName(str);
-	string varExpr = GetVarExpression(str, varName);
+	string varName = GetLhs(str);
+	string varExpr = GetRhs(str, varName);
 	 
 	variable *newVar = new variable;
 	
@@ -171,8 +176,57 @@ void Manager::Let(string str) {
 	varContainer.push_back(*newVar);
 }
 
-void Manager::End() {
+bool Manager::If(string str) {
+	//Remove whitespaces.
+	string trimStr = trimWs(str);
 
+	//Separate variables...
+	size_t found1 = trimStr.find_first_of('>');
+	size_t found2 = trimStr.find_first_of('<');
+	char symbol;
+	string word1, word2;
+	if (found1 != 4294967295) {
+		word1 = trimStr.substr(0, found1);
+		word2 = trimStr.substr(found1 + 1, trimStr.length());
+		symbol = '>';
+	}
+	else if (found2 != 4294967295) {
+		word1 = trimStr.substr(0, found2);
+		word2 = trimStr.substr(found2 + 1, trimStr.length());
+		symbol = '<';
+	}
+	else {
+		return false;
+	}
+	
+	//Check if they exist in varContainer
+	vector<variable>::iterator it;
+	for (it = varContainer.begin(); it != varContainer.end(); ++it) {
+		if (word1.c_str() == it->name) {
+			int expr1 = it->expr;
+			for (it = varContainer.begin(); it != varContainer.end(); ++it) {
+				if (word2.c_str() == it->name) {
+					int expr2 = it->expr;
+					//Compare values (bigger/smaller).
+					if (symbol == '>') {
+						if (expr1 > expr2) {
+							return true;
+						}
+						return false;
+					}
+					else if (symbol == '<') {
+						if (expr1 < expr2) {
+							return true;
+						}
+						return false;
+					}
+				}
+			}
+			
+		}
+	}
+	printf("Cannot identify variables");
+	return false;
 }
 
 int Manager::EvaluateMathExpr(string exp) {
@@ -183,5 +237,4 @@ int Manager::EvaluateMathExpr(string exp) {
 
 	return result;
 }
-
 
