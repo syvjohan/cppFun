@@ -3,16 +3,6 @@
 
 using namespace std;
 
-static std::string trimWs(const std::string &exp) {
-	std::string str;
-	for (const char ch : exp) {
-		if (!(ch == ' ' || ch == '\n')) {
-			str += ch;
-		}
-	}
-	return str;
-}
-
 Manager::Manager() {
 	//keywords = {"INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
 	instructions.push_back("INPUT");
@@ -29,7 +19,7 @@ Manager::~Manager() {
 void Manager::Initializer() {
 	LoadFile();
 	srand(time(NULL));
-	CheckKeywordMatch();
+	Instructions();
 }
 
 void Manager::LoadFile() {
@@ -52,7 +42,7 @@ void Manager::LoadFile() {
 	}
 }
 
-void Manager::CheckKeywordMatch() {
+void Manager::Instructions() {
 	string value;
 	int key;
 
@@ -67,21 +57,26 @@ void Manager::CheckKeywordMatch() {
 
 		string keyword = GetFirstWord(value);
 		int len = keyword.length();
-		string str = value.substr(len , (value.length() - len)); //Get the rest of the string, keyword - value.
+		string str = value.substr(len, (value.length() - len)); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
 			vector<variable>::iterator it;
+			string line = DeleteQuotationMark(str);
+
+			//If there is no variables in the varConatainer
+			if (varContainer.begin() == varContainer.end()) {
+				Print(line);
+			}
+
 			for (it = varContainer.begin(); it != varContainer.end(); ++it) {
-				if (it->name == str) {
-					str = to_string(it->expr);
-					Print(str);
+				if (it->name == line) {
+					line = to_string(it->expr);
+					Print(line);
 				}
 				else {
-					str = GetLhs(str);
-					Print(str);
+					Print(line);
 				}
-			}
-			
+			}			
 		}
 		else if (keyword == "INPUT") {
 			Let(str);
@@ -93,7 +88,7 @@ void Manager::CheckKeywordMatch() {
 			If(str);
 		}
 		else if (keyword == "THEN") {
-
+			//Exercises in FindSpecInstruction(string str, string inst1, string instr2);
 		}
 		else if (keyword == "END") {
 			exit(0);
@@ -115,18 +110,45 @@ void Manager::CheckKeywordMatch() {
 	} while (it != container.end());
 }
 
-bool Manager::FindVariable(string str, string &expr) {
-	vector<variable>::iterator it;
-	for (it = varContainer.begin(); it != varContainer.end(); ++it) {
-		if (it->name == str) {			
-			expr = to_string(it->expr);
-			return true;
+//bool Manager::FindVariable(string str, string &expr) {
+//	vector<variable>::iterator it;
+//	for (it = varContainer.begin(); it != varContainer.end(); ++it) {
+//		if (it->name == str) {			
+//			expr = to_string(it->expr);
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+
+
+//bool isAlpha = ((string[i] > 'a' && string[i] < 'z') || (string[i] > 'A' && string[i] < 'Z'));
+string Manager::DeleteQuotationMark(string &str) {
+	string result;
+	string::iterator it;
+	string::reverse_iterator rit;
+	int countFor = 0;
+	int countRev = 0;
+
+	for (it = str.begin(); it != str.end(); ++it) {
+		if (isalpha(*it)) {
+			break;
 		}
+		++countFor;
 	}
-	return false;
+
+	for (rit = str.rbegin(); rit != str.rend(); ++rit) {
+		if (isalpha(*rit)) {
+			break;
+		}
+		++countRev;
+	}
+	
+	result = str.substr(countFor, str.length() - countRev);
+	return result;
 }
 
-std::string Manager::GetFirstWord(string str) {
+string Manager::GetFirstWord(string str) {
 	size_t found;
 	found = str.find_first_of(' ');
 
@@ -176,29 +198,50 @@ void Manager::Let(string str) {
 	varContainer.push_back(*newVar);
 }
 
-bool Manager::If(string str) {
-	//Remove whitespaces.
-	string trimStr = trimWs(str);
+string Manager::FindSpecInstruction(string str, string inst1, string instr2) {
+	//Check for "THEN" in string.
+	size_t findInstr1 = str.find(inst1);
+	assert(findInstr1 != 4294967295 && "Wrong syntax");
+	string secondExpr = str.substr(findInstr1, str.length());
+	string firstExpr = str.substr(1, findInstr1 - 2);
 
+	//Split second expression.
+	//Check for "GOTO" in string.
+	size_t findInstr2 = secondExpr.find(instr2);
+	assert(findInstr2 != 4294967295 && "Wrong syntax");
+	string instr = secondExpr.substr(findInstr2, 4);
+	string number = secondExpr.substr(findInstr2 + instr.length() + 1, secondExpr.length());
+
+	//return line for GOTO instruction
+	return number;
+}
+
+char Manager::FindRelationalOperator(string strToSearch, string &word1, string &word2) {
 	//Separate variables...
-	size_t found1 = trimStr.find_first_of('>');
-	size_t found2 = trimStr.find_first_of('<');
+	size_t found1 = strToSearch.find_first_of('>');
+	size_t found2 = strToSearch.find_first_of('<');
 	char symbol;
-	string word1, word2;
+
 	if (found1 != 4294967295) {
-		word1 = trimStr.substr(0, found1);
-		word2 = trimStr.substr(found1 + 1, trimStr.length());
-		symbol = '>';
+		word1 = strToSearch.substr(0, found1);
+		word2 = strToSearch.substr(found1 + 1, strToSearch.length());
+		return symbol = '>';
 	}
 	else if (found2 != 4294967295) {
-		word1 = trimStr.substr(0, found2);
-		word2 = trimStr.substr(found2 + 1, trimStr.length());
-		symbol = '<';
+		word1 = strToSearch.substr(0, found2);
+		word2 = strToSearch.substr(found2 + 1, strToSearch.length());
+		return symbol = '<';
 	}
-	else {
-		return false;
-	}
-	
+	assert("ERROR: no realtional operator implemented in IF!");
+	return 'g'; //Relational operators not found
+}
+
+void Manager::If(string str) {
+
+	string word1;
+	string word2;
+	char symbol = FindRelationalOperator(str, word1, word2);
+
 	//Check if they exist in varContainer
 	vector<variable>::iterator it;
 	for (it = varContainer.begin(); it != varContainer.end(); ++it) {
@@ -210,23 +253,23 @@ bool Manager::If(string str) {
 					//Compare values (bigger/smaller).
 					if (symbol == '>') {
 						if (expr1 > expr2) {
-							return true;
+							string goLine = FindSpecInstruction(str, "THEN", "GOTO");
+							Goto(goLine);
 						}
-						return false;
-					}
-					else if (symbol == '<') {
-						if (expr1 < expr2) {
-							return true;
+						else if (symbol == '<') {
+							if (expr1 < expr2) {
+								string goLine = FindSpecInstruction(str, "THEN", "GOTO");
+								Goto(goLine);
+							}
 						}
-						return false;
 					}
+					
 				}
 			}
 			
 		}
 	}
-	printf("Cannot identify variables");
-	return false;
+	assert("Cannot identify variables");
 }
 
 int Manager::EvaluateMathExpr(string exp) {

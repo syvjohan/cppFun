@@ -21,7 +21,7 @@ public:
 	void Initializer();
 	void LoadFile();
 
-	void CheckKeywordMatch();
+	void Instructions();
 
 	typedef struct {
 		std::string name;
@@ -32,21 +32,25 @@ public:
 	}variable;
 
 private:
-	std::vector<std::string> instructions;
-	std::map<int, std::string> container;
+	std::vector<std::string> instructions; //{"INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
+	std::map<int, std::string> container; //txt file..
 	std::vector<variable> varContainer;
 
 	//Keywords.
 	void Print(std::string str);
 	int Goto(std::string str);
 	void Let(std::string str);
-	bool If(std::string str);
+	void If(std::string str);
 
 	//Evaluate functions
 	int EvaluateMathExpr(std::string exp);
 	std::string GetFirstWord(std::string str);
 	std::string GetLhs(std::string str);
 	std::string GetRhs(std::string str1, std::string str2);
+	std::string DeleteQuotationMark(std::string &str);
 	//int IsString(std::string str);
-	bool FindVariable(std::string str, std::string &expr);
+	void FindVariable(std::string str, std::string &expr);
+	char FindRelationalOperator(std::string strToSearch, std::string &word1, std::string &word2);
+	std::string FindSpecInstruction(std::string str, std::string instr1, std::string instr2);
+	
 };
