@@ -1,5 +1,5 @@
 10 PRINT "Valkommen till Gissa Tal"
-30 LET antal = 10 * 10
+20 LET antal = INT ( RANDOM * 100 ) + 1
 40 PRINT antal
 50 INPUT gissning
 60 IF gissning > antal THEN GOTO 10

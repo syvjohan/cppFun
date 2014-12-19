@@ -5,11 +5,6 @@ using namespace std;
 
 Manager::Manager() {
 	//keywords = {"INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
-	instructions.push_back("INPUT");
-	instructions.push_back("PRINT");
-	instructions.push_back("GOTO");
-	instructions.push_back("END");
-
 }
 
 Manager::~Manager() {
@@ -57,23 +52,25 @@ void Manager::Instructions() {
 
 		string keyword = GetFirstWord(value);
 		int len = keyword.length();
-		string str = value.substr(len, (value.length() - len)); //Get the rest of the string, keyword - value.
+		string str = value.substr(len +1, (value.length() - len -1)); //Get the rest of the string, keyword - value.
 
 		if (keyword == "PRINT") {
 			vector<variable>::iterator it;
-			string line = DeleteQuotationMark(str);
+			string line;
 
 			//If there is no variables in the varConatainer
 			if (varContainer.begin() == varContainer.end()) {
+				line = str.substr(1, str.length() - 2);
 				Print(line);
 			}
 
 			for (it = varContainer.begin(); it != varContainer.end(); ++it) {
-				if (it->name == line) {
-					line = to_string(it->expr);
-					Print(line);
+				if (it->name == str) {
+					str = to_string(it->expr);
+					Print(str);
 				}
 				else {
+					line = str.substr(1, str.length() - 2);
 					Print(line);
 				}
 			}			
@@ -170,7 +167,7 @@ string Manager::GetLhs(string str) {
 	size_t found;
 	found = str.find_first_of('=');
 
-	string word = str.substr(1, found -2);
+	string word = str.substr(0, found -1);
 
 	return word;
 }
@@ -196,6 +193,12 @@ void Manager::Let(string str) {
 	newVar->name = varName;
 
 	varContainer.push_back(*newVar);
+}
+
+int Manager::Int(float &expr) {
+	//Cast from float to int.
+	int result = static_cast<int>(expr);
+	return result;
 }
 
 string Manager::FindSpecInstruction(string str, string inst1, string instr2) {

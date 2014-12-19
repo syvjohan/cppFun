@@ -32,7 +32,6 @@ public:
 	}variable;
 
 private:
-	std::vector<std::string> instructions; //{"INPUT", "PRINT", "LET", "IF", "THEN", "GOTO", "END", "RANODM", "INT"};
 	std::map<int, std::string> container; //txt file..
 	std::vector<variable> varContainer;
 
@@ -41,6 +40,7 @@ private:
 	int Goto(std::string str);
 	void Let(std::string str);
 	void If(std::string str);
+	int Int(float &expr);
 
 	//Evaluate functions
 	int EvaluateMathExpr(std::string exp);

@@ -1,7 +1,0 @@
-30 LET antal = 10 * 10
-40 PRINT antal
-50 INPUT gissning
-60 IF gissning > antal THEN GOTO 10
-
-
-600 GOTO 10
