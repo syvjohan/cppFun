@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Image">
+    <Filter Include="Images">
       <UniqueIdentifier>{877d6fa5-433b-4ccf-9c58-29f06e9dde4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -56,7 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="hello_world.bmp">
-      <Filter>Image</Filter>
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="o.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="x.bmp">
+      <Filter>Images</Filter>
     </Image>
   </ItemGroup>
 </Project>
