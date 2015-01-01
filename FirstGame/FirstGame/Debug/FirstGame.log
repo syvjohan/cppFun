@@ -1,18 +1,422 @@
-﻿Build started 2014-05-12 21:05:37.
+﻿Build started 2014-12-28 13:01:32.
      1>Project "C:\cppFun\FirstGame\FirstGame\FirstGame.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>c:\cppfun\firstgame\firstgame\main.cpp(50): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\cppfun\firstgame\firstgame\main.cpp(55): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cppFun\FirstGame\Debug\FirstGame.exe" /INCREMENTAL /NOLOGO SDL2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cppFun\FirstGame\Debug\FirstGame.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cppFun\FirstGame\Debug\FirstGame.lib" /MACHINE:X86 Debug\collision.obj
-         Debug\enemy.obj
-         Debug\main.obj
-         Debug\player.obj
-         FirstGame.vcxproj -> C:\cppFun\FirstGame\Debug\FirstGame.exe
-     1>Done Building Project "C:\cppFun\FirstGame\FirstGame\FirstGame.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TC /analyze- /errorReport:prompt collision.c enemy.c main.c player.c
+         player.c
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2061: syntax error : identifier 'max'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(29): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2061: syntax error : identifier 'velocity'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2061: syntax error : identifier 'forces'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(40): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2085: 'tiRectWidth' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2085: 'tiRectHeight' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'tiRect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2146: syntax error : missing ';' before identifier 'rect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2059: syntax error : '{'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(55): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2081: 'tiRect' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2085: 'tiRectSet' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ';' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2085: 'tiRectContains' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2085: 'tiRectIntersects' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2081: 'tiVec2' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing '{' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2054: expected '(' to follow 'out'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2085: 'tiVec2Add' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2085: 'tiVec2Sub' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2085: 'tiVec2ScalarMul' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2085: 'tiVec2ScalarDiv' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): fatal error C1003: error count exceeds 100; stopping compilation
+         main.c
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2061: syntax error : identifier 'max'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(29): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2061: syntax error : identifier 'velocity'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2061: syntax error : identifier 'forces'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(40): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2085: 'tiRectWidth' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2085: 'tiRectHeight' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'tiRect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2146: syntax error : missing ';' before identifier 'rect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2059: syntax error : '{'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(55): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2081: 'tiRect' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2085: 'tiRectSet' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ';' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2085: 'tiRectContains' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2085: 'tiRectIntersects' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2081: 'tiVec2' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing '{' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2054: expected '(' to follow 'out'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2085: 'tiVec2Add' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2085: 'tiVec2Sub' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2085: 'tiVec2ScalarMul' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2085: 'tiVec2ScalarDiv' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): fatal error C1003: error count exceeds 100; stopping compilation
+         enemy.c
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2061: syntax error : identifier 'max'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(29): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2061: syntax error : identifier 'velocity'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2061: syntax error : identifier 'forces'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(40): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2085: 'tiRectWidth' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2085: 'tiRectHeight' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'tiRect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2146: syntax error : missing ';' before identifier 'rect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2059: syntax error : '{'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(55): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2081: 'tiRect' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2085: 'tiRectSet' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ';' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2085: 'tiRectContains' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2085: 'tiRectIntersects' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2081: 'tiVec2' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing '{' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2054: expected '(' to follow 'out'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2085: 'tiVec2Add' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2085: 'tiVec2Sub' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2085: 'tiVec2ScalarMul' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2085: 'tiVec2ScalarDiv' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): fatal error C1003: error count exceeds 100; stopping compilation
+         collision.c
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(27): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2061: syntax error : identifier 'max'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(28): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(29): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2016: C requires that a struct or union has at least one member
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(32): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2061: syntax error : identifier 'velocity'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(33): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2061: syntax error : identifier 'forces'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(34): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(40): error C2059: syntax error : '}'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2085: 'tiRectWidth' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(43): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2085: 'tiRectHeight' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(48): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(53): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'tiRect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2146: syntax error : missing ';' before identifier 'rect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(54): error C2059: syntax error : '{'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(55): error C2065: 'rect' : undeclared identifier
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2081: 'tiRect' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2085: 'tiRectSet' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2143: syntax error : missing ';' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(59): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2085: 'tiRectContains' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(67): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2085: 'tiRectIntersects' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(77): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2061: syntax error : identifier 'tiRect'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(86): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(97): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing ')' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2081: 'tiVec2' : name in formal parameter list illegal
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2143: syntax error : missing '{' before '*'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(138): error C2054: expected '(' to follow 'out'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(144): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2085: 'tiVec2Add' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(150): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2085: 'tiVec2Sub' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(156): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(162): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2085: 'tiVec2ScalarMul' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(169): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2061: syntax error : identifier 'tiVec2'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ';'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2143: syntax error : missing '{' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(175): error C2059: syntax error : ')'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2054: expected '(' to follow 'inline'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ')' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2085: 'tiVec2ScalarDiv' : not in formal parameter list
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): error C2143: syntax error : missing ';' before '&'
+     1>c:\cppfun\firstgame\firstgame\tinymath.h(182): fatal error C1003: error count exceeds 100; stopping compilation
+         Generating Code...
+     1>Done Building Project "C:\cppFun\FirstGame\FirstGame\FirstGame.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.78
+Time Elapsed 00:00:00.20
