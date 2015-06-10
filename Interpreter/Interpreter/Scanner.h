@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+//#pragma optimize("", on)
+
 using namespace std;
 
 class Scanner
@@ -16,13 +18,14 @@ public:
 
 	void readFile(string path);
 
-	string getkey(std::string str);
-	string getExpression(string str);
-	map<int, std::string> intstructionLine;
+	string removeSlashFromPrint(string str);
+	string getkey(string str);
+	string getExpression(string str, string strIrrelevant);
+	map<int, string> intstructionLine;
 private:
+	int numberOfElements;
+	string keywords[4];
 
-	string *keywords;
-
-	string trimString(std::string str);
+	string trimString(string str);
 };
 

@@ -45,9 +45,9 @@ std::string Eval::calculateExpression() {
 	int exp1 = 0;
 	int exp2 = 0;
 
-	for (int i = 0; i < expression.length(); i++) {
+/*	for (int i = 0; i < expression.length(); i++) {
 		
-	}
+	}*/
 
 	return 0;
 }

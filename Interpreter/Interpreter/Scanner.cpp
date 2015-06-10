@@ -2,8 +2,10 @@
 
 
 Scanner::Scanner() {
-	keywords = new string[3] { "PRINT", "INPUT", "END" };
-
+	numberOfElements = 3;
+	keywords[0] = "PRINT";
+	keywords[1] = "LET";
+	keywords[2] = "INPUT";
 }
 
 
@@ -20,6 +22,12 @@ void Scanner::readFile(string path) {
 			int key = stoi(line.substr(0, firstWhiteSpace));
 
 			string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
+
+			string tmp = removeSlashFromPrint(value);
+			if (tmp != "") {
+				value = tmp;
+			}
+
 			value = trimString(value);
 			intstructionLine.insert(pair<int, string>(key, value));
 		}
@@ -37,11 +45,23 @@ std::string Scanner::trimString(std::string str) {
 	return str;
 }
 
+string Scanner::removeSlashFromPrint(string str) {
+	size_t found = str.find_first_of('\"');
+	size_t found2 = str.find_last_of('\"');
+	if (found != string::npos && found2 != string::npos) {
+		str.erase(found, 1);		
+		found2 = str.find_last_of('\"');
+		str.erase(found2, 1);
+
+		return str;
+	}
+	return "";
+}
+
 string Scanner::getkey(string str) {
-	size_t numberOfElements = sizeof(keywords) / sizeof(keywords[0]);
 	for (int i = 0; i != numberOfElements; i++) {
 		size_t found = str.find(keywords[i]);
-		if (found >= 0) {
+		if (found != string::npos) {
 			return keywords[i];
 		}
 	}
@@ -49,6 +69,7 @@ string Scanner::getkey(string str) {
 	return "";
 }
 
-string Scanner::getExpression(string str) {
-	return str;
+string Scanner::getExpression(string str, string strIrrelevant) {
+	return str.substr(strIrrelevant.length(), (str.length() - strIrrelevant.length()));
+
 }

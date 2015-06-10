@@ -19,13 +19,31 @@ void Manager::init() {
 	string expression = "";
 	for (auto &p : scanner->intstructionLine) {
 		keyword = scanner->getkey(p.second);
-		expression = scanner->getExpression(p.second);
+		expression = scanner->getExpression(p.second, keyword);
+		table(keyword, expression);
 	}
 	
 }
 
+void Manager::table(string keyword, string expression) {
+	if (keyword == "PRINT") {
+		evalInput(expression);
+	}
+	else if (keyword == "LET") {
+		LET *let = new LET(expression);
+	}
+	else if (keyword == "INPUT") {
 
+	}
+	else {
+		return;
+	}
+	
+}
 
+void Manager::evalInput(string str) {
+	cout << str << endl;
+}
 
 int main() {
 
