@@ -67,12 +67,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Eval.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="Scanner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Eval.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Scanner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

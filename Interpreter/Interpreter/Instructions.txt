@@ -1,0 +1,3 @@
+10 PRINT "Välkommen till Gissa Tal"
+20 LET tal = INT ( RANDOM * 100 ) + 1
+30 LET antal = 0

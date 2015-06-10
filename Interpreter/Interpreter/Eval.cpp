@@ -1,17 +1,8 @@
 #include "Eval.h"
 
 
-Eval::Eval(const std::string &expression) {
-	if (expression.length() > 0) {
-		this->expression = expression;
+Eval::Eval() {
 
-		evaluateExpression();
-		//std::cout << this->expression << std::endl;
-
-		return;
-	}
-
-	std::cout << "Empty value" << std::endl;
 }
 
 
@@ -19,16 +10,25 @@ Eval::~Eval() {
 
 }
 
-void Eval::evaluateExpression() {
-	Parser *parser = new Parser();
+int Eval::evaluateExpression(std::string line) {
+	if (expression.length() > 0) {
+		this->expression = line;
+		Parser *parser = new Parser();
 
-	//Remove white space
-	this->expression = parser->trimString(this->expression);
+		//Remove white space
+		this->expression = parser->trimString(this->expression);
 
-	//Check if syntax is correct.
-	if (!parser->isParanthesesMatch(this->expression)) {
-		std::cout << "Expression has wrong syntax" << std::endl;
+		//Check if syntax is correct.
+		if (!parser->isParanthesesMatch(this->expression)) {
+			return -1;
+			std::cout << "Expression has wrong syntax" << std::endl;
+		}
+
+		return 1;
 	}
+
+	std::cout << "Empty value" << std::endl;
+	return -2;
 }
 
 
@@ -39,4 +39,15 @@ void Eval::loopExpression() {
 			std::cout << "is operator\n", expression.at(i);
 		}
 	}
+}
+
+std::string Eval::calculateExpression() {
+	int exp1 = 0;
+	int exp2 = 0;
+
+	for (int i = 0; i < expression.length(); i++) {
+		
+	}
+
+	return 0;
 }

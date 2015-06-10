@@ -7,12 +7,15 @@
 
 class Eval {
 public:
-	Eval(const std::string &expression);
+	Eval();
 	~Eval();
 
+	int evaluateExpression(std::string line);
+
 private:
-	void evaluateExpression();
 	std::string expression;
+
 	void loopExpression();
+	std::string calculateExpression();
 };
 
