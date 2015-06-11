@@ -31,6 +31,7 @@ private:
 	char isOperator(char op);
 	float generateRandomNumber();
 	float doCalc(float value1, char op, float value2);
+	string sortStringForward(std::string str);
 
 };
 

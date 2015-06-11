@@ -67,7 +67,7 @@ void LET::parseExpression(std::string expression) {
 			requestTypeCast = 1;
 		}
 		else if (typeFloat != std::string::npos) {
-			setDataType(expression.substr(typeFloat, typeInt + 2));
+			setDataType(expression.substr(typeFloat, typeInt + 6));
 			requestTypeCast = 2;
 		}
 		else {
@@ -117,14 +117,14 @@ int LET::calculateExpression() {
 
 				if (isOpL != ' ') {
 
-					int index = findOpLeft + 1;
+					int index = findOpLeft - 1;
 					std::string lStr = "";
 					while (isdigit(valueToBeParsed[index])) {
 						lStr += valueToBeParsed[index];
-						++index;
+						--index;
 					}
 
-					int lValue = std::stoi(lStr.c_str());
+					int lValue = std::atoi(sortStringForward(lStr).c_str());
 					expression = doCalc(lValue, isOpL, generateRandomNumber());
 
 				}
@@ -195,4 +195,13 @@ float LET::doCalc(float value1, char op, float value2) {
 	}
 
 	return result;
+}
+
+string LET::sortStringForward(std::string str) {
+	string tmp;
+	for (int i = str.length() -1; i >= 0; i--) {
+		tmp += str[i];
+	}
+	str = tmp;
+	return str;
 }

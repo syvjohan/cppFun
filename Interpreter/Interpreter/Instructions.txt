@@ -1,4 +1,4 @@
 10 PRINT "Välkommen till Gissa Tal"
-20 LET tal = INT ( RANDOM * 100 ) + 1
+20 LET tal = FLOAT ( 10000 * RANDOM ) + 1
 30 LET antal = 0
 90 LET half = i / 2
