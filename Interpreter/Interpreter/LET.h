@@ -10,6 +10,10 @@ public:
 	LET(std::string expression);
 	~LET();
 
+	string getName();
+	string getValue();
+	string getDatatype();
+
 private:
 	std::string name;
 	std::string valueToBeParsed;
@@ -23,8 +27,10 @@ private:
 
 	void parseExpression(std::string expression);
 	int calculateExpression();
+
 	char isOperator(char op);
 	float generateRandomNumber();
+	float doCalc(float value1, char op, float value2);
 
 };
 

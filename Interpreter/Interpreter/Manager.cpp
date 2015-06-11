@@ -1,8 +1,8 @@
 #include "Manager.h"
 
 
-Manager::Manager()
-{
+Manager::Manager() {
+	
 }
 
 
@@ -31,6 +31,7 @@ void Manager::table(string keyword, string expression) {
 	}
 	else if (keyword == "LET") {
 		LET *let = new LET(expression);
+		variables.push_back(*let);
 	}
 	else if (keyword == "INPUT") {
 

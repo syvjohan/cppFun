@@ -33,6 +33,22 @@ void LET::setDataType(std::string datatype) {
 	}
 }
 
+string LET::getName() {
+	return this->name;
+}
+
+string LET::getValue() {
+	return to_string(parsedValue);
+}
+
+string LET::getDatatype() {
+	if (this->datatype == 2) {
+		return "FLOAT";
+	}
+	
+	return "INT";
+}
+
 void LET::parseExpression(std::string expression) {
 	int requestTypeCast = 0; //0 = notypecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
@@ -78,52 +94,51 @@ void LET::parseExpression(std::string expression) {
 
 int LET::calculateExpression() {
 	float expression = 0;
-	//If reguested result is an int or float.
-	if (datatype == 1) {
-		int(expression) = 0.0f;
+	
+	bool multValues = false;
+	for (int i = 0; i != valueToBeParsed.length(); i++) {
+		if (isOperator(valueToBeParsed.at(i)) != ' ') {
+			multValues = true;
+		}
 	}
 
-	
-	for (int i = 0; i != valueToBeParsed.length(); i++) {
 		//More than one value
-		if (isOperator(valueToBeParsed.at(i))) {
+		if (multValues) {
 
 			//If expression request RANDOM.
-			size_t random = valueToBeParsed.find("RANDOM");
-			if (random != std::string::npos) {
+			size_t findRandom = valueToBeParsed.find("RANDOM");
+			if (findRandom != std::string::npos) {
 				int tmp = 0;
-				size_t findOpLeft = valueToBeParsed.find(random - 1);
-				size_t findOpRight = valueToBeParsed.find(random + 7);
-				if (findOpLeft != std::string::npos){
+				int findOpLeft = findRandom - 1;
+				int findOpRight = findRandom + 6;
 
-					char isOpL = isOperator(valueToBeParsed[findOpLeft]);
-					if (isOpL != ' ') {
+				char isOpL = isOperator(valueToBeParsed[findOpLeft]);
+				char isOpR = isOperator(valueToBeParsed[findOpRight]);
 
-						int index = findOpLeft + 1;
-						std::string lStr = "";
-						while (isdigit(valueToBeParsed[index])) {
-							lStr += valueToBeParsed[i];
-							++index;
-						}
+				if (isOpL != ' ') {
 
-						int lValue = std::stoi(lStr, nullptr, 10);
-						expression = lValue + isOpL + generateRandomNumber();
+					int index = findOpLeft + 1;
+					std::string lStr = "";
+					while (isdigit(valueToBeParsed[index])) {
+						lStr += valueToBeParsed[index];
+						++index;
 					}
+
+					int lValue = std::stoi(lStr.c_str());
+					expression = doCalc(lValue, isOpL, generateRandomNumber());
+
 				}
-				else if (findOpRight != std::string::npos) {
-					char isOpR = isOperator(valueToBeParsed[findOpRight]);
-					if (isOpR != ' ') {
+				else if (isOpR != ' ') {
 
 						int index = findOpRight +1;
 						std::string rStr = "";
 						while (isdigit(valueToBeParsed[index])) {
-							rStr += valueToBeParsed[i];
+							rStr += valueToBeParsed[index];
 							++index;
 						}
 
-						int rValue = std::stoi(rStr, nullptr, 10);
-						expression = rValue + isOpR + generateRandomNumber();
-					}
+						int rValue = std::atoi(rStr.c_str());
+						expression = doCalc(rValue, isOpR, generateRandomNumber());
 				}
 
 				
@@ -134,21 +149,25 @@ int LET::calculateExpression() {
 			int index = valueToBeParsed.find_first_of('=') +1;
 			std::string str = "";
 			while (isdigit(valueToBeParsed[index])) {
-				str += valueToBeParsed[i];
+				str += valueToBeParsed[index];
 				++index;
 			}
 
-			int value = std::stoi(str, nullptr, 10);
+			int value = std::atoi(str.c_str());
 			expression = value;
 		}
 
+	//If reguested result is an int or float.
+	if (datatype == 1) {
+		int i = (int)(expression + 0.5);
+		return i;
 	}
 
 	return expression;
 }
 
 char LET::isOperator(char op) {
-	if (op == '+' || op == '-' || op == '/' || op == '*' || op == '%') {
+	if (op == '+' || op == '-' || op == '/' || op == '*') {
 		return op;
 	}
 	return ' ';
@@ -156,4 +175,24 @@ char LET::isOperator(char op) {
 
 float LET::generateRandomNumber() {
 	return (rand() / (float)(RAND_MAX + 1));
+}
+
+float LET::doCalc(float value1, char op, float value2) {
+	float result = 0.0f;
+	switch (op) {
+		case '*':
+			result = value1 * value2;
+			break;
+		case '/':
+			result = value1 / value2;
+			break;
+		case '+':
+			result = value1 + value2;
+			break;
+		case '-':
+			result = value1 - value2;
+			break;
+	}
+
+	return result;
 }
