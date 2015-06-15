@@ -1,31 +1,31 @@
 #pragma once
 
+#include "Map.h"
+
 #include <fstream>
-#include <map>
 #include <string>
-#include <sstream>
-#include <iostream>
 
 //#pragma optimize("", on)
 
-using namespace std;
-
-class Scanner
-{
+class Scanner {
 public:
 	Scanner();
 	~Scanner();
 
-	void readFile(string path);
+	void readFile(std::string path);
 
-	string removeSlashFromPrint(string str);
-	string getkey(string str);
-	string getExpression(string str, string strIrrelevant);
-	map<int, string> intstructionLine;
+	std::string removeSlashFromPrint(std::string str);
+	std::string getkeyword(std::string str);
+	std::string getExpression(std::string str, std::string strIrrelevant);
+	std::pair<std::string, std::string> getInstructionAt(int index);
+	int getInstructionLength();
+
 private:
-	int numberOfElements;
-	string keywords[4];
+	Map map;
 
-	string trimString(string str);
+	int keywordsLength;
+	std::string keywords[4];
+
+	std::string trimString(std::string str);
 };
 

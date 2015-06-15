@@ -11,21 +11,17 @@ Manager::~Manager()
 }
 
 void Manager::init() {
-	Scanner *scanner = new Scanner();
-	scanner->readFile("Instructions.txt");
-	
-	//Iterate line by line
-	string keyword = "";
-	string expression = "";
-	for (auto &p : scanner->intstructionLine) {
-		keyword = scanner->getkey(p.second);
-		expression = scanner->getExpression(p.second, keyword);
-		table(keyword, expression);
+	scanner.readFile("Instructions.txt"); //code file to be read from!
+
+	for (int i = 0; i != scanner.getInstructionLength(); i++) {
+		 table(scanner.getInstructionAt(i).first, scanner.getInstructionAt(i).second);
 	}
+		
+
 	
 }
 
-void Manager::table(string keyword, string expression) {
+void Manager::table(std::string keyword, std::string expression) {
 	if (keyword == "PRINT") {
 		evalInput(expression);
 	}
@@ -42,14 +38,14 @@ void Manager::table(string keyword, string expression) {
 	
 }
 
-void Manager::evalInput(string str) {
-	cout << str << endl;
+void Manager::evalInput(std::string str) {
+	std::cout << str << std::endl;
 }
 
 int main() {
 
-	Manager *manager = new Manager();
-	manager->init();
+	Manager manager;
+	manager.init();
 
 
 	//Eval *eval = new Eval("((2+2)+(2+3))");
@@ -59,9 +55,3 @@ int main() {
 	system("pause");
 	return 0;
 }
-
-
-/*for (auto &t : intstructionLine) {
-cout << t.first << "\n"
-<< t.second << endl;
-}*/

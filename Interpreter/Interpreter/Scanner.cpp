@@ -1,35 +1,33 @@
 #include "Scanner.h"
 
-
 Scanner::Scanner() {
-	numberOfElements = 3;
+	keywordsLength = 4;
 	keywords[0] = "PRINT";
 	keywords[1] = "LET";
 	keywords[2] = "INPUT";
 }
 
-
 Scanner::~Scanner()
 {
 }
 
-void Scanner::readFile(string path) {
-	ifstream file(path);
+void Scanner::readFile(std::string path) {
+	std::ifstream file(path);
 	if (file.is_open()) {
 
-		for (string line = ""; getline(file, line);) {
+		for (std::string line = ""; getline(file, line);) {
 			int firstWhiteSpace = line.find_first_of(' ');
 			int key = stoi(line.substr(0, firstWhiteSpace));
 
-			string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
+			std::string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
 
-			string tmp = removeSlashFromPrint(value);
+			std::string tmp = removeSlashFromPrint(value);
 			if (tmp != "") {
 				value = tmp;
 			}
 
 			value = trimString(value);
-			intstructionLine.insert(pair<int, string>(key, value));
+			map.pushBack(key, value);
 		}
 	}
 }
@@ -45,10 +43,10 @@ std::string Scanner::trimString(std::string str) {
 	return str;
 }
 
-string Scanner::removeSlashFromPrint(string str) {
+std::string Scanner::removeSlashFromPrint(std::string str) {
 	size_t found = str.find_first_of('\"');
 	size_t found2 = str.find_last_of('\"');
-	if (found != string::npos && found2 != string::npos) {
+	if (found != std::string::npos && found2 != std::string::npos) {
 		str.erase(found, 1);		
 		found2 = str.find_last_of('\"');
 		str.erase(found2, 1);
@@ -58,10 +56,10 @@ string Scanner::removeSlashFromPrint(string str) {
 	return "";
 }
 
-string Scanner::getkey(string str) {
-	for (int i = 0; i != numberOfElements; i++) {
+std::string Scanner::getkeyword(std::string str) {
+	for (int i = 0; i != keywordsLength; i++) {
 		size_t found = str.find(keywords[i]);
-		if (found != string::npos) {
+		if (found != std::string::npos) {
 			return keywords[i];
 		}
 	}
@@ -69,7 +67,17 @@ string Scanner::getkey(string str) {
 	return "";
 }
 
-string Scanner::getExpression(string str, string strIrrelevant) {
+std::string Scanner::getExpression(std::string str, std::string strIrrelevant) {
 	return str.substr(strIrrelevant.length(), (str.length() - strIrrelevant.length()));
+}
 
+std::pair<std::string, std::string> Scanner::getInstructionAt(int index) {
+	std::string value = map.getElementAt(index).value;
+	std::string keyword = getkeyword(value);
+	std::string expression = getExpression(value, keyword);
+	return std::make_pair(keyword, expression);
+}
+
+int Scanner::getInstructionLength() {
+	return map.Length();
 }
