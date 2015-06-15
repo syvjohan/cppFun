@@ -27,12 +27,17 @@ private:
 	void identifyPartsInExpression(std::string expression);
 	int calculateExpression();
 
-	char getOperator(char op);
+	char validateOperator(char op);
 	bool isOperator(char op);
 	float generateRandomNumber();
 	float doCalc(float value1, char op, float value2);
 	std::string sortStringForward(std::string str);
 	float isRandom(int posRandom);
-	void subdivideValues(std::string expression);
+
+	std::string subdivideValue(std::string expression, int index);
+	std::string ManageValueClassification(std::string expression, int opHierarchy);
+
+	int validateOperatorStatus(char op);
+	bool isParanthesis(char op);
 };
 

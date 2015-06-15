@@ -49,24 +49,28 @@ std::string LET::getDatatype() {
 }
 
 void LET::identifyPartsInExpression(std::string expression) {
+	std::string tmpExpression = expression;
 	int requestTypeCast = 0; //0 = notypecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
-	for (int i = 0; i != expression.length(); i++) {
+	for (int i = 0; i != tmpExpression.length(); i++) {
 
 		//find name.
-		size_t opEqual = expression.find_first_of('=');
+		size_t opEqual = tmpExpression.find_first_of('=');
 		if (opEqual != std::string::npos) {
-			setName(expression.substr(0, opEqual));
+			setName(tmpExpression.substr(0, opEqual));
+			tmpExpression.erase(0, opEqual +1);
 		}
 
 		//find datatype.
-		size_t typeInt = expression.find("INT");
-		size_t typeFloat = expression.find("FLOAT");
+		size_t typeInt = tmpExpression.find("INT");
+		size_t typeFloat = tmpExpression.find("FLOAT");
 		if (typeInt != std::string::npos) {
-			setDataType(expression.substr(typeInt, typeInt + 2));
+			setDataType(tmpExpression.substr(typeInt, typeInt +2));
+			tmpExpression.erase(typeInt, typeInt + 2);
 			requestTypeCast = 1;
 		}
 		else if (typeFloat != std::string::npos) {
-			setDataType(expression.substr(typeFloat, typeInt + 6));
+			setDataType(tmpExpression.substr(typeFloat, typeInt +6));
+			tmpExpression.erase(typeFloat, typeFloat + 6);
 			requestTypeCast = 2;
 		}
 		else {
@@ -80,71 +84,100 @@ void LET::identifyPartsInExpression(std::string expression) {
 			if (requestTypeCast == 1) {
 				//setValueToBeParsed(expression.substr(typeInt + 3, (expression.length() - typeInt)));
 
-				subdivideValues(expression.substr(typeInt + 3, (expression.length() - typeInt)));
+				ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), 1);
 				return;
 			}
 			else if (requestTypeCast == 2) {
 				//setValueToBeParsed(expression.substr(typeFloat + 5, (expression.length() - typeFloat)));
 
-				subdivideValues(expression.substr(typeInt + 3, (expression.length() - typeInt)));
+				ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), 1);
 				return;
 			}
 
 			//setValueToBeParsed(expression.substr(opEqual + 1, (expression.length() - opEqual)));
 
-			subdivideValues(expression.substr(typeInt + 3, (expression.length() - typeInt)));
+			ManageValueClassification(tmpExpression.substr(typeInt + 1, (tmpExpression.length() - typeInt)), 1);
 		}
 	}
 }
 
-void LET::subdivideValues(std::string expression) {
-	std::vector<float> resultValues;
-	std::string value = "";
+//Recursive function!
+std::string LET::ManageValueClassification(std::string expression, int opHierarchy) {
+
+	for (int index = 0; index < expression.length(); index++) {
+		if (validateOperatorStatus(expression.at(index)) == 1 && opHierarchy == 1) {
+			expression = subdivideValue(expression, index);
+		}
+		else if (validateOperatorStatus(expression.at(index)) == 2 && opHierarchy == 2) {
+			expression = subdivideValue(expression, index);
+		}
+		else if (validateOperatorStatus(expression.at(index)) == 3 && opHierarchy == 3) {
+			//not an operator!
+		}
+	}
+
+	if (opHierarchy == 1) {
+		ManageValueClassification(expression, 2);
+	}
+	else if (opHierarchy == 2) {
+		ManageValueClassification(expression, 3);
+	}
+	
+	return expression;
+}
+
+std::string LET::subdivideValue(std::string expression, int index) {	
 	std::string lhs = "";
 	std::string rhs = "";
-	for (int i = 0; i != expression.length(); i++) {
-		if (isOperator(expression.at(i))) {
-			//find left and right values off op
-			lhs = expression.substr(0, i - 1);
-			rhs = expression.substr(i + 1, expression.length());
+	int posLeft = 0;
+	int posRight = 0;
+	int nextOp = expression.length();
 
-			//transform left and right values to float
-			float lNumber = atoi(lhs.c_str());
-			float rNumber = atoi(rhs.c_str());
-
-			//calculate the values
-			float result = doCalc(lNumber, getOperator(expression.at(i)), rNumber);
-			resultValues.push_back(result);
-
+	//find left value off operator.
+	for (int l = index - 1; l >= 0; l--) {
+		//If there is a character left of value
+		if (isParanthesis(expression[l]) || isOperator(expression[l])) {
+			posLeft = l + 1;
+			lhs = expression.substr(posLeft, index - (l + 1));
+			break;
 		}
-
-
-
-
-
-
-
-
-
-		 //if there is a open parantheses.
-			//if true find end paranthese.	
-				//copy text between parantheses
-				//iterate that part
-				//Identify operators and prioritate / and *
-				//Calculate values
-				//Save value in array
-			//if false return wrong in expression syntax.
-		//If there is NO parantheses.
-			//find first op / or *.
-			//identify value to left and right by that op.
-			//calculate these values.
-			//save in array.
-			//Erase this part from expression
-			//start to loop from beginning.
-			//do it all over untill lenght is 0
-
-
+		//If there is nothing left of value.
+		else if (l == 0) {
+			posLeft = l;
+			lhs = expression.substr(posLeft, index - l);
+			break;
+		}
 	}
+			
+	//find next operator.
+	for (int k = index + 1; k != expression.length(); k++) {
+		if (isOperator(expression.at(k))) {
+			nextOp = k;
+			break;
+		}
+	}
+
+	//find right value off op
+	posRight = nextOp -1;
+	rhs = expression.substr(index +1, posRight - index);
+
+	//transform left and right values to float
+	float lNumber = atoi(lhs.c_str());
+	float rNumber = atoi(rhs.c_str());
+
+	//calculate the values
+	float result = doCalc(lNumber, validateOperator(expression.at(index)), rNumber);
+	std::string tmpResult = std::to_string(result);
+
+	std::string restLeft = expression.substr(0, posLeft);
+	std::string restRight = expression.substr(nextOp, expression.length() - posRight);
+
+	expression = "";
+	expression.append(restLeft);
+	expression.append(tmpResult);
+	expression.append(restRight);
+
+	return expression;
 }
 
 int LET::calculateExpression() {
@@ -152,7 +185,7 @@ int LET::calculateExpression() {
 	
 	bool multValues = false;
 	for (int i = 0; i != valueToBeParsed.length(); i++) {
-		if (getOperator(valueToBeParsed.at(i)) != ' ') {
+		if (validateOperator(valueToBeParsed.at(i)) != ' ') {
 			multValues = true;
 		}
 	}
@@ -195,8 +228,8 @@ float LET::isRandom(int posRandom) {
 	int findOpLeft = posRandom - 1;
 	int findOpRight = posRandom + 6;
 
-	char isOpL = getOperator(valueToBeParsed[findOpLeft]);
-	char isOpR = getOperator(valueToBeParsed[findOpRight]);
+	char isOpL = validateOperator(valueToBeParsed[findOpLeft]);
+	char isOpR = validateOperator(valueToBeParsed[findOpRight]);
 
 	if (isOpL != ' ') {
 
@@ -227,7 +260,7 @@ float LET::isRandom(int posRandom) {
 	return expression;
 }
 
-char LET::getOperator(char op) {
+char LET::validateOperator(char op) {
 	if (op == '+' || op == '-' || op == '/' || op == '*') {
 		return op;
 	}
@@ -236,6 +269,20 @@ char LET::getOperator(char op) {
 
 bool LET::isOperator(char op) {
 	return (op == '+' || op == '-' || op == '/' || op == '*');
+}
+
+int LET::validateOperatorStatus(char op) {
+	if (op == '*' || op == '/') {
+		return 1;
+	}
+	else if (op == '+' || op == '-') {
+		return 2;
+	}
+	return 3;
+}
+
+bool LET::isParanthesis(char op) {
+	return (op == '(' || op == ')');
 }
 
 float LET::generateRandomNumber() {
