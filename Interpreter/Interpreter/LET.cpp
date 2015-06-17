@@ -80,47 +80,78 @@ void LET::identifyPartsInExpression(std::string expression) {
 
 		//find value.
 		if (opEqual != std::string::npos) {
-
 			if (requestTypeCast == 1) {
-				//setValueToBeParsed(expression.substr(typeInt + 3, (expression.length() - typeInt)));
-
-				ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), 1);
+				setValueToBeParsed(ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), "", 1));
 				return;
 			}
 			else if (requestTypeCast == 2) {
-				//setValueToBeParsed(expression.substr(typeFloat + 5, (expression.length() - typeFloat)));
-
-				ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), 1);
+				setValueToBeParsed(ManageValueClassification(tmpExpression.substr(typeInt + 3, (tmpExpression.length() - typeInt)), "", 1));
 				return;
 			}
 
-			//setValueToBeParsed(expression.substr(opEqual + 1, (expression.length() - opEqual)));
-
-			ManageValueClassification(tmpExpression.substr(typeInt + 1, (tmpExpression.length() - typeInt)), 1);
+			setValueToBeParsed(ManageValueClassification(tmpExpression.substr(typeInt + 1, (tmpExpression.length() - typeInt)), "", 1));
+			return;
 		}
 	}
 }
 
 //Recursive function!
-std::string LET::ManageValueClassification(std::string expression, int opHierarchy) {
+std::string LET::ManageValueClassification(std::string expression, std::string subExpression, int opHierarchy) {
+	if (findNewParanthesSet) {
+		//Identify paranthesis position
+		setParanthesisPos(expression);
+		findNewParanthesSet = false;
+	}
+	
+	if (parantheses.open != NULL && parantheses.close != NULL) {
+		subExpression = expression.substr(parantheses.open + 1, (parantheses.close - 1) - parantheses.open);
+		restLeft = expression.substr(0, parantheses.open);
+		restRight = expression.substr(parantheses.close +1, (expression.length() - parantheses.close));
+		
+		expression.erase(parantheses.open, (parantheses.close +1) - parantheses.open);
+		insertPos = parantheses.open;
 
-	for (int index = 0; index < expression.length(); index++) {
-		if (validateOperatorStatus(expression.at(index)) == 1 && opHierarchy == 1) {
-			expression = subdivideValue(expression, index);
+		parantheses.close = NULL;
+		parantheses.open = NULL;
+	}
+
+
+	for (int index = 0; index < subExpression.length(); index++) {
+		if (validateOperatorType(subExpression.at(index)) == 1 && opHierarchy == 1) {
+			subExpression = subdivideValue(subExpression, index);
 		}
-		else if (validateOperatorStatus(expression.at(index)) == 2 && opHierarchy == 2) {
-			expression = subdivideValue(expression, index);
+		else if (validateOperatorType(subExpression.at(index)) == 2 && opHierarchy == 2) {
+			subExpression = subdivideValue(subExpression, index);
 		}
-		else if (validateOperatorStatus(expression.at(index)) == 3 && opHierarchy == 3) {
+		else if (validateOperatorType(subExpression.at(index)) == 3 && opHierarchy == 3) {
 			//not an operator!
 		}
 	}
 
 	if (opHierarchy == 1) {
-		ManageValueClassification(expression, 2);
+		ManageValueClassification(expression, subExpression, 2);
 	}
 	else if (opHierarchy == 2) {
-		ManageValueClassification(expression, 3);
+		ManageValueClassification(expression, subExpression, 3);
+	}
+	else {
+
+	}
+	
+	//Check if there is more to calculate in expression.
+ 	if (!(isDigits(expression))) {
+		expression = "";
+		expression.append(restLeft);
+		expression.append(subExpression);
+		expression.append(restRight);
+		
+		subExpression = expression;
+		restLeft = "";
+		restRight = "";
+
+		findNewParanthesSet = true;
+
+		ManageValueClassification(expression, subExpression, 1);
 	}
 	
 	return expression;
@@ -271,7 +302,7 @@ bool LET::isOperator(char op) {
 	return (op == '+' || op == '-' || op == '/' || op == '*');
 }
 
-int LET::validateOperatorStatus(char op) {
+int LET::validateOperatorType(char op) {
 	if (op == '*' || op == '/') {
 		return 1;
 	}
@@ -316,4 +347,22 @@ std::string LET::sortStringForward(std::string str) {
 	}
 	str = tmp;
 	return str;
+}
+
+void LET::setParanthesisPos(std::string str) {
+	parantheses.open = NULL;
+	parantheses.close = NULL;
+	for (int i = 0; i != str.length(); i++) {
+		if (str[i] == '(') {
+			parantheses.open = i;
+		} else if (str[i] == ')') {
+			parantheses.close = i;
+		}
+
+		if (parantheses.close != NULL && parantheses.open != NULL) { return; }
+	}
+}
+
+bool LET::isDigits(const std::string str) {
+	return str.find_first_not_of("0123456789.") == std::string::npos;
 }

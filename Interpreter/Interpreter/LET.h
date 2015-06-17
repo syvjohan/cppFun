@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 class LET
 {
@@ -14,10 +13,18 @@ public:
 	std::string getDatatype();
 
 private:
+
+	struct Parantheses { int open, close; }parantheses;
+
 	std::string name;
 	std::string valueToBeParsed;
 	float parsedValue;
 	int datatype; //float = 2. int = 1.
+
+	int insertPos;
+	std::string restLeft;
+	std::string restRight;
+	bool findNewParanthesSet;
 
 	void setName(std::string name);
 	void setValue(float value);
@@ -35,9 +42,11 @@ private:
 	float isRandom(int posRandom);
 
 	std::string subdivideValue(std::string expression, int index);
-	std::string ManageValueClassification(std::string expression, int opHierarchy);
+	std::string ManageValueClassification(std::string expression, std::string str, int opHierarchy);
 
-	int validateOperatorStatus(char op);
+	int validateOperatorType(char op);
 	bool isParanthesis(char op);
+	void setParanthesisPos(std::string str);
+	bool isDigits(const std::string str);
 };
 

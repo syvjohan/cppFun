@@ -1,4 +1,4 @@
-40 LET value3 = 3 * 2 + 4
+40 LET value3 = 3 * (2 + 4) * (2 + 2)
 100 LET value2 = 10 * 20
 10 PRINT "Välkommen till Gissa Tal"
 120 LET value1 = 2 * 2 + 3 * 3
