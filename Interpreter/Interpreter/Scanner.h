@@ -14,7 +14,6 @@ public:
 
 	void readFile(std::string path);
 
-	std::string removeSlashFromPrint(std::string str);
 	std::string getkeyword(std::string str);
 	std::string getExpression(std::string str, std::string strIrrelevant);
 	std::pair<std::string, std::string> getInstructionAt(int index);
@@ -27,5 +26,6 @@ private:
 	std::string keywords[4];
 
 	std::string trimString(std::string str);
+	std::string trimPRINT(std::string str);
 };
 

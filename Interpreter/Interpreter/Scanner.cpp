@@ -21,12 +21,15 @@ void Scanner::readFile(std::string path) {
 
 			std::string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
 
-			std::string tmp = removeSlashFromPrint(value);
-			if (tmp != "") {
-				value = tmp;
+			//find PRINT
+			size_t findPRINT = value.find("PRINT");
+			if (findPRINT != std::string::npos) {
+				value = trimPRINT(value);
+			}
+			else {
+				value = trimString(value);
 			}
 
-			value = trimString(value);
 			map.pushBack(key, value);
 		}
 	}
@@ -43,13 +46,22 @@ std::string Scanner::trimString(std::string str) {
 	return str;
 }
 
-std::string Scanner::removeSlashFromPrint(std::string str) {
+std::string Scanner::trimPRINT(std::string str) {
 	size_t found = str.find_first_of('\"');
 	size_t found2 = str.find_last_of('\"');
 	if (found != std::string::npos && found2 != std::string::npos) {
 		str.erase(found, 1);		
 		found2 = str.find_last_of('\"');
 		str.erase(found2, 1);
+
+		//erase first whitespace
+		while (isspace(str.front())) {
+			str.erase(0, 1);
+		}
+		//erase last whitespace
+		while (isspace(str.back())) {
+			str.erase(str.length() -1, 1);
+		}
 
 		return str;
 	}

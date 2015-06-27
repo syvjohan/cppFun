@@ -26,11 +26,12 @@ void Manager::table(std::string keyword, std::string expression) {
 		evalInput(expression);
 	}
 	else if (keyword == "LET") {
-		LET *let = new LET(expression);
-		variables.push_back(*let);
+		LETNumber *var = new LETNumber(expression);
+		variables.push_back(*var);
 	}
 	else if (keyword == "INPUT") {
-
+		//LETString *var = new LETString(expression);
+		//variables.push_back(*var);
 	}
 	else {
 		return;
@@ -46,9 +47,6 @@ int main() {
 
 	Manager manager;
 	manager.init();
-
-
-	//Eval *eval = new Eval("((2+2)+(2+3))");
 
 
 

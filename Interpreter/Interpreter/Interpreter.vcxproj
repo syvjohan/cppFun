@@ -67,7 +67,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Eval.cpp" />
-    <ClCompile Include="LET.cpp" />
+    <ClCompile Include="LETNumber.cpp" />
+    <ClCompile Include="LETString.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Parser.cpp" />
@@ -75,8 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Eval.h" />
+    <ClInclude Include="LETString.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="LET.h" />
+    <ClInclude Include="LETNumber.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Scanner.h" />
