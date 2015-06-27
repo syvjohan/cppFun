@@ -1,10 +1,11 @@
 #include "Scanner.h"
 
 Scanner::Scanner() {
-	keywordsLength = 4;
+	keywordsLength = 10;
 	keywords[0] = "PRINT";
 	keywords[1] = "LET";
 	keywords[2] = "INPUT";
+	keywords[3] = "IF";
 }
 
 Scanner::~Scanner()

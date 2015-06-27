@@ -1,6 +1,8 @@
 #include "LETNumber.h"
 
-LETNumber::LETNumber(std::string expression) {
+LETNumber::LETNumber() {}
+
+LETNumber::LETNumber(std::string &expression) {
 	if (expression != "") {
 		identifyPartsInExpression(expression);
 	}
@@ -43,7 +45,7 @@ std::string LETNumber::getDatatype() {
 	return "INT";
 }
 
-void LETNumber::identifyPartsInExpression(std::string expression) {
+void LETNumber::identifyPartsInExpression(std::string &expression) {
 	int requestTypeCast = 0; //0 = notypecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
 

@@ -4,3 +4,4 @@
 40 PRINT "Jag tänker på ett tal mellan 1 och 100"
 50 PRINT "Gissa talet?"
 60 INPUT gissning
+80 IF gissning > tal THEN GOTO 200 

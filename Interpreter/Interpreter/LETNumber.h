@@ -6,7 +6,8 @@
 class LETNumber
 {
 public:
-	LETNumber(std::string expression);
+	LETNumber(std::string &expression);
+	LETNumber();
 	~LETNumber();
 
 	std::string getName();
@@ -23,7 +24,7 @@ private:
 	void setValue(std::string value);
 	void setDataType(std::string type);
 
-	void identifyPartsInExpression(std::string expression);
+	void identifyPartsInExpression(std::string &expression);
 
 	char validateOperator(char op);
 	bool isOperator(char op);

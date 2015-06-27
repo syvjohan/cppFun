@@ -33,7 +33,7 @@
     <ClCompile Include="LETNumber.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LETString.cpp">
+    <ClCompile Include="LETINPUT.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClInclude Include="LETNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LETString.h">
+    <ClInclude Include="LETINPUT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

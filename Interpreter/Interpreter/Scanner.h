@@ -23,7 +23,7 @@ private:
 	Map map;
 
 	int keywordsLength;
-	std::string keywords[4];
+	std::string keywords[10];
 
 	std::string trimString(std::string str);
 	std::string trimPRINT(std::string str);

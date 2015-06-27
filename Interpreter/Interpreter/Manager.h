@@ -5,7 +5,7 @@
 
 #include "Scanner.h"
 #include "LETNumber.h"
-#include "LETString.h"
+#include "LETINPUT.h"
 
 class Manager
 {
@@ -17,9 +17,11 @@ public:
 
 private:
 	Scanner scanner;
-	std::vector<LETNumber> variables;
+	std::vector<LETNumber> variablesNUMBER;
+	std::vector<LETINPUT> variablesINPUT;
 	void table(std::string keyword, std::string expression);
-	void evalInput(std::string str);
-
+	void evalPRINT(std::string str);
+	void evalINPUT(std::string &str);
+	void evalIF(std::string &str);
 };
 
