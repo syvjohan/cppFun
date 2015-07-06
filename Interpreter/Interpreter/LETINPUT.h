@@ -11,12 +11,12 @@ public:
 
 	std::string getName();
 	std::string getValue();
-	std::string getDatatype();
+	int getDatatype();
 
 private:
 	std::string name;
 	std::string parsedValue;
-	int datatype; //string = 1, int = 2, float = 3.
+	int datatype; //int = 1, float = 2, string = 3.
 
 	void setName(std::string name);
 	void setValue(std::string value);

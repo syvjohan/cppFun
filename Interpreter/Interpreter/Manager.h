@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "Scanner.h"
 #include "LETNumber.h"
@@ -19,9 +20,16 @@ private:
 	Scanner scanner;
 	std::vector<LETNumber> variablesNUMBER;
 	std::vector<LETINPUT> variablesINPUT;
+
+	int tableIndex;
+
+	std::string exchangeVariableNameToValue(std::string expression);
+	std::string getDatatype(LETNumber var);
+
 	void table(std::string keyword, std::string expression);
-	void evalPRINT(std::string str);
-	void evalINPUT(std::string &str);
-	void evalIF(std::string &str);
+	void evalPRINT(std::string &expression);
+	void evalINPUT(std::string &expression);
+	void evalIF(std::string &expression);
+	void evalGOTO(std::string &expression);
 };
 

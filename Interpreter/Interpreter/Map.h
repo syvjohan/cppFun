@@ -17,7 +17,7 @@ public:
 	bool pushBack(int key, std::string value);
 	Pair getElementAt(int key);
 	Pair* getAllElements();
-	int Length();
+	int length();
 
 private:
 	int elementNumber;

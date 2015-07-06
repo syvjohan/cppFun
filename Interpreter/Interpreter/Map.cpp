@@ -66,7 +66,7 @@ void Map::rezise() {
 	delete[] tmpMap;
 }
 
-int Map::Length() {
+int Map::length() {
 	return elementNumber;
 }
 

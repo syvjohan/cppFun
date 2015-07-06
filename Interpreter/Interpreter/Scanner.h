@@ -15,9 +15,10 @@ public:
 	void readFile(std::string path);
 
 	std::string getkeyword(std::string str);
-	std::string getExpression(std::string str, std::string strIrrelevant);
+	std::string getLinenumber(int index);
+	int getIndex(int linenumber);
 	std::pair<std::string, std::string> getInstructionAt(int index);
-	int getInstructionLength();
+	int length();
 
 private:
 	Map map;
@@ -27,5 +28,7 @@ private:
 
 	std::string trimString(std::string str);
 	std::string trimPRINT(std::string str);
+
+	std::string getExpression(std::string str, std::string strIrrelevant);
 };
 

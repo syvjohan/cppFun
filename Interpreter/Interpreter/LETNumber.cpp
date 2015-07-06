@@ -37,16 +37,16 @@ std::string LETNumber::getValue() {
 	return parsedValue;
 }
 
-std::string LETNumber::getDatatype() {
+int LETNumber::getDatatype() {
 	if (this->datatype == 2) {
-		return "FLOAT";
+		return 2;
 	}
 	
-	return "INT";
+	return 1;
 }
 
 void LETNumber::identifyPartsInExpression(std::string &expression) {
-	int requestTypeCast = 0; //0 = notypecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
+	int requestTypeCast = 0; //0 = no typecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
 
 		//find name.
@@ -109,7 +109,7 @@ std::string& LETNumber::subdivideValue(std::string &expression) {
 		if (subExpression.length() != closeParanthes) {
 			restAfterParanthesis = expression.substr(closeParanthes + 1, expression.length() - closeParanthes); 
 		}
-			
+		
 		//check number of operators.
 		int countOp = 0;
 		for (int op = 0; op != subExpression.length(); op++) {
@@ -278,6 +278,7 @@ bool LETNumber::isNumber(const std::string str) {
 	return str.find_first_not_of("0123456789.") == std::string::npos;
 }
 
+//Exchange words to values, ex: PI, RANDOM.
 std::string LETNumber::transformKeywordsToValues(std::string str) {
 
 	size_t foundRandom = str.find("RANDOM");

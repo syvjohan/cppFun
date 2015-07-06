@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "Map.h"
 
 class LETNumber
@@ -12,7 +13,7 @@ public:
 
 	std::string getName();
 	std::string getValue();
-	std::string getDatatype();
+	int getDatatype();
 
 private:
 

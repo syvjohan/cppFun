@@ -16,12 +16,18 @@ LETINPUT::~LETINPUT()
 {
 }
 
-std::string LETINPUT::getDatatype() {
-	if (datatype == 1) {
-		return "STRING";
+int LETINPUT::getDatatype() {
+	if (datatype == 3) {
+		return 3;
+	}
+	else if (datatype == 2) {
+		return 2;
+	}
+	else if (datatype == 1) {
+		return 1;
 	}
 
-	return "STRING";
+	return 3;
 }
 
 std::string LETINPUT::getName() {
@@ -67,12 +73,12 @@ void LETINPUT::identifyPartsInExpression(std::string &expression) {
 	size_t isFLOAT = value.find_first_not_of("0123456789.");
 
 	if (isAlpha) {
-		setDataType(1);
+		setDataType(3);
 	}
 	else if (isINT == std::string::npos) {
-		setDataType(2);
+		setDataType(1);
 	}
 	else if (isFLOAT == std::string::npos) {
-		setDataType(3);
+		setDataType(2);
 	}
 }
