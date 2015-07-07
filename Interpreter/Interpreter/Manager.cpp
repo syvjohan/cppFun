@@ -19,13 +19,10 @@ void Manager::init() {
 
 void Manager::table(std::string keyword, std::string expression) {
 	if (keyword == "PRINT") {
-		expression = exchangeVariableNameToValue(expression);
 		evalPRINT(expression);
 	}
 	else if (keyword == "LET") {
-		expression = exchangeVariableNameToValue(expression);
-		LETNumber *var = new LETNumber(expression);
-		variablesNUMBER.push_back(*var);
+		evalLET(expression);
 	}
 	else if (keyword == "INPUT") {
 		evalINPUT(expression);
@@ -44,63 +41,81 @@ void Manager::table(std::string keyword, std::string expression) {
 	}
 }
 
-void Manager::evalPRINT(std::string &str) {
-	std::cout << str << std::endl;
+void Manager::evalPRINT(std::string &expression) {
+	expression = exchangeVariableNameToValue(expression);
+
+	std::cout << expression << std::endl;
 }
 
-void Manager::evalINPUT(std::string &str) {
+void Manager::evalLET(std::string &expression) {
+	expression = exchangeVariableNameToValue(expression);
+	
+	LET *var = new LET(expression);
+	overwriteOldVariableValue(var);
+}
+
+void Manager::evalINPUT(std::string &expression) {
 	std::string input = "";
 	std::cin.clear();
 	std::getline(std::cin, input);
 
-	bool isAlpha = std::regex_match(input, std::regex("^[A-Za-z]+$"));
-	size_t isINT = input.find_first_not_of("0123456789");
-	size_t isFLOAT = input.find_first_not_of("0123456789.");
+	expression.append("||");
+	expression.append(input);
 
-	if (isAlpha || isINT == std::string::npos || isFLOAT == std::string::npos) {
-		str.append("||");
-		str.append(input);
+	LET *var = new LET(expression);
 
-		LETINPUT *var = new LETINPUT(str);
-
-		if (variablesINPUT.size() != 0) {
-			for (size_t i = 0; i <= variablesINPUT.size(); i++) {
-				if (var->getName() == variablesINPUT.at(i).getName()) {
-					variablesINPUT.erase(variablesINPUT.begin() + i);
-				}
-			}
-		}
-		
-		variablesINPUT.push_back(*var);
-	}
-
-	//Invalid input, only letters or only numbers.
-	return;
+	overwriteOldVariableValue(var);
 }
 
-void Manager::evalIF(std::string &str) {
-	//get first variable.
-	LETINPUT var1;
-	LETNumber var2;
+void Manager::evalIF(std::string &expression) {
+
+	LET var1;
+	LET var2;
 
 	size_t foundVar2 = -1;
 	size_t foundVar1 = -1;
-	for (int i = 0; i != variablesINPUT.size(); i++) {
-		foundVar1 = str.find(variablesINPUT.at(i).getName());
+
+	bool isVariable1 = false;
+	bool isVariable2 = false;
+
+	//get first variable.
+	for (int i = 0; i != variablesNUMBER.size(); i++) {
+		foundVar1 = expression.find(variablesNUMBER.at(i).getName());
 		if (foundVar1 != std::string::npos) {
-			var1 = variablesINPUT.at(i);
+			var1 = variablesNUMBER.at(i);
+			isVariable1 = true;
 			break;
 		}
 	}
 	
 	//get second variable.
 	for (int k = 0; k != variablesNUMBER.size(); k++) {
-		foundVar2 = str.find(variablesNUMBER.at(k).getName());
+		foundVar2 = expression.find(variablesNUMBER.at(k).getName());
 		if (foundVar2 != std::string::npos) {
 			var2 = variablesNUMBER.at(k);
+			isVariable2 = true;
 			break;
 		}
 	}
+
+	//If compared values are no variables instead they are hardcoded values.
+	/*if (!isVariable1) {
+		size_t foundOpEqual = str.find("=");
+		size_t foundTHEN = str.find("THEN");
+		if (foundOpEqual != std::string::npos && foundTHEN != std::string::npos) {
+			std::string value = str.substr(foundOpEqual + 1, foundTHEN - foundOpEqual +1);
+
+			//is value a string or a number.
+			bool isAlpha = std::regex_match(value, std::regex("^[A-Za-z]+$"));
+			size_t isINT = value.find_first_not_of("0123456789");
+			size_t isFLOAT = value.find_first_not_of("0123456789.");
+
+
+		}
+	}
+	else if (!isVariable2) {
+
+	}*/
 
 	//compare datatypes.
 	if (var1.getDatatype() != var2.getDatatype()) {
@@ -109,10 +124,10 @@ void Manager::evalIF(std::string &str) {
 	else {
 		//get operator.
 		if (foundVar1 != -1 && foundVar2 != -1) {
-			size_t findOpGreater = str.find('>');
-			size_t findOpLess = str.find('<');
-			size_t findOpLessOrEqual = str.find(">=");
-			size_t findOpGreaterOrEqual = str.find("=<");
+			size_t findOpGreater = expression.find('>');
+			size_t findOpLess = expression.find('<');
+			size_t findOpLessOrEqual = expression.find(">=");
+			size_t findOpGreaterOrEqual = expression.find("=<");
 
 			//comapre variables.
 			bool result = false;
@@ -135,13 +150,12 @@ void Manager::evalIF(std::string &str) {
 
 			if (result) {
 				//get linenumber.
-				size_t line = str.find_first_of("0123456789");
-				if (line != str.length() && line != std::string::npos) {
-					std::string linenumber = str.substr(line, str.length() - line);
+				size_t line = expression.find_first_of("0123456789");
+				if (line != expression.length() && line != std::string::npos) {
+					std::string linenumber = expression.substr(line, expression.length() - line);
 					
 					// get instruction index.
 					tableIndex = scanner.getIndex(std::stoi(linenumber));
-					//++tableIndex; // offset map[0] to [1].
 
 					//GOTO that line
 					table("GOTO", linenumber);
@@ -214,7 +228,20 @@ std::string Manager::exchangeVariableNameToValue(std::string expression) {
 	return expression;
 }
 
-std::string Manager::getDatatype(LETNumber var) {
+//overwrite the old value with the new value.
+void Manager::overwriteOldVariableValue(LET *newVar) {
+	if (variablesNUMBER.size() != 0) {
+		for (size_t i = 0; i != variablesNUMBER.size(); i++) {
+			if (newVar->getName() == variablesNUMBER.at(i).getName()) {
+				variablesNUMBER.erase(variablesNUMBER.begin() + i);
+			}
+		}
+	}
+
+	variablesNUMBER.push_back(*newVar);
+}
+
+std::string Manager::getDatatype(LET var) {
 	std::string value = var.getValue();
 	if (var.getDatatype() == 1) {
 		size_t foundDot = var.getValue().find('.');

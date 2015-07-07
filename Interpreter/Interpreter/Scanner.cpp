@@ -41,7 +41,7 @@ void Scanner::readFile(std::string path) {
 std::string Scanner::trimString(std::string str) {
 	std::string tmp = "";
 	for (int i = 0; i != str.length(); i++) {
-		if (str.at(i) != ' ' && str.at(i) != '\t' && str.at(i) != '\n' && str.at(i) != '\v') {
+		if (str.at(i) != ' ' && str.at(i) != '\t' && str.at(i) != '\n' && str.at(i) != '\v' && str.at(i) != '\"') {
 			tmp += str.at(i);
 		}
 	}

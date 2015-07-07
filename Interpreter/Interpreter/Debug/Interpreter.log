@@ -1,22 +1,30 @@
-﻿Build started 7/6/2015 4:28:49 PM.
-     1>Project "C:\Programmering\cppFun\Interpreter\Interpreter\Interpreter.vcxproj" on node 2 (Build target(s)).
+﻿Build started 7/7/2015 11:41:21 AM.
+     1>Project "C:\Programmering\cppFun\Interpreter\Interpreter\Interpreter.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt LETNumber.cpp Manager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Eval.cpp LET.cpp Manager.cpp Map.cpp Parser.cpp Scanner.cpp
+         Scanner.cpp
+         Parser.cpp
+         Map.cpp
          Manager.cpp
+         LET.cpp
+     1>c:\programmering\cppfun\interpreter\interpreter\let.cpp(34): warning C4553: '==' : operator has no effect; did you intend '='?
+     1>c:\programmering\cppfun\interpreter\interpreter\let.cpp(151): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\programmering\cppfun\interpreter\interpreter\let.cpp(155): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\programmering\cppfun\interpreter\interpreter\let.cpp(195): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\programmering\cppfun\interpreter\interpreter\let.cpp(199): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         Eval.cpp
          Generating Code...
-         Skipping... (no relevant changes detected)
-         LETNumber.cpp
+     1>c:\programmering\cppfun\interpreter\interpreter\map.cpp(45): warning C4715: 'Map::getElementAt' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Programmering\cppFun\Interpreter\Debug\Interpreter.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Programmering\cppFun\Interpreter\Debug\Interpreter.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Programmering\cppFun\Interpreter\Debug\Interpreter.lib" /MACHINE:X86 Debug\Eval.obj
-         Debug\LETNumber.obj
-         Debug\LETINPUT.obj
+         Debug\LET.obj
          Debug\Manager.obj
          Debug\Map.obj
          Debug\Parser.obj
          Debug\Scanner.obj
          Interpreter.vcxproj -> C:\Programmering\cppFun\Interpreter\Debug\Interpreter.exe
-     1>Done Building Project "C:\Programmering\cppFun\Interpreter\Interpreter\Interpreter.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Programmering\cppFun\Interpreter\Interpreter\Interpreter.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.83
+Time Elapsed 00:00:02.49

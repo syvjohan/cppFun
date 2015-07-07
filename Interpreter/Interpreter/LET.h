@@ -1,15 +1,16 @@
 #pragma once
 
 #include <string>
+#include <regex>
 
 #include "Map.h"
 
-class LETNumber
+class LET
 {
 public:
-	LETNumber(std::string &expression);
-	LETNumber();
-	~LETNumber();
+	LET(std::string &expression);
+	LET();
+	~LET();
 
 	std::string getName();
 	std::string getValue();
@@ -19,7 +20,7 @@ private:
 
 	std::string name;
 	std::string parsedValue;
-	int datatype; //float = 2. int = 1.
+	int datatype; //float = 2. int = 1, string = 3.
 
 	void setName(std::string name);
 	void setValue(std::string value);

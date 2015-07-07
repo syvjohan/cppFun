@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Parser.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Eval.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
@@ -30,17 +27,14 @@
     <ClCompile Include="Map.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LETNumber.cpp">
+    <ClCompile Include="LET.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LETINPUT.cpp">
+    <ClCompile Include="Parser.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Eval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -53,10 +47,10 @@
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LETNumber.h">
+    <ClInclude Include="LET.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LETINPUT.h">
+    <ClInclude Include="Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

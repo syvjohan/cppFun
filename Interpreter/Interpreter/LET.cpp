@@ -1,64 +1,72 @@
-#include "LETNumber.h"
+#include "LET.h"
 
-LETNumber::LETNumber() {}
+LET::LET() {}
 
-LETNumber::LETNumber(std::string &expression) {
+LET::LET(std::string &expression) {
 	if (expression != "") {
 		identifyPartsInExpression(expression);
 	}
 }
 
-LETNumber::~LETNumber() {
+LET::~LET() {
 
 }
 
-void LETNumber::setName(std::string name) {
+void LET::setName(std::string name) {
 	this->name = name;
 }
 
-void LETNumber::setValue(std::string value) {
+void LET::setValue(std::string value) {
 	this->parsedValue = value;
 }
 
-void LETNumber::setDataType(std::string datatype) {
+void LET::setDataType(std::string datatype) {
 	if (datatype == "FLOAT") {
 		this->datatype = 2;
 	}
-	else {
+	else if (datatype == "INT") {
 		this->datatype = 1;
+	}
+	else if (datatype == "STRING") {
+		this->datatype = 3;
+	}
+	else {
+		this->datatype == 1;
 	}
 }
 
-std::string LETNumber::getName() {
+std::string LET::getName() {
 	return this->name;
 }
 
-std::string LETNumber::getValue() {
+std::string LET::getValue() {
 	return parsedValue;
 }
 
-int LETNumber::getDatatype() {
-	if (this->datatype == 2) {
-		return 2;
-	}
-	
-	return 1;
+int LET::getDatatype() {
+	return datatype;
 }
 
-void LETNumber::identifyPartsInExpression(std::string &expression) {
+void LET::identifyPartsInExpression(std::string &expression) {
 	int requestTypeCast = 0; //0 = no typecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
 
 		//find name.
 		size_t opEqual = expression.find_first_of('=');
+		size_t foundArbitration = expression.find("||");
 		if (opEqual != std::string::npos) {
 			setName(expression.substr(0, opEqual));
-			expression.erase(0, opEqual + 1);
+			expression.erase(0, opEqual +1);
+		}
+		else if (foundArbitration != std::string::npos) {
+			setName(expression.substr(0, foundArbitration));
+			expression.erase(0, foundArbitration + 2);
 		}
 
 		//find datatype.
 		size_t typeInt = expression.find("INT");
 		size_t typeFloat = expression.find("FLOAT");
+		bool isAlpha = std::regex_match(expression, std::regex("^[A-Za-z]+$"));
 		if (typeInt != std::string::npos) {
 			setDataType(expression.substr(typeInt, typeInt + 2));
 			expression.erase(typeInt, typeInt + 3);
@@ -68,6 +76,9 @@ void LETNumber::identifyPartsInExpression(std::string &expression) {
 			setDataType(expression.substr(typeFloat, typeInt + 6));
 			expression.erase(typeFloat, typeFloat + 5);
 			requestTypeCast = 2;
+		}
+		else if (isAlpha) {
+			setDataType("STRING");
 		}
 		else {
 			setDataType("INT");
@@ -85,6 +96,9 @@ void LETNumber::identifyPartsInExpression(std::string &expression) {
 				//Syntax wrong in expression.
 			}
 		}
+		else if (foundArbitration != std::string::npos && foundArbitration + 1 != expression.length()) {
+			setValue(expression);
+		}
 		else {
 			//Invalid value
 		}
@@ -93,7 +107,7 @@ void LETNumber::identifyPartsInExpression(std::string &expression) {
 	}
 }
 
-std::string& LETNumber::subdivideValue(std::string &expression) {	
+std::string& LET::subdivideValue(std::string &expression) {	
 	std::string subExpression = "";
 	int nextOp = expression.length();
 	std::string restInsideParanthes = "";
@@ -216,18 +230,18 @@ std::string& LETNumber::subdivideValue(std::string &expression) {
 	 return expression;
 }
 
-char LETNumber::validateOperator(char op) {
+char LET::validateOperator(char op) {
 	if (op == '+' || op == '-' || op == '/' || op == '*') {
 		return op;
 	}
 	return ' ';
 }
 
-bool LETNumber::isOperator(char op) {
+bool LET::isOperator(char op) {
 	return (op == '+' || op == '-' || op == '/' || op == '*');
 }
 
-int LETNumber::validateOperatorType(char op) {
+int LET::validateOperatorType(char op) {
 	if (op == '*' || op == '/') {
 		return 1;
 	}
@@ -237,15 +251,15 @@ int LETNumber::validateOperatorType(char op) {
 	return 3;
 }
 
-bool LETNumber::isParanthesis(char op) {
+bool LET::isParanthesis(char op) {
 	return (op == '(' || op == ')');
 }
 
-float LETNumber::generateRandomNumber() {
+float LET::generateRandomNumber() {
 	return (rand() / (float)(RAND_MAX + 1));
 }
 
-float LETNumber::doCalc(float value1, char op, float value2) {
+float LET::doCalc(float value1, char op, float value2) {
 	float result = 0.0f;
 	switch (op) {
 		case '*':
@@ -265,7 +279,7 @@ float LETNumber::doCalc(float value1, char op, float value2) {
 	return result;
 }
 
-std::string LETNumber::sortStringForward(std::string str) {
+std::string LET::sortStringForward(std::string str) {
 	std::string tmp;
 	for (int i = str.length() -1; i >= 0; i--) {
 		tmp += str[i];
@@ -274,12 +288,12 @@ std::string LETNumber::sortStringForward(std::string str) {
 	return str;
 }
 
-bool LETNumber::isNumber(const std::string str) {
+bool LET::isNumber(const std::string str) {
 	return str.find_first_not_of("0123456789.") == std::string::npos;
 }
 
 //Exchange words to values, ex: PI, RANDOM.
-std::string LETNumber::transformKeywordsToValues(std::string str) {
+std::string LET::transformKeywordsToValues(std::string str) {
 
 	size_t foundRandom = str.find("RANDOM");
 	if (foundRandom != std::string::npos) {
