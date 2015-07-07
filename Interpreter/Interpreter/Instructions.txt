@@ -1,7 +1,7 @@
 10 PRINT "Valkommen till Gissa Tal"
-20 LET tal = 1
+20 LET tal = FLOAT ( RANDOM * 100 ) + 1
 30 LET antal = 0
-40 PRINT "Jag tanker på ett tal mellan 1 och 100"
+40 PRINT "Jag tanker pa ett tal mellan 1 och 100"
 50 PRINT "Gissa talet?"
 60 INPUT gissning
 70 LET antal = antal + 1
@@ -17,4 +17,4 @@
 200 PRINT "Du gissade for hogt! Gissa igen!"
 210 GOTO 50
 300 PRINT "Du gissade for lagt! Gissa igen!"
-310 GOTO 50
+310 GOTO 50 

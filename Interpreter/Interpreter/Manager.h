@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <vector>
 #include <string>
 
@@ -24,6 +26,7 @@ private:
 	std::string exchangeVariableNameToValue(std::string expression);
 	std::string getDatatype(LET var);
 	void overwriteOldVariableValue(LET *newVar);
+	size_t getCompareOperatorPos(std::string *expression);
 
 	void table(std::string keyword, std::string expression);
 	void evalPRINT(std::string &expression);

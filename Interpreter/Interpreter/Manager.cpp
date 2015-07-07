@@ -34,6 +34,7 @@ void Manager::table(std::string keyword, std::string expression) {
 		evalGOTO(expression);
 	}
 	else if (keyword == "END") {
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		exit(0);
 	}
 	else {
@@ -71,6 +72,7 @@ void Manager::evalIF(std::string &expression) {
 
 	LET var1;
 	LET var2;
+	LET *tmp = nullptr;
 
 	size_t foundVar2 = -1;
 	size_t foundVar1 = -1;
@@ -81,7 +83,7 @@ void Manager::evalIF(std::string &expression) {
 	//get first variable.
 	for (int i = 0; i != variablesNUMBER.size(); i++) {
 		foundVar1 = expression.find(variablesNUMBER.at(i).getName());
-		if (foundVar1 != std::string::npos) {
+		if (foundVar1 != std::string::npos && foundVar1 < getCompareOperatorPos(&expression)) {
 			var1 = variablesNUMBER.at(i);
 			isVariable1 = true;
 			break;
@@ -91,7 +93,7 @@ void Manager::evalIF(std::string &expression) {
 	//get second variable.
 	for (int k = 0; k != variablesNUMBER.size(); k++) {
 		foundVar2 = expression.find(variablesNUMBER.at(k).getName());
-		if (foundVar2 != std::string::npos) {
+		if (foundVar2 != std::string::npos && foundVar2 > getCompareOperatorPos(&expression)) {
 			var2 = variablesNUMBER.at(k);
 			isVariable2 = true;
 			break;
@@ -99,49 +101,76 @@ void Manager::evalIF(std::string &expression) {
 	}
 
 	//If compared values are no variables instead they are hardcoded values.
-	/*if (!isVariable1) {
-		size_t foundOpEqual = str.find("=");
-		size_t foundTHEN = str.find("THEN");
-		if (foundOpEqual != std::string::npos && foundTHEN != std::string::npos) {
-			std::string value = str.substr(foundOpEqual + 1, foundTHEN - foundOpEqual +1);
-
-			//is value a string or a number.
-			bool isAlpha = std::regex_match(value, std::regex("^[A-Za-z]+$"));
-			size_t isINT = value.find_first_not_of("0123456789");
-			size_t isFLOAT = value.find_first_not_of("0123456789.");
-
-
+	std::string value = "";
+	size_t foundOp = getCompareOperatorPos(&expression);
+	size_t foundTHEN = expression.find("THEN");
+	if (!isVariable2) {
+		if (foundOp != std::string::npos && foundTHEN != std::string::npos) {
+			value = expression.substr(foundOp + 1, foundTHEN - foundOp - 1);
 		}
 	}
-	else if (!isVariable2) {
+	else if (!isVariable1) {
+		if (foundOp != std::string::npos && foundTHEN != std::string::npos) {
+			value = expression.substr(0, foundOp);
+		}
+	}
+	else {
+		//syntax error, problem with equal operator and keyword THEN.
+	}
 
-	}*/
+	if (!isVariable1 || !isVariable2) {
+		std::string newExpression = "";
+		//is value a string or a number. 
+		bool isAlpha = std::regex_match(value, std::regex("^[A-Za-z]+$"));
+		size_t isNumber = value.find_first_not_of("0123456789.");
 
+		//If it is text
+		if (isAlpha) {
+			newExpression.append("tmp");
+			newExpression.append("=");
+			newExpression.append(value);
+			tmp = new LET(newExpression);
+		}
+		//if it is a number.
+		else if (isNumber != std::string::npos) {
+			newExpression.append("tmp");
+			newExpression.append(value);
+			tmp = new LET(newExpression);
+		}
+		else {
+			//syntax error, numbers and letters are mixed!
+		}
+
+		// create a temporary variable.
+		if (!isVariable1) {
+			var1 = *tmp;
+		}
+		else {
+			var2 = *tmp;
+		}
+	}
+	
 	//compare datatypes.
 	if (var1.getDatatype() != var2.getDatatype()) {
 		// cannot compare different datatypes.
 	}
 	else {
 		//get operator.
-		if (foundVar1 != -1 && foundVar2 != -1) {
+		if (var1.getValue() != "" && var2.getValue() != "") {
 			size_t findOpGreater = expression.find('>');
 			size_t findOpLess = expression.find('<');
-			size_t findOpLessOrEqual = expression.find(">=");
-			size_t findOpGreaterOrEqual = expression.find("=<");
+			size_t findOpEqual = expression.find("=");
 
 			//comapre variables.
 			bool result = false;
-			if (findOpGreater != std::string::npos && findOpGreater < foundVar2) {
+			if (findOpGreater != std::string::npos) {
 				result = var1.getValue() > var2.getValue();
 			}
-			else if (findOpLess != std::string::npos && findOpLess < foundVar2) {
+			else if (findOpLess != std::string::npos) {
 				result = var1.getValue() < var2.getValue();
 			}
-			else if (findOpGreaterOrEqual != std::string::npos && findOpGreaterOrEqual < foundVar2) {
-				result = var1.getValue() >= var2.getValue();
-			}
-			else if (findOpLessOrEqual != std::string::npos && findOpLessOrEqual < foundVar2) {
-				result = var1.getValue() <= var2.getValue();
+			else if (findOpEqual != std::string::npos) {
+				result = var1.getValue() == var2.getValue();
 			}
 			else {
 				result = false;
@@ -154,9 +183,6 @@ void Manager::evalIF(std::string &expression) {
 				if (line != expression.length() && line != std::string::npos) {
 					std::string linenumber = expression.substr(line, expression.length() - line);
 					
-					// get instruction index.
-					tableIndex = scanner.getIndex(std::stoi(linenumber));
-
 					//GOTO that line
 					table("GOTO", linenumber);
 				}
@@ -172,6 +198,9 @@ void Manager::evalIF(std::string &expression) {
 			//syntax error variables to compare has not been defined!
 		}
 	}
+
+	delete tmp;
+	tmp = NULL;
 }
 
 void Manager::evalGOTO(std::string &expression) {
@@ -251,6 +280,23 @@ std::string Manager::getDatatype(LET var) {
 	}
 	
 	return value;
+}
+
+size_t Manager::getCompareOperatorPos(std::string *expression) {
+	size_t opEqual = expression->find("=");
+	size_t opLess = expression->find("<");
+	size_t opLarger = expression->find(">");
+	if (opEqual != std::string::npos) {
+		return opEqual;
+	}
+	else if (opLess != std::string::npos) {
+		return opLess;
+	}
+	else if (opLarger != std::string::npos) {
+		return opLarger;
+	}
+
+	return std::string::npos;
 }
 
 int main() {
