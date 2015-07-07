@@ -9,13 +9,5 @@ class Eval {
 public:
 	Eval();
 	~Eval();
-
-	int evaluateExpression(std::string line);
-
-private:
-	std::string expression;
-
-	void loopExpression();
-	std::string calculateExpression();
 };
 

@@ -8,6 +8,10 @@ Scanner::Scanner() {
 	keywords[3] = "IF";
 	keywords[4] = "GOTO";
 	keywords[5] = "END";
+	keywords[6] = "FOR";
+	keywords[7] = "THEN";
+	keywords[8] = "TO";
+	keywords[9] = "NEXT";
 }
 
 Scanner::~Scanner()
@@ -60,7 +64,7 @@ std::string Scanner::trimPRINT(std::string str) {
 	}
 	//if it is a variable
 	else {
-		for (int i = 0; i != str.length(); i++) {
+		for (int i = 0; i <= str.length(); i++) {
 			if (isspace(str[i])) {
 				str.erase(i, 1);
 			}

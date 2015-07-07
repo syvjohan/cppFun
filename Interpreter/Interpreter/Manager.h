@@ -19,7 +19,7 @@ public:
 
 private:
 	Scanner scanner;
-	std::vector<LET> variablesNUMBER;
+	std::vector<LET> variables;
 
 	int tableIndex;
 
@@ -27,6 +27,7 @@ private:
 	std::string getDatatype(LET var);
 	void overwriteOldVariableValue(LET *newVar);
 	size_t getCompareOperatorPos(std::string *expression);
+	size_t getOperatorPos(std::string *expression);
 
 	void table(std::string keyword, std::string expression);
 	void evalPRINT(std::string &expression);
@@ -34,5 +35,6 @@ private:
 	void evalLET(std::string &expression);
 	void evalIF(std::string &expression);
 	void evalGOTO(std::string &expression);
+	void evalFOR(std::string &expression);
 };
 

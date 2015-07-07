@@ -1,0 +1,15 @@
+10 PRINT "Multiplikationstabeller"
+20 PRINT "Vilken tabell (1-10):"
+30 INPUT tabell
+40 FOR i = 1 TO tabell
+90 PRINT i * tabell / 4
+50 PRINT tabell ; 
+60 PRINT "*" ; 
+70 PRINT i ;
+80 PRINT " = " ;
+100 NEXT i
+110 END
+//TODO "" kontrollera att dessa är där
+de ska ange att det är en string och
+de får inte tas bort.
+Hitta var de tas bort!!
