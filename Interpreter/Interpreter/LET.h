@@ -16,15 +16,15 @@ public:
 	std::string getValue();
 	int getDatatype();
 
+	void setName(std::string name);
+	void setValue(std::string value);
+	void setDataType(std::string type);
+
 private:
 
 	std::string name;
 	std::string parsedValue;
 	int datatype; //float = 2. int = 1, string = 3.
-
-	void setName(std::string name);
-	void setValue(std::string value);
-	void setDataType(std::string type);
 
 	void identifyPartsInExpression(std::string &expression);
 

@@ -30,16 +30,28 @@ void Scanner::readFile(std::string path) {
 
 			//find PRINT
 			size_t findPRINT = value.find("PRINT");
-			if (findPRINT != std::string::npos) {
-				value = trimPRINT(value);
-			}
-			else {
+			if (findPRINT == std::string::npos) {
 				value = trimString(value);
 			}
+
+			value = removeFirstAndLastWhitesspace(value);
 
 			map.pushBack(key, value);
 		}
 	}
+}
+
+std::string Scanner::removeFirstAndLastWhitesspace(std::string &str) {
+	//erase first whitespace
+	while (isspace(str.front())) {
+		str.erase(0, 1);
+	}
+	//erase last whitespace
+	while (isspace(str.back())) {
+		str.erase(str.length() - 1, 1);
+	}
+
+	return str;
 }
 
 std::string Scanner::trimString(std::string str) {
@@ -54,14 +66,24 @@ std::string Scanner::trimString(std::string str) {
 }
 
 std::string Scanner::trimPRINT(std::string str) {
+	str = removeFirstAndLastWhitesspace(str);
+
 	// if it is text.
-	size_t found = str.find_first_of('\"');
-	size_t found2 = str.find_last_of('\"');
-	if (found != std::string::npos && found2 != std::string::npos) {
-		str.erase(found, 1);		
-		found2 = str.find_last_of('\"');
-		str.erase(found2, 1);
+	size_t foundQuote = str.find_first_of('\"');
+	size_t foundQuote2 = str.find_last_of('\"');
+	if (foundQuote != std::string::npos && foundQuote2 != std::string::npos) {
+		str.erase(foundQuote, 1);
+		foundQuote2 = str.find_last_of('\"');
+		str.erase(foundQuote2, 1);
+
+		//if there is whitespace after quote
+		for (int i = foundQuote2; i <= str.length(); i++) {
+			if (isspace(str[i])) {
+				str.erase(i, 1);
+			}
+		}
 	}
+	
 	//if it is a variable
 	else {
 		for (int i = 0; i <= str.length(); i++) {
@@ -71,16 +93,17 @@ std::string Scanner::trimPRINT(std::string str) {
 		}
 	}
 
-	//erase first whitespace
-	while (isspace(str.front())) {
-		str.erase(0, 1);
-	}
-	//erase last whitespace
-	while (isspace(str.back())) {
-		str.erase(str.length() -1, 1);
+	return str;
+}
+
+bool Scanner::isString(std::string str) {
+	size_t foundQuote = str.find_first_of('\"');
+	size_t foundQuote2 = str.find_last_of('\"');
+	if (foundQuote && foundQuote2 != std::string::npos) {
+		return true;
 	}
 
-	return str;
+	return false;
 }
 
 std::string Scanner::getkeyword(std::string str) {

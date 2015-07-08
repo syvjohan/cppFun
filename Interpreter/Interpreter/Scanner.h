@@ -19,6 +19,8 @@ public:
 	int getIndex(int linenumber);
 	std::pair<std::string, std::string> getInstructionAt(int index);
 	int length();
+	std::string trimPRINT(std::string str);
+	bool isString(std::string str);
 
 private:
 	Map map;
@@ -27,8 +29,7 @@ private:
 	std::string keywords[10];
 
 	std::string trimString(std::string str);
-	std::string trimPRINT(std::string str);
-
+	std::string removeFirstAndLastWhitesspace(std::string &str);
 	std::string getExpression(std::string str, std::string strIrrelevant);
 };
 
