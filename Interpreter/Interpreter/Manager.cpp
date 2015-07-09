@@ -11,7 +11,7 @@ Manager::~Manager()
 }
 
 void Manager::init() {
-	scanner.readFile("1.1Instructions.txt"); //code file to be read from!
+	scanner.readFile("1.2Instructions.txt"); //code file to be read from!
 
 	int len = scanner.length();
 	for (tableIndex = 0; tableIndex != len; tableIndex++) {
@@ -46,6 +46,15 @@ void Manager::table(std::string keyword, std::string expression) {
 	else if (keyword == "NEXT") {
 		evalNEXT(expression);
 	}
+	else if (keyword == "INT") {
+		evalLET(expression, 1);
+	}
+	else if (keyword == "STR") {
+		evalLET(expression, 3);
+	}
+	else if (keyword == "DEC") {
+		evalLET(expression, 2);
+	}
 }
 
 void Manager::evalPRINT(std::string &expression) {
@@ -75,6 +84,34 @@ void Manager::evalLET(std::string &expression) {
 	
 	LET *var = new LET(expression);
 	overwriteOldVariableValue(var);
+}
+
+void Manager::evalLET(std::string &expression, int datatype) {
+	//search for variable.
+	std::string varExpression = "";
+	for (int i = expression.length(); i != -1; i--) {
+		if (isspace(expression[i])) {
+			std::string varName = expression.substr(i +1, expression.length() - i);
+			expression.erase(i, expression.length() - i);
+
+			varExpression.append(getDatatypeAsString(datatype));
+			varExpression.append(varName);
+
+			LET *variable = new LET(varExpression);
+
+			//Store variable on heap or stack
+			if (lengthNestedForLoops < 1) {
+				variablesHeap.push_back(*variable);
+			}
+			else {
+				variablesStack.push_back(*variable);
+			}
+
+			varExpression = "";
+			delete variable;
+			variable = NULL;
+		}
+	}
 }
 
 void Manager::evalINPUT(std::string &expression) {
@@ -517,7 +554,23 @@ void Manager::endLoop() {
 	std::string value = scanner.getInstructionAt(endLoopIndex).second;
 	std::string key = scanner.getInstructionAt(endLoopIndex).first;
 
+	decrementNestedForLoops();
+
 	table(key, value);
+}
+
+std::string Manager::getDatatypeAsString(int datatype) {
+	if (datatype == 1) {
+		return "INT";
+	}
+	else if (datatype == 2) {
+		return "FLOAT";
+	}
+	else if (datatype == 3) {
+		return "STR";
+	}
+
+	return "";
 }
 
 int main() {

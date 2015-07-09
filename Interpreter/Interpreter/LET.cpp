@@ -8,9 +8,7 @@ LET::LET(std::string &expression) {
 	}
 }
 
-LET::~LET() {
-
-}
+LET::~LET() {}
 
 void LET::setName(std::string name) {
 	this->name = name;
@@ -20,14 +18,14 @@ void LET::setValue(std::string value) {
 	this->parsedValue = value;
 }
 
-void LET::setDataType(std::string datatype) {
-	if (datatype == "FLOAT") {
+void LET::setDataType(int datatype) {
+	if (datatype == 2) {
 		this->datatype = 2;
 	}
-	else if (datatype == "INT") {
+	else if (datatype == 1) {
 		this->datatype = 1;
 	}
-	else if (datatype == "STRING") {
+	else if (datatype == 3) {
 		this->datatype = 3;
 	}
 	else {
@@ -51,38 +49,46 @@ void LET::identifyPartsInExpression(std::string &expression) {
 	int requestTypeCast = 0; //0 = no typecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
 
+		//find datatype.
+		size_t typeInt = expression.find("INT");
+		size_t typeFloat = expression.find("FLOAT");
+		size_t typeString = expression.find("STR");
+		bool isAlpha = std::regex_match(expression, std::regex("^[A-Za-z]+$"));
+		if (typeInt != std::string::npos) {
+			setDataType(1); //INT
+			expression.erase(typeInt, typeInt + 3);
+			requestTypeCast = 1;
+		}
+		else if (typeFloat != std::string::npos) {
+			setDataType(2); //FLOAT
+			expression.erase(typeFloat, typeFloat + 5);
+			requestTypeCast = 2;
+		}
+		else if (typeString != std::string::npos) {
+			setDataType(3); //STRING
+			expression.erase(typeString, typeString + 3);
+		}
+		else if (isAlpha) {
+			setDataType(3); //STRING
+		}
+		else {
+			setDataType(1); //INT
+			requestTypeCast = 3;
+		}
+
 		//find name.
 		size_t opEqual = expression.find_first_of('=');
 		size_t foundArbitration = expression.find("||");
 		if (opEqual != std::string::npos) {
 			setName(expression.substr(0, opEqual));
-			expression.erase(0, opEqual +1);
+			expression.erase(0, opEqual + 1);
 		}
 		else if (foundArbitration != std::string::npos) {
 			setName(expression.substr(0, foundArbitration));
 			expression.erase(0, foundArbitration + 2);
 		}
-
-		//find datatype.
-		size_t typeInt = expression.find("INT");
-		size_t typeFloat = expression.find("FLOAT");
-		bool isAlpha = std::regex_match(expression, std::regex("^[A-Za-z]+$"));
-		if (typeInt != std::string::npos) {
-			setDataType(expression.substr(typeInt, typeInt + 2));
-			expression.erase(typeInt, typeInt + 3);
-			requestTypeCast = 1;
-		}
-		else if (typeFloat != std::string::npos) {
-			setDataType(expression.substr(typeFloat, typeInt + 6));
-			expression.erase(typeFloat, typeFloat + 5);
-			requestTypeCast = 2;
-		}
-		else if (isAlpha) {
-			setDataType("STRING");
-		}
 		else {
-			setDataType("INT");
-			requestTypeCast = 3;
+			setName(expression);
 		}
 
 		//find value.
@@ -100,7 +106,8 @@ void LET::identifyPartsInExpression(std::string &expression) {
 			setValue(expression);
 		}
 		else {
-			//Invalid value
+			//No value found set default value.
+			setDefaultValue();
 		}
 
 		return;
@@ -293,7 +300,7 @@ bool LET::isNumber(const std::string str) {
 }
 
 //Exchange words to values, ex: PI, RANDOM.
-std::string LET::transformKeywordsToValues(std::string str) {
+std::string LET::transformKeywordsToValues(std::string &str) {
 
 	size_t foundRandom = str.find("RANDOM");
 	if (foundRandom != std::string::npos) {
@@ -310,4 +317,17 @@ std::string LET::transformKeywordsToValues(std::string str) {
 	}
 	
 	return str;
+}
+
+void LET::setDefaultValue() {
+	std::string value = "";
+	if (datatype == 1) {
+		setValue(value = "0");
+	}
+	else if (datatype == 2) {
+		setValue(value = "0.0f");
+	}
+	else if (datatype == 3) {
+		setValue("");
+	}
 }

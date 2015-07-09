@@ -1,7 +1,7 @@
 #include "Scanner.h"
 
 Scanner::Scanner() {
-	keywordsLength = 10;
+	keywordsLength = 20;
 	keywords[0] = "PRINT";
 	keywords[1] = "LET";
 	keywords[2] = "INPUT";
@@ -12,6 +12,9 @@ Scanner::Scanner() {
 	keywords[7] = "THEN";
 	keywords[8] = "TO";
 	keywords[9] = "NEXT";
+	keywords[10] = "INT";
+	keywords[11] = "STR";
+	keywords[12] = "DEC";
 }
 
 Scanner::~Scanner()
@@ -28,9 +31,14 @@ void Scanner::readFile(std::string path) {
 
 			std::string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
 
+			size_t findDatatype1 = value.find("INT");
+			size_t findDatatype2 = value.find("FLOAT");
+			size_t findDatatype3 = value.find("STRING");
+
 			//find PRINT
 			size_t findPRINT = value.find("PRINT");
-			if (findPRINT == std::string::npos) {
+			if (findPRINT == std::string::npos && findDatatype1 != std::string::npos && 
+				findDatatype2 != std::string::npos && findDatatype3 != std::string::npos) {
 				value = trimString(value);
 			}
 

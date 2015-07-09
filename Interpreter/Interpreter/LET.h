@@ -18,10 +18,9 @@ public:
 
 	void setName(std::string name);
 	void setValue(std::string value);
-	void setDataType(std::string type);
+	void setDataType(int datatype);
 
 private:
-
 	std::string name;
 	std::string parsedValue;
 	int datatype; //float = 2. int = 1, string = 3.
@@ -35,10 +34,11 @@ private:
 	std::string sortStringForward(std::string str);
 
 	std::string& subdivideValue(std::string &expression);
+	void setDefaultValue();
 
 	int validateOperatorType(char op);
 	bool isParanthesis(char op);
 	bool isNumber(const std::string str);
-	std::string transformKeywordsToValues(std::string str);
+	std::string transformKeywordsToValues(std::string &str);
 };
 

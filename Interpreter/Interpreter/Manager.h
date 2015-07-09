@@ -35,15 +35,17 @@ private:
 	void overwriteOldVariableValue(LET *newVar);
 	size_t getCompareOperatorPos(std::string *expression);
 	size_t getOperatorPos(std::string *expression);
+	std::string getDatatypeAsString(int datatype);
 	void incrementNestedForLoops(std::string &variableName);
 	void decrementNestedForLoops();
 	void gotoLoopHead();
 	void endLoop();
-
 	void table(std::string keyword, std::string expression);
+
 	void evalPRINT(std::string &expression);
 	void evalINPUT(std::string &expression);
 	void evalLET(std::string &expression);
+	void evalLET(std::string &expression, int datatype);
 	void evalIF(std::string &expression);
 	void evalGOTO(std::string &expression);
 	void evalFOR(std::string &expression);
