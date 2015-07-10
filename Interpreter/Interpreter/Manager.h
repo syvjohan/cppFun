@@ -21,8 +21,9 @@ private:
 	Scanner scanner;
 	std::vector<LET> variablesHeap;
 	std::vector<LET> variablesStack;
+	int subPositionStack;
 
-	int tableIndex;
+	int tableIndex; 
 	int headLoopIndex;
 	int endLoopIndex;
 
@@ -40,6 +41,7 @@ private:
 	void decrementNestedForLoops();
 	void gotoLoopHead();
 	void endLoop();
+	void eraseVariablesFromStack();
 	void table(std::string keyword, std::string expression);
 
 	void evalPRINT(std::string &expression);

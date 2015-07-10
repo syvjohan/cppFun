@@ -314,6 +314,7 @@ void Manager::evalFOR(std::string &expression) {
 		incrementVar.append(incrementVarName).append("=").append(incrementVarValue);
 		LET *var = new LET(incrementVar);
 		variablesStack.push_back(*var);
+		subPositionStack = variablesStack.size(); //sets first variable position on stack i for loop.
 
 		//stop value.
 		bool isAlpha = std::regex_match(stopVar, std::regex("^[A-Za-z]+$"));
@@ -347,7 +348,7 @@ void Manager::evalNEXT(std::string &variable) {
 		//check if variable exist.
 		if (lengthNestedForLoops > 0) {
 			if (variable == nestedForLoops[lengthNestedForLoops]) {
-				for (int i = 0; i != variablesHeap.size(); i++) {
+				for (int i = 0; i != variablesStack.size(); i++) {
 					if (variablesStack[i].getName() == variable) {
 						VariableonStack = true;
 						std::string strValue = variablesStack[i].getValue();
@@ -376,7 +377,7 @@ void Manager::evalNEXT(std::string &variable) {
 		// incorrect syntax no increment variable has been added.
 	}
 }
-
+// sqr = 3*3 byter ut sqr mot ett värde.
 //Change variable name to variable value in string if variable name exist in expression.
 std::string Manager::exchangeVariableNameToValue(std::string expression) {
 	//if it is not a variable
@@ -398,21 +399,24 @@ std::string Manager::exchangeVariableNameToValue(std::string expression) {
 				op = expression.substr(foundOperator, 1);
 				rhs = expression.substr(foundOperator + 1, expression.length() - foundOperator);
 
-				//exchange name to value. HEAP!
-				for (int k = 0; k != variablesHeap.size(); k++) {
-					if (lhs == variablesHeap[k].getName()) {
-						lhsValue = variablesHeap[k].getValue();
-						break;
-					}
-				}
-
-				//exchange name to value. STACK!
-				if (lhsValue == "") {
+				if (lengthNestedForLoops > 0) {
+					//exchange name to value. STACK!
 					for (int k = 0; k != variablesStack.size(); k++) {
 						if (lhs == variablesStack[k].getName()) {
 							lhsValue = variablesStack[k].getValue();
 							break;
 						}
+						lhsValue = lhs;
+					}
+				}
+				else {
+					//exchange name to value. HEAP!
+					for (int k = 0; k != variablesHeap.size(); k++) {
+						if (lhs == variablesHeap[k].getName()) {
+							lhsValue = variablesHeap[k].getValue();
+							break;
+						}
+						lhsValue = lhs;
 					}
 				}
 
@@ -424,21 +428,22 @@ std::string Manager::exchangeVariableNameToValue(std::string expression) {
 		}
 		//only one value
 		if (expression.length() != 0) {
-			bool onHEAP = false;
 			//change name to value, HEAP
-			for (int k = 0; k != variablesHeap.size(); k++) {
-				if (expression == variablesHeap[k].getName()) {
-					expression = variablesHeap[k].getValue();
-					onHEAP = true;
-					break;
+			if (lengthNestedForLoops > 0) {
+				//change name to value, STACK
+				for (int k = 0; k != variablesStack.size(); k++) {
+					if (expression == variablesStack[k].getName()) {
+						expression = variablesStack[k].getValue();
+						break;
+					}
 				}
 			}
-
-			//change name to value, STACK
-			for (int k = 0; k != variablesStack.size(); k++) {
-				if (expression == variablesStack[k].getName()) {
-					expression = variablesStack[k].getValue();
-					break;
+			else {
+				for (int k = 0; k != variablesHeap.size(); k++) {
+					if (expression == variablesHeap[k].getName()) {
+						expression = variablesHeap[k].getValue();
+						break;
+					}
 				}
 			}
 			tmp.append(expression);
@@ -452,15 +457,22 @@ std::string Manager::exchangeVariableNameToValue(std::string expression) {
 
 //overwrite the old value with the new value.
 void Manager::overwriteOldVariableValue(LET *newVar) {
-	if (variablesHeap.size() != 0) {
-		for (size_t i = 0; i != variablesHeap.size(); i++) {
-			if (newVar->getName() == variablesHeap.at(i).getName()) {
-				variablesHeap.erase(variablesHeap.begin() + i);
+	if (lengthNestedForLoops > 0) {
+		for (int s = 0; s != variablesStack.size(); s++) {
+			if (newVar->getName() == variablesStack.at(s).getName()) {
+				variablesStack.erase(variablesStack.begin() + s);
 			}
 		}
+		variablesStack.push_back(*newVar);
 	}
-
-	variablesHeap.push_back(*newVar);
+	else {
+		for (int h = 0; h != variablesHeap.size(); h++) {
+			if (newVar->getName() == variablesHeap.at(h).getName()) {
+				variablesHeap.erase(variablesHeap.begin() + h);
+			}
+		}
+		variablesHeap.push_back(*newVar);
+	}
 }
 
 std::string Manager::getDatatype(LET var) {
@@ -544,6 +556,9 @@ void Manager::decrementNestedForLoops() {
 void Manager::gotoLoopHead() {
 	endLoopIndex = tableIndex + 1;
 	tableIndex = headLoopIndex;
+	
+	eraseVariablesFromStack();
+
 	std::string value = scanner.getInstructionAt(headLoopIndex).second;
 	std::string key = scanner.getInstructionAt(headLoopIndex).first;
 
@@ -571,6 +586,12 @@ std::string Manager::getDatatypeAsString(int datatype) {
 	}
 
 	return "";
+}
+
+void Manager::eraseVariablesFromStack() {
+	for (int i = variablesStack.size(); i != (subPositionStack); i--) {
+		variablesStack.pop_back();
+	}
 }
 
 int main() {

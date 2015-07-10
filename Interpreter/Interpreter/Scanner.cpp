@@ -32,12 +32,16 @@ void Scanner::readFile(std::string path) {
 			std::string value = line.substr(firstWhiteSpace, line.length() - firstWhiteSpace);
 
 			size_t findDatatype1 = value.find("INT");
-			size_t findDatatype2 = value.find("FLOAT");
-			size_t findDatatype3 = value.find("STRING");
+			size_t findDatatype2 = value.find("DEC");
+			size_t findDatatype3 = value.find("STR");
 
 			//find PRINT
 			size_t findPRINT = value.find("PRINT");
-			if (findPRINT == std::string::npos && findDatatype1 != std::string::npos && 
+			if (findPRINT == std::string::npos && findDatatype1 == std::string::npos &&
+				findDatatype2 == std::string::npos && findDatatype3 == std::string::npos) {
+				value = trimString(value);
+			}
+			else if (findDatatype1 != std::string::npos &&
 				findDatatype2 != std::string::npos && findDatatype3 != std::string::npos) {
 				value = trimString(value);
 			}
