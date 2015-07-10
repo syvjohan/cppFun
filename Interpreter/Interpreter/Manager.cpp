@@ -119,7 +119,7 @@ void Manager::evalINPUT(std::string &expression) {
 	std::cin.clear();
 	std::getline(std::cin, input);
 
-	expression.append("||");
+	expression.append("=");
 	expression.append(input);
 
 	LET *var = new LET(expression);
@@ -128,49 +128,69 @@ void Manager::evalINPUT(std::string &expression) {
 }
 
 void Manager::evalIF(std::string &expression) {
-
 	LET var1;
 	LET var2;
 	LET *tmp = nullptr;
 
-	size_t foundVar2 = -1;
-	size_t foundVar1 = -1;
-
 	bool isVariable1 = false;
 	bool isVariable2 = false;
 
-	//get first variable.
+	size_t foundTHEN = expression.find("THEN");
+	size_t opPos = getCompareOperatorPos(&expression);
+
+	std::string foundVar1 = expression.substr(0, opPos);
+	std::string foundVar2 = expression.substr(opPos + 1, foundTHEN - opPos - 1);
+
+	//get first variable. HEAP
 	for (int i = 0; i != variablesHeap.size(); i++) {
-		foundVar1 = expression.find(variablesHeap.at(i).getName());
-		if (foundVar1 != std::string::npos && foundVar1 < getCompareOperatorPos(&expression)) {
+		if (foundVar1 == variablesHeap.at(i).getName() && opPos > 0) {
 			var1 = variablesHeap.at(i);
 			isVariable1 = true;
 			break;
 		}
 	}
+
+	//get first variable. STACK
+	if (!isVariable1 && lengthNestedForLoops > 0) {
+		for (int i = 0; i != variablesStack.size(); i++) {			
+			if (foundVar1 == variablesStack.at(i).getName() && opPos > 0) {
+				var1 = variablesStack.at(i);
+				isVariable1 = true;
+				break;
+			}
+		}
+	}
 	
-	//get second variable.
+	//get second variable. HEAP
 	for (int k = 0; k != variablesHeap.size(); k++) {
-		foundVar2 = expression.find(variablesHeap.at(k).getName());
-		if (foundVar2 != std::string::npos && foundVar2 > getCompareOperatorPos(&expression)) {
+		if (foundVar2 == variablesHeap.at(k).getName() && opPos < foundTHEN) {
 			var2 = variablesHeap.at(k);
 			isVariable2 = true;
 			break;
 		}
 	}
 
+	//get second variable. STACK
+	if (!isVariable2 && lengthNestedForLoops > 0) {
+		for (int i = 0; i != variablesStack.size(); i++) {
+			if (foundVar2 == variablesStack.at(i).getName() && opPos < foundTHEN) {
+				var2 = variablesStack.at(i);
+				isVariable1 = true;
+				break;
+			}
+		}
+	}
+
 	//If compared values are no variablesHeap instead they are hardcoded values.
 	std::string value = "";
-	size_t foundOp = getCompareOperatorPos(&expression);
-	size_t foundTHEN = expression.find("THEN");
 	if (!isVariable2) {
-		if (foundOp != std::string::npos && foundTHEN != std::string::npos) {
-			value = expression.substr(foundOp + 1, foundTHEN - foundOp - 1);
+		if (opPos != std::string::npos && foundTHEN != std::string::npos) {
+			value = expression.substr(opPos + 1, foundTHEN - opPos - 1);
 		}
 	}
 	else if (!isVariable1) {
-		if (foundOp != std::string::npos && foundTHEN != std::string::npos) {
-			value = expression.substr(0, foundOp);
+		if (opPos != std::string::npos && foundTHEN != std::string::npos) {
+			value = expression.substr(0, opPos);
 		}
 	}
 	else {
@@ -299,6 +319,7 @@ void Manager::evalFOR(std::string &expression) {
 						int value2 = std::stoi(variablesHeap[h].getValue());
 						if (value1 > value2) {
 							endLoop();
+							break;
 						}
 					}
 				}
@@ -314,7 +335,7 @@ void Manager::evalFOR(std::string &expression) {
 		incrementVar.append(incrementVarName).append("=").append(incrementVarValue);
 		LET *var = new LET(incrementVar);
 		variablesStack.push_back(*var);
-		subPositionStack = variablesStack.size(); //sets first variable position on stack i for loop.
+		positionStackForScope = variablesStack.size(); //sets first variable position on stack i for loop.
 
 		//stop value.
 		bool isAlpha = std::regex_match(stopVar, std::regex("^[A-Za-z]+$"));
@@ -358,6 +379,7 @@ void Manager::evalNEXT(std::string &variable) {
 							strValue = std::to_string(value);
 							variablesStack[i].setValue(strValue);
 							gotoLoopHead();
+							break;
 						}
 						else {
 							//increment variable datatype can only be an INT.
@@ -475,18 +497,6 @@ void Manager::overwriteOldVariableValue(LET *newVar) {
 	}
 }
 
-std::string Manager::getDatatype(LET var) {
-	std::string value = var.getValue();
-	if (var.getDatatype() == 1) {
-		size_t foundDot = var.getValue().find('.');
-		if (foundDot != std::string::npos) {
-			value = var.getValue().erase(foundDot, var.getValue().length() - foundDot);
-		}
-	}
-	
-	return value;
-}
-
 size_t Manager::getCompareOperatorPos(std::string *expression) {
 	size_t opEqual = expression->find("=");
 	size_t opLess = expression->find("<");
@@ -562,7 +572,7 @@ void Manager::gotoLoopHead() {
 	std::string value = scanner.getInstructionAt(headLoopIndex).second;
 	std::string key = scanner.getInstructionAt(headLoopIndex).first;
 
-	table(key, value);
+	return table(key, value);
 }
 
 void Manager::endLoop() {
@@ -570,8 +580,11 @@ void Manager::endLoop() {
 	std::string key = scanner.getInstructionAt(endLoopIndex).first;
 
 	decrementNestedForLoops();
+	positionStackForScope = 0;
+	tableIndex = endLoopIndex;
+	variablesStack.pop_back();
 
-	table(key, value);
+	return table(key, value);
 }
 
 std::string Manager::getDatatypeAsString(int datatype) {
@@ -589,7 +602,7 @@ std::string Manager::getDatatypeAsString(int datatype) {
 }
 
 void Manager::eraseVariablesFromStack() {
-	for (int i = variablesStack.size(); i != (subPositionStack); i--) {
+	for (int i = variablesStack.size(); i != positionStackForScope; i--) {
 		variablesStack.pop_back();
 	}
 }

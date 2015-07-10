@@ -21,7 +21,7 @@ private:
 	Scanner scanner;
 	std::vector<LET> variablesHeap;
 	std::vector<LET> variablesStack;
-	int subPositionStack;
+	int positionStackForScope;
 
 	int tableIndex; 
 	int headLoopIndex;
@@ -32,7 +32,6 @@ private:
 	int capacity;
 
 	std::string exchangeVariableNameToValue(std::string expression);
-	std::string getDatatype(LET var);
 	void overwriteOldVariableValue(LET *newVar);
 	size_t getCompareOperatorPos(std::string *expression);
 	size_t getOperatorPos(std::string *expression);

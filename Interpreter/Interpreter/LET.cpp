@@ -5,6 +5,7 @@ LET::LET() {}
 LET::LET(std::string &expression) {
 	if (expression != "") {
 		identifyPartsInExpression(expression);
+		transformValueAfterDatatype();
 	}
 }
 
@@ -46,53 +47,53 @@ int LET::getDatatype() {
 }
 
 void LET::identifyPartsInExpression(std::string &expression) {
-	int requestTypeCast = 0; //0 = no typecast needed, 1 = typecast to int, 2 = typecast to float, 3 = no typecast was requested.
 	for (int i = 0; i != expression.length(); i++) {
 
-		//find datatype.
+		//find datatype. DEFINED DATATYPES
+		bool hasDefinedDatatype = false;
 		size_t typeInt = expression.find("INT");
 		size_t typeFloat = expression.find("FLOAT");
 		size_t typeString = expression.find("STR");
-		bool isAlpha = std::regex_match(expression, std::regex("^[A-Za-z]+$"));
 		if (typeInt != std::string::npos) {
 			setDataType(1); //INT
 			expression.erase(typeInt, typeInt + 3);
-			requestTypeCast = 1;
+			hasDefinedDatatype = true;
 		}
 		else if (typeFloat != std::string::npos) {
 			setDataType(2); //FLOAT
 			expression.erase(typeFloat, typeFloat + 5);
-			requestTypeCast = 2;
+			hasDefinedDatatype = true;
 		}
 		else if (typeString != std::string::npos) {
 			setDataType(3); //STRING
 			expression.erase(typeString, typeString + 3);
-		}
-		else if (isAlpha) {
-			setDataType(3); //STRING
+			hasDefinedDatatype = true;
 		}
 		else {
 			setDataType(1); //INT
-			requestTypeCast = 3;
 		}
 
 		//find name.
 		size_t opEqual = expression.find_first_of('=');
-		size_t foundArbitration = expression.find("||");
 		if (opEqual != std::string::npos) {
 			setName(expression.substr(0, opEqual));
 			expression.erase(0, opEqual + 1);
-		}
-		else if (foundArbitration != std::string::npos) {
-			setName(expression.substr(0, foundArbitration));
-			expression.erase(0, foundArbitration + 2);
 		}
 		else {
 			setName(expression);
 		}
 
-		//find value.
+		//find value and find UNDEFINED DATATYPES.
 		if (opEqual != std::string::npos && opEqual + 1 != expression.length()) {
+			size_t isFloat = expression.find_first_not_of(".");
+			bool isAlpha = std::regex_match(expression, std::regex("^[A-Za-z]+$"));
+			if (isFloat && !hasDefinedDatatype) {
+				setDataType(2); //FLOAT
+			}
+			else if (isAlpha && !hasDefinedDatatype) {
+				setDataType(3); //STRING
+			}
+
 			expression = transformKeywordsToValues(expression);
 			expression = subdivideValue(expression);
 			if (expression != "") { 
@@ -101,9 +102,6 @@ void LET::identifyPartsInExpression(std::string &expression) {
 			else {
 				//Syntax wrong in expression.
 			}
-		}
-		else if (foundArbitration != std::string::npos && foundArbitration + 1 != expression.length()) {
-			setValue(expression);
 		}
 		else {
 			//No value found set default value.
@@ -329,5 +327,18 @@ void LET::setDefaultValue() {
 	}
 	else if (datatype == 3) {
 		setValue("");
+	}
+}
+
+void LET::transformValueAfterDatatype() {
+	std::string value = getValue();
+	size_t findDot = value.find('.');
+	if (findDot != std::string::npos) {
+		if (getDatatype() == 1) {
+			setValue(value.substr(0, findDot));
+		}
+		else if (getDatatype() == 2) {
+			setValue(value.substr(0, findDot + 2));
+		}
 	}
 }

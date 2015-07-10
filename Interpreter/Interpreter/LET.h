@@ -40,5 +40,6 @@ private:
 	bool isParanthesis(char op);
 	bool isNumber(const std::string str);
 	std::string transformKeywordsToValues(std::string &str);
+	void transformValueAfterDatatype();
 };
 
